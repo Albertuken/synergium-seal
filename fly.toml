@@ -1,0 +1,50 @@
+# Despliegue en Fly.io.
+#
+# Cambia "app" por el nombre que elijas al crear la aplicación.
+# Región: "mad" (Madrid) por cercanía; si tus colegas están en Colombia y Reino
+# Unido, "mad" es un punto medio razonable y la latencia aquí da igual: sellar
+# es una petición pequeña, no un servicio interactivo.
+
+app = "synergium-seal"
+primary_region = "mad"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  SEAL_DB = "/data/seal.db"
+  UPGRADE_INTERVAL = "7200"   # anclaje cada 2 h
+
+# ---------------------------------------------------------------------------
+# EL PUNTO CRÍTICO
+# Sin este volumen, el sistema de ficheros es efímero y CADA REDESPLIEGUE
+# BORRARÍA TODOS LOS SELLOS. Créalo antes del primer deploy:
+#     fly volumes create seal_data --size 1 --region mad
+# ---------------------------------------------------------------------------
+[[mounts]]
+  source = "seal_data"
+  destination = "/data"
+
+[http_service]
+  internal_port = 8080
+  force_https = true          # crypto.subtle no existe sin contexto seguro
+  auto_stop_machines = false  # que no se duerma: un arranque en frío ante un
+  auto_start_machines = true  # colega probándolo es una mala primera impresión
+  min_machines_running = 1
+
+  # Una sola máquina, obligatoriamente: SQLite sobre un volumen no se comparte.
+  [http_service.concurrency]
+    type = "requests"
+    soft_limit = 40
+    hard_limit = 80
+
+[[http_service.checks]]
+  grace_period = "10s"
+  interval = "30s"
+  method = "GET"
+  path = "/health"
+  timeout = "5s"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "256mb"

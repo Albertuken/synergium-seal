@@ -1,0 +1,89 @@
+# Despliegue a Fly.io desde GitHub.
+#
+# La gracia de este fichero: flyctl se ejecuta en la máquina de GitHub, no en
+# la tuya. No necesitas instalar nada en tu ordenador. Cada vez que se sube
+# código a main, se despliega solo.
+#
+# Requisito único: un secreto FLY_API_TOKEN en el repositorio.
+#   GitHub → Settings → Secrets and variables → Actions → New repository secret
+#
+# El nombre de la app se puede cambiar sin tocar este fichero, creando una
+# variable FLY_APP en el mismo sitio (pestaña "Variables").
+
+name: Desplegar en Fly.io
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:        # permite lanzarlo a mano desde la pestaña Actions
+
+env:
+  FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+  FLY_APP: ${{ vars.FLY_APP || 'synergium-seal' }}
+  FLY_REGION: mad
+
+jobs:
+  deploy:
+    name: Construir y desplegar
+    runs-on: ubuntu-latest
+    concurrency:
+      group: deploy-${{ github.ref }}
+      cancel-in-progress: false     # nunca cortar un despliegue a medias
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+
+      - name: Comprobar que hay token
+        run: |
+          if [ -z "$FLY_API_TOKEN" ]; then
+            echo "Falta el secreto FLY_API_TOKEN en este repositorio."
+            echo "GitHub → Settings → Secrets and variables → Actions."
+            exit 1
+          fi
+
+      # Idempotente: si la app ya existe, no hace nada.
+      - name: Crear la aplicación si no existe
+        run: |
+          if flyctl status --app "$FLY_APP" >/dev/null 2>&1; then
+            echo "La app $FLY_APP ya existe."
+          else
+            echo "Creando la app $FLY_APP…"
+            flyctl apps create "$FLY_APP" --org personal
+          fi
+
+      # EL PASO QUE NO PUEDE FALTAR.
+      # Sin volumen, el disco es efímero y cada despliegue borraría los sellos.
+      - name: Crear el volumen persistente si no existe
+        run: |
+          if flyctl volumes list --app "$FLY_APP" | grep -q seal_data; then
+            echo "El volumen seal_data ya existe."
+          else
+            echo "Creando el volumen seal_data…"
+            flyctl volumes create seal_data \
+              --app "$FLY_APP" --region "$FLY_REGION" --size 1 --yes
+          fi
+
+      - name: Desplegar
+        run: flyctl deploy --remote-only --app "$FLY_APP"
+
+      # Que el propio despliegue confirme que el servicio responde.
+      - name: Comprobar que está vivo
+        run: |
+          url="https://$FLY_APP.fly.dev/health"
+          echo "Comprobando $url"
+          for i in $(seq 1 12); do
+            if curl -fsS --max-time 10 "$url" > /tmp/health.json; then
+              echo "Responde:"; cat /tmp/health.json; echo
+              exit 0
+            fi
+            echo "  intento $i sin respuesta, reintentando en 10s…"
+            sleep 10
+          done
+          echo "El servicio no respondió tras dos minutos."
+          flyctl logs --app "$FLY_APP" | tail -50
+          exit 1
+
+      - name: Dónde ha quedado
+        run: echo "Listo → https://${FLY_APP}.fly.dev"

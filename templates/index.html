@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synergium · Sellado de anterioridad</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header class="appbar">
+  <div class="shell">
+    <span class="brand">Synergium</span>
+    <span class="brand-sub">Sellado de anterioridad</span>
+  </div>
+</header>
+
+<main class="shell">
+
+  <div class="privacy" role="note">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="4" y="11" width="16" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+    <span>Tu fichero no se sube. La huella se calcula en este navegador y al servidor solo viaja esa huella.</span>
+  </div>
+
+  <nav class="tabs" aria-label="Secciones">
+    <button class="tab" type="button" data-view="sellar" aria-current="page">Sellar</button>
+    <button class="tab" type="button" data-view="verificar">Verificar</button>
+  </nav>
+
+  <!-- ---------------- SELLAR ---------------- -->
+  <section id="view-sellar">
+    <h1>Fecha una idea antes de compartirla</h1>
+    <p class="lead">Se calcula la huella SHA-256 de tu documento y se registra en la cadena de Bitcoin a través de OpenTimestamps. El certificado que obtienes lo puede comprobar cualquiera, sin depender de nosotros.</p>
+
+    <div class="card">
+      <div class="drop" id="drop-seal" tabindex="0" role="button" aria-describedby="drop-seal-hint">
+        <input type="file" id="file-seal" hidden>
+        <strong>Arrastra un fichero aquí</strong>
+        <span id="drop-seal-hint">o pulsa para elegirlo · también puedes pegar texto abajo</span>
+      </div>
+
+      <div class="field">
+        <label for="text-seal">O pega el texto que quieres sellar</label>
+        <textarea id="text-seal" rows="5" placeholder="El planteamiento de tu idea, un protocolo, un plan de análisis…"></textarea>
+      </div>
+
+      <div class="digest" id="digest-seal" hidden>
+        <span class="digest-label">Huella SHA-256</span>
+        <code id="digest-seal-value"></code>
+      </div>
+
+      <div class="field">
+        <label for="label-seal">Etiqueta <span class="opt">— opcional, para reconocerlo después</span></label>
+        <input type="text" id="label-seal" maxlength="200" placeholder="Protocolo CPUE Gran Sol v3">
+        <span class="hint">Se guarda en claro en nuestro servidor. No pongas aquí nada confidencial.</span>
+      </div>
+
+      <button class="btn btn-primary" id="btn-seal" type="button" disabled>Sellar</button>
+      <div id="seal-result" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- ---------------- VERIFICAR ---------------- -->
+  <section id="view-verificar" hidden>
+    <h1>Comprobar un sello</h1>
+    <p class="lead">Vuelve a calcular la huella de un documento y mira si está registrado. Si cambió un solo carácter, la huella será otra y no habrá coincidencia.</p>
+
+    <div class="card">
+      <div class="drop" id="drop-verify" tabindex="0" role="button">
+        <input type="file" id="file-verify" hidden>
+        <strong>Arrastra el fichero a comprobar</strong>
+        <span>o pulsa para elegirlo · también puedes pegar texto abajo</span>
+      </div>
+
+      <div class="field">
+        <label for="text-verify">O pega el texto</label>
+        <textarea id="text-verify" rows="5"></textarea>
+      </div>
+
+      <div class="digest" id="digest-verify" hidden>
+        <span class="digest-label">Huella SHA-256</span>
+        <code id="digest-verify-value"></code>
+      </div>
+
+      <button class="btn btn-primary" id="btn-verify" type="button" disabled>Comprobar</button>
+      <div id="verify-result" aria-live="polite"></div>
+    </div>
+
+    <div class="card independent">
+      <h2>La comprobación que no depende de nosotros</h2>
+      <p>Lo anterior consulta nuestro registro. La prueba real está en el fichero <code>.ots</code> que descargas con cada sello: se valida contra la cadena de Bitcoin con la herramienta oficial, aunque este servicio desaparezca.</p>
+      <pre><code>pip install opentimestamps-client
+ots verify TU-SELLO.ots -f tu-fichero.pdf</code></pre>
+    </div>
+  </section>
+
+</main>
+
+<footer class="shell">
+  <p>Sellado sobre <a href="https://opentimestamps.org" rel="noopener noreferrer" target="_blank">OpenTimestamps</a>. Un sello recién creado queda <em>pendiente</em> unas horas hasta que entra en un bloque de Bitcoin; ya es válido desde el primer momento, pero solo es incontestable una vez anclado.</p>
+</footer>
+
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
