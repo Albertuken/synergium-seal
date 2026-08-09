@@ -1,12 +1,12 @@
 # Despliegue en Fly.io.
 #
 # Cambia "app" por el nombre que elijas al crear la aplicación.
-# Región: "mad" (Madrid) por cercanía; si tus colegas están en Colombia y Reino
-# Unido, "mad" es un punto medio razonable y la latencia aquí da igual: sellar
+# Región: "cdg" (París). Fly ya no ofrece Madrid. Con colegas en Colombia y
+# Reino Unido es un punto medio razonable, y aquí la latencia da igual: sellar
 # es una petición pequeña, no un servicio interactivo.
 
 app = "synergium-seal"
-primary_region = "mad"
+primary_region = "cdg"
 
 [build]
   dockerfile = "Dockerfile"
@@ -19,7 +19,7 @@ primary_region = "mad"
 # EL PUNTO CRÍTICO
 # Sin este volumen, el sistema de ficheros es efímero y CADA REDESPLIEGUE
 # BORRARÍA TODOS LOS SELLOS. Créalo antes del primer deploy:
-#     fly volumes create seal_data --size 1 --region mad
+#     fly volumes create seal_data --size 1 --region cdg
 # ---------------------------------------------------------------------------
 [[mounts]]
   source = "seal_data"
