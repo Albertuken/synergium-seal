@@ -43,15 +43,43 @@ jobs:
             exit 1
           fi
 
+      # Sin esto, un fallo al crear la app no dice por qué y hay que adivinar.
+      - name: Diagnóstico de la cuenta
+        run: |
+          echo "── organizaciones visibles con este token ──"
+          flyctl orgs list || echo "  no se pudieron listar (el token puede no tener permiso de cuenta)"
+          echo "── ¿el nombre está libre? ──"
+          flyctl apps list 2>/dev/null | grep -w "$FLY_APP" && echo "  ya existe en tu cuenta" || echo "  no aparece en tu cuenta"
+
       # Idempotente: si la app ya existe, no hace nada.
       - name: Crear la aplicación si no existe
         run: |
           if flyctl status --app "$FLY_APP" >/dev/null 2>&1; then
             echo "La app $FLY_APP ya existe."
-          else
-            echo "Creando la app $FLY_APP…"
-            flyctl apps create "$FLY_APP" --org personal
+            exit 0
           fi
+
+          # El identificador de la organización no siempre es "personal".
+          ORG=$(flyctl orgs list 2>/dev/null | awk 'NR>1 && $1!="" {print $NF; exit}')
+          ORG=${ORG:-personal}
+          echo "Creando $FLY_APP en la organización: $ORG"
+
+          if flyctl apps create "$FLY_APP" --org "$ORG" 2>err.txt; then
+            echo "Creada."
+            exit 0
+          fi
+
+          echo "── error devuelto por Fly ──"
+          cat err.txt
+          echo "::error::No se pudo crear la aplicación «$FLY_APP»."
+          echo "Las tres causas habituales, por orden de probabilidad:"
+          echo "  1) La cuenta de Fly no tiene tarjeta añadida. Fly no deja crear apps sin ella."
+          echo "     Se arregla en https://fly.io/dashboard → Billing."
+          echo "  2) El nombre ya lo tiene otra persona: en Fly son únicos en todo el mundo."
+          echo "     Se arregla creando una variable FLY_APP en el repositorio con otro nombre."
+          echo "  3) El token es de despliegue de una app concreta y no puede crear apps nuevas."
+          echo "     Se arregla generando un token de cuenta en el panel de Fly."
+          exit 1
 
       # EL PASO QUE NO PUEDE FALTAR.
       # Sin volumen, el disco es efímero y cada despliegue borraría los sellos.
