@@ -43,13 +43,14 @@ jobs:
             exit 1
           fi
 
-      # Sin esto, un fallo al crear la app no dice por qué y hay que adivinar.
+      # El registro completo solo lo ve quien administra el repo. Las anotaciones
+      # sí se leen por la API pública, así que el diagnóstico sale por ahí.
       - name: Diagnóstico de la cuenta
         run: |
-          echo "── organizaciones visibles con este token ──"
-          flyctl orgs list || echo "  no se pudieron listar (el token puede no tener permiso de cuenta)"
-          echo "── ¿el nombre está libre? ──"
-          flyctl apps list 2>/dev/null | grep -w "$FLY_APP" && echo "  ya existe en tu cuenta" || echo "  no aparece en tu cuenta"
+          orgs=$(flyctl orgs list 2>&1 | tr '\n' ' ' | tr -s ' ')
+          echo "::warning::ORGS: ${orgs:-vacío}"
+          apps=$(flyctl apps list 2>&1 | tr '\n' ' ' | tr -s ' ')
+          echo "::warning::APPS: ${apps:-vacío}"
 
       # Idempotente: si la app ya existe, no hace nada.
       - name: Crear la aplicación si no existe
@@ -69,9 +70,10 @@ jobs:
             exit 0
           fi
 
-          echo "── error devuelto por Fly ──"
-          cat err.txt
-          echo "::error::No se pudo crear la aplicación «$FLY_APP»."
+          # En una sola línea para que llegue íntegro a la anotación.
+          FLYERR=$(cat err.txt | tr '\n' ' ' | tr -s ' ')
+          echo "::error::FLY DIJO: ${FLYERR:-sin mensaje}"
+          echo "::error::No se pudo crear la aplicación «$FLY_APP» en la organización «$ORG»."
           echo "Las tres causas habituales, por orden de probabilidad:"
           echo "  1) La cuenta de Fly no tiene tarjeta añadida. Fly no deja crear apps sin ella."
           echo "     Se arregla en https://fly.io/dashboard → Billing."
