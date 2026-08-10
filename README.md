@@ -118,6 +118,17 @@ cuente un usuario.
 
 Las marcadas `network` sellan de verdad contra los calendarios públicos.
 
+`tests/test_layout.py` comprueba que ninguna de las tres páginas se sale por
+el lado, a 375, 768 y 1280 px. No lee el CSS: carga cada página en un iframe
+del ancho exacto —un iframe ignora el meta viewport, así que maqueta a los
+píxeles que le des— y compara `scrollWidth` con `clientWidth`. Un solo
+arranque de Chrome mide las nueve combinaciones en unos catorce segundos.
+
+Incluye un canario que desborda a propósito y que la sonda tiene que ver
+desbordar. Sin eso, una sonda rota daría todo correcto.
+
+Si no hay Chrome ni Chromium instalado, esas pruebas se saltan solas.
+
 ## Comprobación independiente
 
 Esto es lo que hace que el sello valga algo. Con el `.ots` descargado:
