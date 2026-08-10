@@ -199,6 +199,29 @@
     border: 1px solid var(--line-strong); color: var(--ink-faint); padding: 2px 6px; border-radius: 3px;
   }
   .langtag.has-abstract { border-color: var(--ok); color: var(--ok); }
+  /* El título tal como se selló, bajo la versión inglesa. */
+  /* Lista de requisitos de la cotutela: se lee de un vistazo cuál falta. */
+  .cotlist { list-style: none; margin: 12px 0 0; padding: 0; }
+  .cotlist li {
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+    gap: 4px 16px; padding: 10px 0 10px 22px; position: relative;
+    border-bottom: 1px solid var(--line);
+  }
+  .cotlist li:last-child { border-bottom: none; }
+  .cotlist li::before {
+    position: absolute; left: 0; top: 9px; font-family: var(--font-mono); font-size: 0.8rem;
+  }
+  .cotlist li.done::before { content: "✓"; color: #1c6b4b; }
+  .cotlist li.todo::before { content: "·"; color: var(--gold-ink); font-weight: 700; }
+  .cotlist .cot-k { font-size: 0.92rem; font-weight: 600; color: var(--ink); }
+  .cotlist li.todo .cot-k { color: var(--ink-soft); }
+  .cotlist .cot-v { font-size: 0.86rem; color: var(--ink-faint); }
+  @media (max-width: 640px) { .cotlist li { grid-template-columns: 1fr; } }
+  .title-orig { font-size: 0.82rem; color: var(--ink-faint); margin-top: 4px; font-style: italic; }
+  .only-in {
+    margin-top: 8px; font-size: 0.74rem; letter-spacing: 0.04em; text-transform: uppercase;
+    color: var(--gold-ink); font-family: var(--font-mono);
+  }
   .translated-note {
     font-size: 0.78rem; color: var(--ink-faint); font-style: italic; margin-top: 4px;
   }
@@ -968,7 +991,28 @@
       'idea.whyFit': 'Por qué encajas', 'idea.whyFitPh': 'Qué has hecho antes que sea directamente relevante para esta idea…',
       'idea.sendRequest': 'Enviar solicitud', 'idea.simAccept': 'Simular: el autor acepta',
       'idea.simAccepted': 'El autor ha aceptado tu solicitud: nivel 2 abierto para ti.',
-      'idea.writtenIn': 'Escrita en {lang}', 'idea.hasAbstract': 'con resumen en inglés',
+      'type.cotutela': 'Cotutela',
+      'cot.role.busca': 'Busca institución de acogida', 'cot.role.ofrece': 'Ofrece acogida en cotutela',
+      'cot.year': 'Año {n} del doctorado', 'cot.pending': 'por asignar',
+      'cot.agreement': 'Convenio de cotutela', 'cot.signed': 'Firmado',
+      'cot.signBy': 'Sin firmar — antes del {date}',
+      'cot.reqs': '{n}/{total} requisitos',
+      'cot.checklist': 'Qué falta para que la cotutela sea válida',
+      'cot.checklistHint': 'Que falten es lo normal: por eso está publicada. Lo que aprieta es la fecha de firma.',
+      'cot.rTwo': 'Dos instituciones, dos países',
+      'cot.rSup': 'Dirección acreditada en ambas',
+      'cot.rMonths': 'Estancia mínima en la acogida',
+      'cot.rAgree': 'Convenio firmado',
+      'cot.rLangs': 'Idioma de tesis y de defensa',
+      'cot.monthsDetail': '{n} meses propuestos (mínimo {min}) · {w}',
+      'cot.thesisLang': 'Tesis', 'cot.defenceLang': 'Defensa',
+      'cot.fund.cubierta': 'financiación cubierta', 'cot.fund.parcial': 'financiación parcial',
+      'cot.fund.sin': 'sin financiación',
+      'idea.writtenIn': 'Escrita en {lang}', 'idea.hasAbstract': 'con versión en inglés',
+      'idea.writtenByAuthorEn': 'Versión en inglés escrita por su autor',
+      'idea.onlyIn': 'Solo disponible en {lang}',
+      'idea.originalIn': 'Original en {lang} — es el texto sellado',
+      'explore.readableIn': 'Puedo leer {lang}',
       'idea.noAbstract': 'Sin resumen en inglés: solo la encontrará quien busque en {lang}.',
       'idea.verifyLink': 'Verificar esta huella',
       'type.idea': 'Idea', 'type.consortium': 'Consorcio', 'type.comparative': 'Estudio comparativo',
@@ -1153,7 +1197,28 @@
       'idea.whyFit': 'Why you fit', 'idea.whyFitPh': 'What you have done before that is directly relevant to this idea…',
       'idea.sendRequest': 'Send request', 'idea.simAccept': 'Simulate: the author accepts',
       'idea.simAccepted': 'The author accepted your request: level 2 is now open to you.',
-      'idea.writtenIn': 'Written in {lang}', 'idea.hasAbstract': 'with English abstract',
+      'type.cotutela': 'Cotutelle',
+      'cot.role.busca': 'Seeking a host institution', 'cot.role.ofrece': 'Offering to host a cotutelle',
+      'cot.year': 'Year {n} of the doctorate', 'cot.pending': 'to be assigned',
+      'cot.agreement': 'Cotutelle agreement', 'cot.signed': 'Signed',
+      'cot.signBy': 'Unsigned — due by {date}',
+      'cot.reqs': '{n}/{total} requirements',
+      'cot.checklist': 'What is missing for the cotutelle to be valid',
+      'cot.checklistHint': 'Gaps are normal — that is why it is posted. What presses is the signing date.',
+      'cot.rTwo': 'Two institutions, two countries',
+      'cot.rSup': 'Accredited supervisor on both sides',
+      'cot.rMonths': 'Minimum stay at the host',
+      'cot.rAgree': 'Agreement signed',
+      'cot.rLangs': 'Thesis and defence language',
+      'cot.monthsDetail': '{n} months proposed (minimum {min}) · {w}',
+      'cot.thesisLang': 'Thesis', 'cot.defenceLang': 'Defence',
+      'cot.fund.cubierta': 'funding secured', 'cot.fund.parcial': 'partial funding',
+      'cot.fund.sin': 'no funding',
+      'idea.writtenIn': 'Written in {lang}', 'idea.hasAbstract': 'with an English version',
+      'idea.writtenByAuthorEn': 'English version written by the author',
+      'idea.onlyIn': 'Available in {lang} only',
+      'idea.originalIn': 'Original in {lang} — this is the sealed text',
+      'explore.readableIn': 'I read {lang}',
       'idea.noAbstract': 'No English abstract: only someone searching in {lang} will find it.',
       'idea.verifyLink': 'Verify this seal',
       'type.idea': 'Idea', 'type.consortium': 'Consortium', 'type.comparative': 'Comparative study',
@@ -1338,7 +1403,28 @@
       'idea.whyFit': 'Pourquoi vous convenez', 'idea.whyFitPh': 'Ce que vous avez fait auparavant et qui touche directement à cette idée…',
       'idea.sendRequest': 'Envoyer la demande', 'idea.simAccept': 'Simuler : l’auteur accepte',
       'idea.simAccepted': 'L’auteur a accepté votre demande : le niveau 2 vous est ouvert.',
-      'idea.writtenIn': 'Rédigée en {lang}', 'idea.hasAbstract': 'avec résumé en anglais',
+      'type.cotutela': 'Cotutelle',
+      'cot.role.busca': 'Cherche un établissement d’accueil', 'cot.role.ofrece': 'Propose un accueil en cotutelle',
+      'cot.year': 'Année {n} du doctorat', 'cot.pending': 'à définir',
+      'cot.agreement': 'Convention de cotutelle', 'cot.signed': 'Signée',
+      'cot.signBy': 'Non signée — avant le {date}',
+      'cot.reqs': '{n}/{total} conditions',
+      'cot.checklist': 'Ce qu’il manque pour que la cotutelle soit valable',
+      'cot.checklistHint': 'Il est normal qu’il manque des éléments : c’est la raison de l’annonce. Ce qui presse, c’est la date de signature.',
+      'cot.rTwo': 'Deux établissements, deux pays',
+      'cot.rSup': 'Direction habilitée des deux côtés',
+      'cot.rMonths': 'Séjour minimal dans l’établissement d’accueil',
+      'cot.rAgree': 'Convention signée',
+      'cot.rLangs': 'Langue de thèse et de soutenance',
+      'cot.monthsDetail': '{n} mois proposés (minimum {min}) · {w}',
+      'cot.thesisLang': 'Thèse', 'cot.defenceLang': 'Soutenance',
+      'cot.fund.cubierta': 'financement assuré', 'cot.fund.parcial': 'financement partiel',
+      'cot.fund.sin': 'sans financement',
+      'idea.writtenIn': 'Rédigée en {lang}', 'idea.hasAbstract': 'avec version anglaise',
+      'idea.writtenByAuthorEn': 'Version anglaise rédigée par son auteur',
+      'idea.onlyIn': 'Disponible uniquement en {lang}',
+      'idea.originalIn': 'Original en {lang} — c’est le texte scellé',
+      'explore.readableIn': 'Je lis {lang}',
       'idea.noAbstract': 'Sans résumé en anglais : seuls ceux qui cherchent en {lang} la trouveront.',
       'idea.verifyLink': 'Vérifier cette empreinte',
       'type.idea': 'Idée', 'type.consortium': 'Consortium', 'type.comparative': 'Étude comparative',
@@ -1530,11 +1616,55 @@
      ========================================================= */
   var ideas = [
     {
+      id: 'SYN-2026-1402', mine: false, level: 1, field: 'ecomar', lang: 'es', type: 'cotutela',
+      title: 'Conectividad larvaria en el Mediterráneo occidental: busco institución de acogida',
+      titleEn: 'Larval connectivity in the western Mediterranean: seeking a host institution',
+      summary: 'Tengo la tesis empezada y director en Barcelona. Me falta el grupo de fuera que aporte la modelización biofísica de dispersión y un programa de doctorado que admita cotutela.',
+      abstractEn: 'The thesis is under way with a supervisor in Barcelona. What is missing is the partner group contributing biophysical dispersal modelling, and a doctoral programme that accepts a cotutelle.',
+      seeking: 'grupo con modelización biofísica de dispersión y programa de doctorado que admita cotutela',
+      seekingEn: 'group with biophysical dispersal modelling and a doctoral programme that accepts cotutelle',
+      approach: 'La hipótesis es que los corredores de conectividad entre reservas marinas no coinciden con los que predice el modelo hidrodinámico medio, porque los episodios de viento de tres días concentran el transporte. Propongo acoplar el modelo de dispersión a la serie de viento horaria, no a la media mensual.',
+      data: 'Serie de reclutamiento de 6 reservas (2018–2025), genotipado de 1.400 individuos y el código del modelo acoplado que ya corre con forzamiento medio.',
+      skills: [{ name: 'Modelización lagrangiana de dispersión', w: 'key' }, { name: 'Genética de poblaciones marinas', w: 'key' }, { name: 'Oceanografía física', w: 'opt' }],
+      doc: {
+        role: 'busca', year: 1,
+        home:    { inst: 'Universitat de Barcelona', country: 'ES', programme: 'Biodiversidad', supervisor: 'Perfil verificado #2210', accredited: true },
+        partner: { inst: null, country: null, programme: null, supervisor: null, accredited: false },
+        monthsAtPartner: 9, monthsRequired: 6, window: 'ene–sep 2027',
+        thesisLang: 'en', defenceLang: 'en',
+        agreement: { signed: false, deadline: '2026-11-30' },
+        funding: 'parcial'
+      },
+      author: 'Perfil verificado #6104', sealed: '2026-05-18T10:12:04Z', requestSent: false, access: []
+    },
+    {
+      id: 'SYN-2026-1455', mine: false, level: 1, field: 'clim', lang: 'en', type: 'cotutela',
+      title: 'Cotutelle host offer: documentary palaeoclimate, Université Grenoble Alpes',
+      summary: 'We hold a funded three-year contract and can host a cotutelle. We are looking for a first-year candidate whose home institution will sign, and who already has a transcribed documentary series to work on.',
+      abstractEn: '',
+      seeking: 'first-year doctoral candidate with a transcribed documentary series and a home institution willing to sign a cotutelle agreement',
+      approach: 'Our side contributes the calibration against instrumental series and the uncertainty propagation. What the candidate brings is the archive and the palaeographic work; what we do not have is a documented series long enough to calibrate.',
+      data: 'Instrumental series for the Alpine arc since 1760, the calibration code and two previous theses under the same framework.',
+      skills: [{ name: 'Palaeography', w: 'key' }, { name: 'Archival transcription', w: 'key' }, { name: 'Time-series calibration', w: 'opt' }],
+      doc: {
+        role: 'ofrece', year: 1,
+        home:    { inst: null, country: null, programme: null, supervisor: null, accredited: false },
+        partner: { inst: 'Université Grenoble Alpes', country: 'FR', programme: 'Terre, Univers, Environnement', supervisor: 'Perfil verificado #7781', accredited: true },
+        monthsAtPartner: 12, monthsRequired: 6, window: 'sep 2026 – ago 2029',
+        thesisLang: 'en', defenceLang: 'fr',
+        agreement: { signed: false, deadline: '2026-09-05' },
+        funding: 'cubierta'
+      },
+      author: 'Perfil verificado #7781', sealed: '2026-06-02T14:33:51Z', requestSent: false, access: []
+    },
+    {
       id: 'SYN-2026-0311', mine: false, level: 1, field: 'ecomar', lang: 'es',
       title: 'Modelo bayesiano para biodiversidad de arrecifes',
+      titleEn: 'Bayesian model for reef biodiversity',
       summary: 'Las series de biodiversidad de arrecife se analizan casi siempre con medias anuales, que borran los episodios de blanqueo cortos. Quiero saber si un enfoque jerárquico recupera esa señal.',
       abstractEn: 'Reef biodiversity series are almost always analysed as annual means, which erase short bleaching episodes. I want to test whether a hierarchical approach recovers that signal.',
       seeking: 'especialista en modelos bayesianos jerárquicos para series temporales',
+      seekingEn: 'specialist in hierarchical Bayesian models for time series',
       approach: 'La hipótesis es que la varianza intraanual, y no la media, es lo que predice el colapso de la comunidad doce meses después. Propongo un modelo jerárquico con efectos de sitio anidados en arrecife y una verosimilitud de cola pesada para los episodios extremos.',
       data: 'Censos visuales propios de 11 arrecifes del Caribe (2009–2025, no publicados), con temperatura horaria in situ y el cuaderno de calibración de los observadores.',
       skills: [{ name: 'Modelos bayesianos jerárquicos', w: 'key' }, { name: 'Stan o PyMC', w: 'key' }, { name: 'Ecología de arrecifes', w: 'opt' }],
@@ -1576,9 +1706,11 @@
     {
       id: 'SYN-2026-0688', mine: false, level: 1, field: 'lingcomp', lang: 'es',
       title: 'Deriva semántica en corpus diacrónicos del español',
+      titleEn: 'Semantic drift in diachronic corpora of Spanish',
       summary: 'Los métodos de deriva semántica se han probado casi solo en inglés. Quiero saber si los cambios que detectan en español son reales o artefactos del desequilibrio de los corpus históricos.',
       abstractEn: 'Semantic drift methods have been tested almost exclusively on English. I want to know whether the changes they detect in Spanish are real or artefacts of imbalance in historical corpora.',
       seeking: 'especialista en corpus históricos con criterio filológico, no solo computacional',
+      seekingEn: 'specialist in historical corpora with philological, not merely computational, judgement',
       approach: 'La hipótesis es que buena parte de la deriva detectada por embeddings diacrónicos en español refleja cambios de género textual en el corpus, no cambio semántico. Propongo un control estratificado por tipo de documento.',
       data: 'Corpus compilado de 1450–1900 con metadatos de género textual y la línea base de embeddings ya entrenada.',
       skills: [{ name: 'Corpus históricos', w: 'key' }, { name: 'Embeddings diacrónicos', w: 'key' }, { name: 'Filología hispánica', w: 'opt' }],
@@ -1587,9 +1719,11 @@
     {
       id: 'SYN-2026-0913', mine: true, level: 3, field: 'clim', lang: 'es',
       title: 'Reconstrucción de olas de calor preinstrumentales a partir de archivos agrícolas',
+      titleEn: 'Reconstructing pre-instrumental heat waves from agricultural archives',
       summary: 'Las fechas de vendimia y siega de los archivos municipales son un termómetro indirecto sin explotar para episodios extremos anteriores a 1850.',
       abstractEn: 'Grape-harvest and reaping dates in municipal archives are an unexploited proxy thermometer for extreme episodes before 1850.',
       seeking: 'especialista en dendrocronología para calibrar la señal contra anillos de crecimiento',
+      seekingEn: 'dendrochronology specialist to calibrate the signal against tree rings',
       approach: 'La hipótesis es que la dispersión entre municipios vecinos en la fecha de vendimia mide la intensidad del episodio de calor mejor que la fecha media, que es lo que se ha usado hasta ahora.',
       data: 'Base de datos propia de 9.400 fechas de vendimia y siega (1420–1874) de 61 municipios, ya georreferenciada y normalizada.',
       skills: [{ name: 'Dendrocronología', w: 'key' }, { name: 'Series climáticas proxy', w: 'key' }, { name: 'SIG', w: 'opt' }],
@@ -1603,9 +1737,11 @@
     {
       id: 'SYN-2026-0770', mine: true, level: 1, field: 'econ', lang: 'es',
       title: 'Efecto de las ferias medievales en la persistencia de mercados locales',
+      titleEn: 'The effect of medieval fairs on the persistence of local markets',
       summary: 'Una intuición sin desarrollar: los municipios con feria concedida antes de 1400 siguen teniendo hoy más densidad de comercio minorista. Falta comprobar si es causal o pura geografía.',
       abstractEn: 'An undeveloped intuition: towns granted a fair before 1400 still show higher retail density today. Whether that is causal or plain geography remains untested.',
       seeking: 'economista con experiencia en identificación causal con datos históricos',
+      seekingEn: 'economist experienced in causal identification with historical data',
       approach: '', data: '',
       skills: [{ name: 'Identificación causal', w: 'key' }],
       author: null, sealed: '2026-07-28T14:31:09Z', requests: [], access: []
@@ -1615,9 +1751,11 @@
     {
       id: 'SYN-2026-1120', type: 'consortium', mine: false, level: 1, field: 'ecomar', lang: 'es',
       title: 'Consorcio para HORIZON-CL6-2026-BIODIV-02 · Resiliencia de la pesca artesanal atlántica',
+      titleEn: 'Consortium for HORIZON-CL6-2026-BIODIV-02 · Resilience of Atlantic small-scale fisheries',
       summary: 'Consorcio en formación para la convocatoria de biodiversidad marina. Tenemos coordinación y muestreo cubiertos; faltan la parte socioeconómica y la interlocución con las flotas.',
       abstractEn: 'Consortium being assembled for the marine biodiversity call. Coordination and sampling are covered; socio-economic modelling and fleet engagement are still open.',
       seeking: 'líder de WP4 (modelización socioeconómica) y socio de WP5 (participación de flotas)',
+      seekingEn: 'WP4 lead (socio-economic modelling) and WP5 partner (fleet engagement)',
       approach: 'El ángulo del que partimos es que la resiliencia de la flota artesanal depende más de la diversificación de artes que del tamaño de la cuota. La propuesta articula tres WP de campo y dos de síntesis, con una comparación explícita entre regiones con y sin cogestión.',
       data: 'Borrador de propuesta (Parte B, 18 páginas), presupuesto preliminar por socio y cartas de interés ya firmadas por dos cofradías.',
       skills: [{ name: 'Modelización socioeconómica', w: 'key' }, { name: 'Participación de actores', w: 'key' }],
@@ -1637,9 +1775,11 @@
     {
       id: 'SYN-2026-1044', type: 'comparative', mine: false, level: 1, field: 'ecomar', lang: 'es',
       title: 'Ya analicé las capturas de arrastre en Gran Sol: busco quién repita el mismo análisis en su caladero',
+      titleEn: 'I have analysed trawl catches in the Great Sole Bank: looking for someone to repeat the same analysis in their own fishing ground',
       summary: 'Tengo hecho y cerrado el análisis de CPUE para la zona 27.VII con flota española bajo TAC comunitario. Ofrezco el protocolo completo a quien lo aplique tal cual en su zona y su flota: su resultado es el contrafactual del mío.',
       abstractEn: 'I have completed the CPUE analysis for FAO area 27.VII with a Spanish fleet under EU TAC. I am offering the full protocol to anyone who applies it as-is in their own area and fleet: their result becomes the counterfactual to mine.',
       seeking: 'equipos con datos de desembarque y observadores a bordo dispuestos a repetir el mismo protocolo en su caladero',
+      seekingEn: 'teams with landing data and on-board observers willing to repeat the same protocol in their own fishing ground',
       approach: 'La hipótesis es que el régimen de cuotas explica más varianza en la CPUE estandarizada que las condiciones oceanográficas del caladero. Mi serie sola no puede separarlo: hace falta al menos una réplica bajo un régimen regulatorio distinto manteniendo el arte y la ventana idénticos.',
       data: 'Protocolo completo de estandarización paso a paso, código R de ajuste del GLM, plantilla de volcado de datos y mi serie depurada de Gran Sol para que puedas contrastar tu implementación contra la mía antes de correrla.',
       skills: [{ name: 'Estandarización de CPUE', w: 'key' }, { name: 'Acceso a datos de observadores', w: 'key' }],
@@ -1669,9 +1809,11 @@
     {
       id: 'SYN-2026-1188', type: 'comparative', mode: 'coordinado', mine: false, level: 1, field: 'ecomar', lang: 'es',
       title: 'Microplásticos en playas: protocolo único con arranque simultáneo en marzo de 2027',
+      titleEn: 'Microplastics on beaches: one shared protocol with a simultaneous start in March 2027',
       summary: 'Nadie ha ejecutado esto todavía. Buscamos sitios que se comprometan a muestrear con el mismo protocolo en la misma ventana de cuatro semanas, para que las diferencias entre playas no acaben siendo diferencias de método.',
       abstractEn: 'Nothing has been run yet. We are looking for sites willing to sample with one shared protocol in the same four-week window, so that differences between beaches are not differences of method.',
       seeking: 'grupos con acceso a playa y capacidad de tamizado en seco, en cualquier latitud',
+      seekingEn: 'groups with beach access and dry-sieving capacity, at any latitude',
       approach: 'La hipótesis preregistrada es que la carga de microplásticos escala con la densidad de población costera dentro de un radio de 50 km, y que esa relación se aplana por encima de cierta latitud. Solo se puede contrastar con un muestreo simultáneo: si cada sitio muestrea en su propia estación, la variación estacional se confunde con la latitudinal.',
       data: 'Protocolo de muestreo y tamizado paso a paso, plantilla de registro, material de calibración inter-laboratorio y el script de análisis ya escrito contra datos simulados.',
       skills: [{ name: 'Tamizado y cuantificación de microplásticos', w: 'key' }, { name: 'Acceso a playa en la ventana acordada', w: 'key' }],
@@ -1789,6 +1931,38 @@
 
   /* Horizon Europe collaborative actions: >=3 independent entities from >=3
      different Member/Associated States. Computed, not asserted. */
+  /* ---------- Cotutela ----------
+     Una cotutela no es «dos universidades que se llevan bien»: es un convenio
+     con requisitos duros. Se comprueban los cinco que la invalidan si faltan,
+     igual que la regla de 3 entidades / 3 Estados en Horizonte Europa.
+
+     Que falten es lo normal —por eso se publica—. Lo que importa es cuántos
+     faltan y cuánto tiempo queda para firmar. */
+  function cotutelaCheck(idea) {
+    var d = idea.doc, rows = [];
+    var dosPaises = !!(d.home.inst && d.partner.inst && d.home.country && d.partner.country
+                       && d.home.country !== d.partner.country);
+    rows.push({ k: 'rTwo', ok: dosPaises,
+      detail: [d.home.inst, d.partner.inst].map(function (x) { return x || t('cot.pending'); }).join(' ⇄ ') });
+    rows.push({ k: 'rSup', ok: d.home.accredited && d.partner.accredited,
+      detail: [d.home.accredited ? d.home.supervisor : null,
+               d.partner.accredited ? d.partner.supervisor : null]
+              .map(function (x) { return x || t('cot.pending'); }).join(' · ') });
+    rows.push({ k: 'rMonths', ok: d.monthsAtPartner >= d.monthsRequired,
+      detail: t('cot.monthsDetail', { n: d.monthsAtPartner, min: d.monthsRequired, w: d.window }) });
+    rows.push({ k: 'rAgree', ok: d.agreement.signed,
+      detail: d.agreement.signed ? t('cot.signed') : t('cot.signBy', { date: fmtDate(d.agreement.deadline) }) });
+    rows.push({ k: 'rLangs', ok: !!(d.thesisLang && d.defenceLang),
+      detail: t('cot.thesisLang') + ': ' + langName(d.thesisLang) + ' · ' + t('cot.defenceLang') + ': ' + langName(d.defenceLang) });
+    return { rows: rows, ok: rows.filter(function (r) { return r.ok; }).length, total: rows.length };
+  }
+  /* La fecha que aprieta en una cotutela es la de firma del convenio. */
+  function cotDeadline(idea) {
+    var n = daysUntil(idea.doc.agreement.deadline);
+    if (n < 0) return { text: t('cons.closed'), urgent: false, closed: true };
+    return { text: n === 1 ? t('cons.daysLeft1') : t('cons.daysLeft', { n: n }), urgent: n <= 60, closed: false };
+  }
+
   function eligibility(idea) {
     var entities = [idea.coordinator].concat(idea.partners || []).filter(Boolean);
     var countries = [];
@@ -1872,12 +2046,23 @@
     var base = {
       type: ideaType(idea), title: idea.title, field: idea.field, lang: idea.lang,
       summary: idea.summary, abstractEn: idea.abstractEn || '',
+      titleEn: idea.titleEn || '', seekingEn: idea.seekingEn || '',
       seeking: idea.seeking, approach: idea.approach || '', data: idea.data || '',
       skills: idea.skills || []
     };
     if (ideaType(idea) === 'consortium') {
       base.call = idea.call || null;
       base.slots = idea.slots || [];
+    }
+    if (ideaType(idea) === 'cotutela') {
+      // Se sella el marco acordado, no el estado del trámite: si se sellara
+      // «convenio firmado», la huella cambiaría el día que se firme.
+      base.doc = {
+        role: idea.doc.role, home: idea.doc.home, partner: idea.doc.partner,
+        monthsAtPartner: idea.doc.monthsAtPartner, monthsRequired: idea.doc.monthsRequired,
+        window: idea.doc.window, thesisLang: idea.doc.thesisLang, defenceLang: idea.doc.defenceLang,
+        agreementDeadline: idea.doc.agreement.deadline
+      };
     }
     if (ideaType(idea) === 'comparative') {
       base.mode = compMode(idea);
@@ -2013,7 +2198,12 @@
     wrap.textContent = '';
     var used = [];
     ideas.forEach(function (i) { if (used.indexOf(i.lang) === -1) used.push(i.lang); });
-    var opts = [{ k: null, label: t('common.allLangs') }].concat(used.map(function (c) { return { k: c, label: langName(c) }; }));
+    // El filtro cuenta cuántas puedes leer, no en cuántas se escribió: una idea
+    // en castellano con versión inglesa completa entra también en «inglés».
+    var opts = [{ k: null, label: t('common.allLangs') }].concat(used.map(function (c) {
+      var n = ideas.filter(function (i) { return readableIn(i, c); }).length;
+      return { k: c, label: t('explore.readableIn', { lang: langName(c) }) + ' · ' + n };
+    }));
     opts.forEach(function (o) {
       var b = el('button', 'chip', o.label);
       b.type = 'button';
@@ -2026,7 +2216,8 @@
     var wrap = $('type-chips');
     wrap.textContent = '';
     var opts = [{ k: null, label: t('type.all') }, { k: 'idea', label: t('type.idea') },
-                { k: 'consortium', label: t('type.consortium') }, { k: 'comparative', label: t('type.comparative') }];
+                { k: 'consortium', label: t('type.consortium') }, { k: 'comparative', label: t('type.comparative') },
+                { k: 'cotutela', label: t('type.cotutela') }];
     opts.forEach(function (o) {
       var b = el('button', 'chip', o.label);
       b.type = 'button';
@@ -2051,7 +2242,7 @@
   function matches(idea) {
     if (state.type && ideaType(idea) !== state.type) return false;
     if (state.field && idea.field !== state.field) return false;
-    if (state.contentLang && idea.lang !== state.contentLang) return false;
+    if (state.contentLang && !readableIn(idea, state.contentLang)) return false;
     if (!state.q) return true;
     var q = state.q.toLowerCase();
     var hay = [idea.title, idea.summary, idea.abstractEn || '', idea.seeking, fieldName(idea.field)].join(' ').toLowerCase();
@@ -2063,20 +2254,44 @@
     span.textContent = mine ? t('common.mine') : t('common.level') + ' ' + idea.level;
     return span;
   }
+  /* Una idea NO se traduce sola: lo que está sellado es un texto concreto, y
+     traducirlo por nuestra cuenta rompería la correspondencia con la huella.
+     Lo único que existe es la versión que su autor haya escrito en inglés.
+
+     Y esa versión cuenta solo si está COMPLETA — título, resumen y perfil
+     buscado. Con media versión, la ficha salía con el título en castellano y
+     el cuerpo en inglés: incoherente, y por eso se leía como un error. */
+  function hasEn(idea) {
+    if (idea.lang === 'en') return true;
+    return !!(idea.titleEn && idea.titleEn.trim()
+           && idea.abstractEn && idea.abstractEn.trim()
+           && idea.seekingEn && idea.seekingEn.trim());
+  }
+  /* ¿Puede leerla alguien que lea este idioma? El inglés es la lengua franca:
+     es el único idioma al que una idea puede tener versión alternativa. */
+  function readableIn(idea, lang) {
+    return idea.lang === lang || (lang === 'en' && hasEn(idea));
+  }
   function langTag(idea) {
-    var hasAb = !!(idea.abstractEn && idea.abstractEn.trim()) || idea.lang === 'en';
-    var s = el('span', 'langtag' + (hasAb ? ' has-abstract' : ''));
-    s.textContent = idea.lang.toUpperCase() + (hasAb && idea.lang !== 'en' ? ' + EN' : '');
-    s.title = hasAb ? t('idea.writtenIn', { lang: langName(idea.lang) }) + ' · ' + t('idea.hasAbstract')
-                    : t('idea.writtenIn', { lang: langName(idea.lang) });
+    var en = hasEn(idea);
+    var s = el('span', 'langtag' + (en ? ' has-abstract' : ''));
+    s.textContent = idea.lang.toUpperCase() + (en && idea.lang !== 'en' ? ' + EN' : '');
+    s.title = en ? t('idea.writtenIn', { lang: langName(idea.lang) }) + ' · ' + t('idea.hasAbstract')
+                 : t('idea.writtenIn', { lang: langName(idea.lang) });
     return s;
   }
-  /* When the UI is in English and the idea is not, prefer the author's English abstract. */
-  function displaySummary(idea) {
-    if (uiLang !== idea.lang && idea.abstractEn && idea.abstractEn.trim()) {
-      return { text: idea.abstractEn, translated: true };
+  /* Devuelve la ficha en un solo idioma, nunca a medias. */
+  function display(idea) {
+    if (idea.lang !== 'en' && uiLang !== idea.lang && hasEn(idea)) {
+      return {
+        title: idea.titleEn, summary: idea.abstractEn, seeking: idea.seekingEn,
+        translated: true, original: idea.title
+      };
     }
-    return { text: idea.summary, translated: false };
+    return {
+      title: idea.title, summary: idea.summary, seeking: idea.seeking,
+      translated: false, original: null
+    };
   }
 
   function renderGrid() {
@@ -2099,7 +2314,11 @@
       right.appendChild(levelPill(idea));
       top.appendChild(right);
       card.appendChild(top);
-      card.appendChild(el('h3', null, idea.title));
+      var dsp = display(idea);
+      card.appendChild(el('h3', null, dsp.title));
+      // El título original va debajo, como en las tesis con título bilingüe:
+      // lo sellado es ese, no la versión inglesa.
+      if (dsp.original) card.appendChild(el('p', 'title-orig', dsp.original));
 
       // type-specific status line: what a scanner needs to know first
       if (ideaType(idea) === 'consortium') {
@@ -2129,14 +2348,28 @@
           if (bad.length) meta2.appendChild(el('span', 'elig no', bad.length + ' × ' + t('comp.gapChip')));
         }
         card.appendChild(meta2);
+      } else if (ideaType(idea) === 'cotutela') {
+        var dc = cotutelaCheck(idea), dl2 = cotDeadline(idea);
+        var meta3 = el('p', 'card-meta');
+        meta3.appendChild(el('span', 'origin-chip', t('cot.role.' + idea.doc.role)));
+        var chip2 = el('span', 'deadline' + (dl2.closed ? ' closed' : dl2.urgent ? ' urgent' : ''));
+        chip2.textContent = fmtDate(idea.doc.agreement.deadline) + ' · ' + dl2.text;
+        meta3.appendChild(chip2);
+        meta3.appendChild(el('span', 'elig ' + (dc.ok === dc.total ? 'ok' : 'no'),
+                             t('cot.reqs', { n: dc.ok, total: dc.total })));
+        card.appendChild(meta3);
       }
 
-      var d = displaySummary(idea);
-      card.appendChild(el('p', 'summary', d.text));
-      if (d.translated) card.appendChild(el('p', 'translated-note', t('idea.abstractEn')));
+      card.appendChild(el('p', 'summary', dsp.summary));
+      if (dsp.translated) card.appendChild(el('p', 'translated-note', t('idea.writtenByAuthorEn')));
+      // Sin versión inglesa y con la interfaz en otro idioma, se dice: es un
+      // estado de la idea, no un descuido de la página.
+      if (!dsp.translated && idea.lang !== uiLang) {
+        card.appendChild(el('p', 'only-in', t('idea.onlyIn', { lang: langName(idea.lang) })));
+      }
       var seeks = el('p', 'seeks');
       seeks.appendChild(el('b', null, t('idea.seeks')));
-      seeks.appendChild(document.createTextNode(' ' + idea.seeking));
+      seeks.appendChild(document.createTextNode(' ' + dsp.seeking));
       card.appendChild(seeks);
       card.addEventListener('click', function () { openIdea(idea.id); });
       grid.appendChild(card);
@@ -2165,6 +2398,36 @@
 
   function renderTypeSections(idea, body) {
     var ty = ideaType(idea);
+
+    if (ty === 'cotutela') {
+      var d = idea.doc, chk = cotutelaCheck(idea);
+      var box = el('div', 'callbox');
+      var rr = el('div', 'callbox-row');
+      rr.appendChild(el('span', 'sec-label', t('cot.role.' + d.role)));
+      rr.appendChild(el('span', 'mono-sm', t('cot.year', { n: d.year }) + ' · ' + t('cot.fund.' + d.funding)));
+      box.appendChild(rr);
+      var rd = el('div', 'callbox-row');
+      rd.appendChild(el('span', 'sec-label', t('cot.agreement')));
+      var dl3 = cotDeadline(idea);
+      var c3 = el('span', 'deadline' + (dl3.closed ? ' closed' : dl3.urgent ? ' urgent' : ''));
+      c3.textContent = fmtDate(d.agreement.deadline) + ' · ' + dl3.text;
+      rd.appendChild(c3);
+      box.appendChild(rd);
+      body.appendChild(box);
+
+      var blk = el('div', 'block');
+      blk.appendChild(el('span', 'sec-label', t('cot.checklist')));
+      blk.appendChild(el('p', 'hint', t('cot.checklistHint')));
+      var ul = el('ul', 'cotlist');
+      chk.rows.forEach(function (row) {
+        var li = el('li', row.ok ? 'done' : 'todo');
+        li.appendChild(el('span', 'cot-k', t('cot.' + row.k)));
+        li.appendChild(el('span', 'cot-v', row.detail));
+        ul.appendChild(li);
+      });
+      blk.appendChild(ul);
+      body.appendChild(blk);
+    }
 
     if (ty === 'consortium') {
       var callBox = el('div', 'callbox');
@@ -2441,10 +2704,12 @@
     right.appendChild(levelPill(idea));
     top.appendChild(right);
     head.appendChild(top);
-    var h = el('h2', null, idea.title);
+    var dTit = display(idea);
+    var h = el('h2', null, dTit.title);
     h.id = 'panel-title';
     h.style.marginTop = '12px';
     head.appendChild(h);
+    if (dTit.original) head.appendChild(el('p', 'title-orig', dTit.original));
     body.appendChild(head);
 
     // seal
@@ -2466,14 +2731,17 @@
     seal.appendChild(col);
     body.appendChild(seal);
 
-    var d = displaySummary(idea);
-    body.appendChild(block(d.translated ? t('idea.abstractEn') : t('idea.summaryPublic'), d.text));
-    if (d.translated) body.appendChild(block(t('idea.summaryPublic'), idea.summary));
-    if (!d.translated && idea.lang !== 'en' && !(idea.abstractEn && idea.abstractEn.trim())) {
-      var warn = el('p', 'translated-note', t('idea.noAbstract', { lang: langName(idea.lang) }));
-      body.appendChild(warn);
+    var d = display(idea);
+    body.appendChild(block(d.translated ? t('idea.abstractEn') : t('idea.summaryPublic'), d.summary));
+    // En el detalle sí se enseña el original completo: es lo que quedó sellado.
+    // El título original ya va bajo el titular del panel; aquí solo el resumen.
+    if (d.translated) {
+      body.appendChild(block(t('idea.originalIn', { lang: langName(idea.lang) }), idea.summary));
     }
-    body.appendChild(block(t('idea.seeks'), idea.seeking));
+    if (!d.translated && idea.lang !== uiLang) {
+      body.appendChild(el('p', 'translated-note', t('idea.onlyIn', { lang: langName(idea.lang) })));
+    }
+    body.appendChild(block(t('idea.seeks'), d.seeking));
     renderTypeSections(idea, body);
 
     var lvl = idea.mine ? 3 : idea.level;
@@ -3195,6 +3463,10 @@
     sel.value = uiLang;
     sel.addEventListener('change', function () {
       uiLang = sel.value;
+      // Cambiar de idioma filtra por lo que puedes leer. Si no hay contenido en
+      // ese idioma —el francés, hoy— se cae al inglés, que es la lengua franca.
+      // Queda visible en el chip, y con un clic se ven todas.
+      state.contentLang = ideas.some(function (i) { return readableIn(i, uiLang); }) ? uiLang : 'en';
       rebuildLanguageDependentUI();
     });
   }
