@@ -583,6 +583,85 @@
   }
   .toast[hidden] { display: none; }
   /* ═══════════════════════════════════════════════════════════
+     Los filtros: tres grupos que hacen tres cosas distintas y que
+     antes se veían iguales. Ahora cada uno lleva su rótulo a la
+     izquierda y su propia forma:
+       · qué buscas → segmentos unidos, es la oferta de la web
+       · disciplina → chips sueltos, lista que crece
+       · idioma     → segmentos, lista corta y cerrada
+     Y todos con recuento: un filtro sin número es una apuesta.
+     ═══════════════════════════════════════════════════════════ */
+  .filterset { border-top: 1px solid var(--ink); margin: 4px 0 14px; }
+  .fs-row {
+    display: grid; grid-template-columns: 104px minmax(0, 1fr); gap: 0 18px;
+    align-items: start; padding: 11px 0; border-bottom: 1px solid var(--line);
+  }
+  .fs-label {
+    font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--ink-faint); padding-top: 7px;
+  }
+  .fs-primary { padding: 9px 0; }
+  .fs-primary .fs-label { color: var(--ink); padding-top: 9px; }
+  @media (max-width: 640px) {
+    .fs-row { grid-template-columns: 1fr; gap: 6px; }
+    .fs-label { padding-top: 0; }
+    /* En móvil cada grupo se desliza en una línea. Envolviendo, los tres
+       grupos ocupaban 471 px: la pantalla entera antes del primer resultado. */
+    .filterset .segs, .filterset .chips {
+      flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none;
+      -webkit-overflow-scrolling: touch; padding-bottom: 2px;
+    }
+    .filterset .segs::-webkit-scrollbar, .filterset .chips::-webkit-scrollbar { display: none; }
+    .filterset .seg, .filterset .chip { flex: 0 0 auto; }
+  }
+
+  /* Segmentos: se tocan, así que se leen como un mando, no como etiquetas. */
+  .segs { display: flex; flex-wrap: wrap; }
+  .seg {
+    display: inline-flex; align-items: baseline; gap: 7px;
+    background: transparent; border: 1px solid var(--line-strong);
+    margin: 0 0 -1px -1px; padding: 7px 12px; cursor: pointer;
+    color: var(--ink-soft); transition: background .12s linear, color .12s linear;
+  }
+  .seg:first-child { margin-left: 0; }
+  .seg-n { font-size: 0.86rem; font-weight: 600; }
+  .seg-c {
+    font-family: var(--font-mono); font-size: 0.66rem; color: var(--ink-faint);
+    font-variant-numeric: tabular-nums;
+  }
+  .seg:hover:not(:disabled) { color: var(--accent); border-color: var(--accent); position: relative; z-index: 1; }
+  .seg[aria-pressed="true"] {
+    background: var(--ink); border-color: var(--ink); color: var(--paper);
+    position: relative; z-index: 2;
+  }
+  .seg[aria-pressed="true"] .seg-c { color: var(--paper); opacity: 0.75; }
+  .seg.empty { opacity: 0.4; cursor: not-allowed; }
+
+  /* Chips con recuento; los idiomas van unidos porque son pocos y cerrados. */
+  .chip .cnt {
+    font-family: var(--font-mono); font-size: 0.62rem; margin-left: 7px;
+    color: var(--ink-faint); font-variant-numeric: tabular-nums;
+  }
+  .chip[aria-pressed="true"] .cnt { color: var(--paper); opacity: 0.75; }
+  .chip.empty { opacity: 0.4; cursor: not-allowed; }
+  .chip-more { border-style: dashed; }
+  .chips-joined { display: flex; flex-wrap: wrap; gap: 0; }
+  .chips-joined .chip { margin: 0 0 -1px -1px; }
+  .chips-joined .chip:first-child { margin-left: 0; }
+
+  /* Cuánto has estrechado y cómo deshacerlo. */
+  .fs-state { border-bottom: none; }
+  .fs-state > div { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+  .fs-count { font-size: 0.86rem; color: var(--ink); font-weight: 600; }
+  .fs-clear {
+    background: transparent; border: none; padding: 0; cursor: pointer;
+    font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--accent);
+    border-bottom: 1px solid var(--accent);
+  }
+  .fs-clear:hover { color: var(--ink); border-bottom-color: var(--ink); }
+
+  /* ═══════════════════════════════════════════════════════════
      Capa de instrumento: lo que los tokens no alcanzan por sí solos.
      Va al final para ganar por orden, no por especificidad inflada.
      ═══════════════════════════════════════════════════════════ */
@@ -737,14 +816,23 @@
           <input type="search" id="q" data-i18n-placeholder="explore.search" data-i18n-aria="explore.search">
         </div>
       </div>
-      <div class="filters">
-        <div class="chips" id="type-chips" role="group" data-i18n-aria="explore.byType"></div>
-      </div>
-      <div class="filters">
-        <div class="chips" id="chips" role="group" data-i18n-aria="explore.byField"></div>
-      </div>
-      <div class="filters">
-        <div class="chips" id="lang-chips" role="group" data-i18n-aria="explore.byLang"></div>
+      <div class="filterset">
+        <div class="fs-row fs-primary">
+          <span class="fs-label" data-i18n="explore.lWhat"></span>
+          <div class="segs" id="type-chips" role="group" data-i18n-aria="explore.byType"></div>
+        </div>
+        <div class="fs-row">
+          <span class="fs-label" data-i18n="explore.lField"></span>
+          <div class="chips" id="chips" role="group" data-i18n-aria="explore.byField"></div>
+        </div>
+        <div class="fs-row">
+          <span class="fs-label" data-i18n="explore.lLang"></span>
+          <div class="chips chips-joined" id="lang-chips" role="group" data-i18n-aria="explore.byLang"></div>
+        </div>
+        <div class="fs-row fs-state" id="filter-state" hidden>
+          <span class="fs-label"></span>
+          <div id="filter-state-body"></div>
+        </div>
       </div>
       <p class="filter-note" data-i18n="explore.searchNote"></p>
       <div class="grid" id="grid"></div>
@@ -1151,6 +1239,9 @@
       'explore.lead': 'Cada ficha muestra solo el resumen público. El planteamiento detallado se abre cuando su autor acepta tu solicitud.',
       'explore.search': 'Buscar por tema, técnica o disciplina…',
       'explore.byField': 'Filtrar por disciplina', 'explore.byLang': 'Filtrar por idioma de la idea',
+      'explore.lWhat': 'Qué buscas', 'explore.lField': 'Disciplina', 'explore.lLang': 'Idioma',
+      'explore.lState': 'Filtros', 'explore.showing': 'Viendo {n} de {total}',
+      'explore.clear': 'Quitar filtros', 'explore.more': '+{n} más', 'explore.less': 'Ver menos',
       'explore.searchNote': 'La búsqueda solo recorre los resúmenes públicos y los resúmenes en inglés: nunca el contenido protegido.',
       'explore.empty': 'Ninguna idea coincide con esa búsqueda.',
       'idea.seeks': 'Busca:', 'idea.summaryPublic': 'Resumen público', 'idea.abstractEn': 'Resumen en inglés',
@@ -1392,6 +1483,9 @@
       'explore.lead': 'Each record shows only the public summary. The detailed proposal opens once its author accepts your request.',
       'explore.search': 'Search by topic, technique or field…',
       'explore.byField': 'Filter by field', 'explore.byLang': 'Filter by idea language',
+      'explore.lWhat': 'What you need', 'explore.lField': 'Field', 'explore.lLang': 'Language',
+      'explore.lState': 'Filters', 'explore.showing': 'Showing {n} of {total}',
+      'explore.clear': 'Clear filters', 'explore.more': '+{n} more', 'explore.less': 'Show fewer',
       'explore.searchNote': 'Search covers only public summaries and English abstracts — never protected content.',
       'explore.empty': 'No idea matches that search.',
       'idea.seeks': 'Looking for:', 'idea.summaryPublic': 'Public summary', 'idea.abstractEn': 'English abstract',
@@ -1633,6 +1727,9 @@
       'explore.lead': 'Chaque fiche ne montre que le résumé public. L’exposé détaillé s’ouvre lorsque son auteur accepte votre demande.',
       'explore.search': 'Chercher par sujet, technique ou discipline…',
       'explore.byField': 'Filtrer par discipline', 'explore.byLang': 'Filtrer par langue de l’idée',
+      'explore.lWhat': 'Ce que vous cherchez', 'explore.lField': 'Discipline', 'explore.lLang': 'Langue',
+      'explore.lState': 'Filtres', 'explore.showing': 'Affichage de {n} sur {total}',
+      'explore.clear': 'Effacer les filtres', 'explore.more': '+{n} de plus', 'explore.less': 'Voir moins',
       'explore.searchNote': 'La recherche ne parcourt que les résumés publics et les résumés en anglais : jamais le contenu protégé.',
       'explore.empty': 'Aucune idée ne correspond à cette recherche.',
       'idea.seeks': 'Recherche :', 'idea.summaryPublic': 'Résumé public', 'idea.abstractEn': 'Résumé en anglais',
@@ -2560,52 +2657,121 @@
   }
 
   /* ---------- Explore ---------- */
+  function countWith(cambio) {
+    var st = { type: state.type, field: state.field, contentLang: state.contentLang, q: state.q };
+    for (var k in cambio) st[k] = cambio[k];
+    return ideas.filter(function (i) { return matchesWith(i, st); }).length;
+  }
+  /* Una opción que no daría ningún resultado se enseña, pero apagada: sirve
+     para saber que existe, no para llevarte a una pantalla vacía. */
+  function chipCount(node, n) {
+    node.appendChild(el('span', 'cnt', String(n)));
+    if (n === 0) { node.disabled = true; node.classList.add('empty'); }
+  }
+
+  var fieldsOpen = false;
+  var FIELDS_VISIBLE = 5;
   function renderChips() {
     var wrap = $('chips');
     wrap.textContent = '';
     var used = FIELD_KEYS.filter(function (k) { return ideas.some(function (i) { return i.field === k; }); });
+    // Las disciplinas con resultados primero: las vacías no roban sitio arriba.
+    used.sort(function (a, b) { return countWith({ field: b }) - countWith({ field: a }); });
     var opts = [{ k: null, label: t('common.all') }].concat(used.map(function (k) { return { k: k, label: fieldName(k) }; }));
-    opts.forEach(function (o) {
+    var conResultados = opts.filter(function (o) { return countWith({ field: o.k }) > 0; });
+    var recorta = !fieldsOpen && opts.length > FIELDS_VISIBLE + 1;
+    var visibles = recorta ? conResultados.slice(0, FIELDS_VISIBLE) : opts;
+    // La disciplina activa se ve siempre, aunque esté fuera del recorte.
+    if (recorta && state.field && !visibles.some(function (o) { return o.k === state.field; })) {
+      visibles = visibles.slice(0, FIELDS_VISIBLE - 1)
+        .concat(opts.filter(function (o) { return o.k === state.field; }));
+    }
+    visibles.forEach(function (o) {
       var b = el('button', 'chip', o.label);
       b.type = 'button';
+      chipCount(b, countWith({ field: o.k }));
       b.setAttribute('aria-pressed', state.field === o.k ? 'true' : 'false');
-      b.addEventListener('click', function () { state.field = o.k; renderChips(); renderGrid(); });
+      b.addEventListener('click', function () {
+        state.field = o.k;
+        renderChips(); renderLangChips(); renderTypeChips(); renderGrid(); renderFilterState();
+      });
       wrap.appendChild(b);
     });
+    if (recorta || fieldsOpen) {
+      var ocultas = opts.length - visibles.length;
+      if (!fieldsOpen && ocultas <= 0) return;
+      var mas = el('button', 'chip chip-more',
+        fieldsOpen ? t('explore.less') : t('explore.more', { n: ocultas }));
+      mas.type = 'button';
+      mas.addEventListener('click', function () { fieldsOpen = !fieldsOpen; renderChips(); });
+      wrap.appendChild(mas);
+    }
   }
   function renderLangChips() {
     var wrap = $('lang-chips');
     wrap.textContent = '';
     var used = [];
     ideas.forEach(function (i) { if (used.indexOf(i.lang) === -1) used.push(i.lang); });
-    // El filtro cuenta cuántas puedes leer, no en cuántas se escribió: una idea
-    // en castellano con versión inglesa completa entra también en «inglés».
+    // Cuenta lo que puedes leer, no en lo que se escribió: una idea en
+    // castellano con versión inglesa completa entra también en «inglés».
     var opts = [{ k: null, label: t('common.allLangs') }].concat(used.map(function (c) {
-      var n = ideas.filter(function (i) { return readableIn(i, c); }).length;
-      return { k: c, label: t('explore.readableIn', { lang: langName(c) }) + ' · ' + n };
+      return { k: c, label: langName(c) };
     }));
     opts.forEach(function (o) {
       var b = el('button', 'chip', o.label);
       b.type = 'button';
+      chipCount(b, countWith({ contentLang: o.k }));
       b.setAttribute('aria-pressed', state.contentLang === o.k ? 'true' : 'false');
-      b.addEventListener('click', function () { state.contentLang = o.k; renderLangChips(); renderGrid(); });
+      b.addEventListener('click', function () {
+        state.contentLang = o.k;
+        renderLangChips(); renderChips(); renderTypeChips(); renderGrid(); renderFilterState();
+      });
       wrap.appendChild(b);
     });
   }
+  /* Esta fila no es un filtro más: es lo que la web ofrece. Por eso va en
+     segmentos unidos y con más peso que las de abajo. */
   function renderTypeChips() {
     var wrap = $('type-chips');
     wrap.textContent = '';
     var opts = [{ k: null, label: t('type.all') }, { k: 'idea', label: t('type.idea') },
                 { k: 'consortium', label: t('type.consortium') }, { k: 'comparative', label: t('type.comparative') },
-                { k: 'cotutela', label: t('type.cotutela') },
-                { k: 'estancia', label: t('type.estancia') }];
+                { k: 'cotutela', label: t('type.cotutela') }, { k: 'estancia', label: t('type.estancia') }];
     opts.forEach(function (o) {
-      var b = el('button', 'chip', o.label);
+      var b = el('button', 'seg');
       b.type = 'button';
+      b.appendChild(el('span', 'seg-n', o.label));
+      var n = countWith({ type: o.k });
+      b.appendChild(el('span', 'seg-c', String(n)));
+      if (n === 0) { b.disabled = true; b.classList.add('empty'); }
       b.setAttribute('aria-pressed', state.type === o.k ? 'true' : 'false');
-      b.addEventListener('click', function () { state.type = o.k; renderTypeChips(); renderGrid(); });
+      b.addEventListener('click', function () {
+        state.type = o.k;
+        renderTypeChips(); renderChips(); renderLangChips(); renderGrid(); renderFilterState();
+      });
       wrap.appendChild(b);
     });
+  }
+
+  /* Cuánto has estrechado, y cómo deshacerlo. Sin esto no se sabe si la
+     pantalla está vacía porque no hay nada o porque queda un filtro puesto. */
+  function renderFilterState() {
+    var fila = $('filter-state'), cuerpo = $('filter-state-body');
+    var activos = [state.type, state.field, state.contentLang, state.q].filter(Boolean).length;
+    if (!activos) { fila.hidden = true; return; }
+    fila.hidden = false;
+    fila.querySelector('.fs-label').textContent = t('explore.lState');
+    cuerpo.textContent = '';
+    cuerpo.appendChild(el('span', 'fs-count',
+      t('explore.showing', { n: ideas.filter(matches).length, total: ideas.length })));
+    var limpiar = el('button', 'fs-clear', t('explore.clear'));
+    limpiar.type = 'button';
+    limpiar.addEventListener('click', function () {
+      state.type = null; state.field = null; state.contentLang = null; state.q = '';
+      $('q').value = '';
+      renderTypeChips(); renderChips(); renderLangChips(); renderGrid(); renderFilterState();
+    });
+    cuerpo.appendChild(limpiar);
   }
   function typeBadge(idea) {
     var ty = ideaType(idea);
@@ -2620,12 +2786,15 @@
     return { text: d === 1 ? t('cons.daysLeft1') : t('cons.daysLeft', { n: d }), urgent: d <= 60, closed: false };
   }
 
-  function matches(idea) {
-    if (state.type && ideaType(idea) !== state.type) return false;
-    if (state.field && idea.field !== state.field) return false;
-    if (state.contentLang && !readableIn(idea, state.contentLang)) return false;
-    if (!state.q) return true;
-    var q = state.q.toLowerCase();
+  function matches(idea) { return matchesWith(idea, state); }
+  /* Un contador que no cuenta el total, sino lo que verías si pulsaras: por eso
+     el filtrado se parametriza y se evalúa con el resto de filtros puestos. */
+  function matchesWith(idea, st) {
+    if (st.type && ideaType(idea) !== st.type) return false;
+    if (st.field && idea.field !== st.field) return false;
+    if (st.contentLang && !readableIn(idea, st.contentLang)) return false;
+    if (!st.q) return true;
+    var q = st.q.toLowerCase();
     var hay = [idea.title, idea.summary, idea.abstractEn || '', idea.seeking, fieldName(idea.field)].join(' ').toLowerCase();
     return hay.indexOf(q) !== -1;
   }
@@ -2767,7 +2936,10 @@
       grid.appendChild(card);
     });
   }
-  $('q').addEventListener('input', function (e) { state.q = e.target.value.trim(); renderGrid(); });
+  $('q').addEventListener('input', function (e) {
+    state.q = e.target.value.trim();
+    renderGrid(); renderTypeChips(); renderChips(); renderLangChips(); renderFilterState();
+  });
 
   /* ---------- Idea detail ---------- */
   function redacted(widths) {
@@ -3980,6 +4152,7 @@
     $('f-type').addEventListener('change', updateTypeFields);
     updateTypeFields();
     renderTabs(); renderTypeChips(); renderChips(); renderLangChips();
+    renderFilterState();
     renderSkills(); renderSpecTechs(); renderSpecialists();
     setStep(1);
 
