@@ -193,6 +193,23 @@
   .langtag.has-abstract { border-color: var(--ok); color: var(--ok); }
   /* El título tal como se selló, bajo la versión inglesa. */
   /* Lista de requisitos de la cotutela: se lee de un vistazo cuál falta. */
+  /* La ventana sobre dos años: cuándo se puede ir, antes de leerlo. */
+  .winbar { margin-top: 12px; }
+  .winbar-track {
+    position: relative; height: 10px; background: var(--accent-soft);
+    border-left: 2px solid var(--wax);
+  }
+  .winbar-span { position: absolute; top: 0; bottom: 0; background: var(--accent-deep); }
+  .winbar-legend {
+    display: flex; justify-content: space-between; gap: 10px; margin-top: 6px;
+    font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.05em;
+    text-transform: uppercase; color: var(--ink-faint);
+  }
+  .winbar-range { color: var(--accent-deep); font-weight: 700; }
+  .est-note {
+    margin-top: 14px; padding-left: 14px; border-left: 2px solid var(--gold);
+    font-size: 0.86rem; color: var(--ink-soft);
+  }
   .cotlist { list-style: none; margin: 12px 0 0; padding: 0; }
   .cotlist li {
     display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
@@ -984,7 +1001,23 @@
       'idea.whyFit': 'Por qué encajas', 'idea.whyFitPh': 'Qué has hecho antes que sea directamente relevante para esta idea…',
       'idea.sendRequest': 'Enviar solicitud', 'idea.simAccept': 'Simular: el autor acepta',
       'idea.simAccepted': 'El autor ha aceptado tu solicitud: nivel 2 abierto para ti.',
-      'type.cotutela': 'Cotutela',
+      'type.cotutela': 'Cotutela', 'type.estancia': 'Estancia',
+      'est.role.busca': 'Busca grupo de acogida', 'est.role.ofrece': 'Ofrece acoger una estancia',
+      'est.monthsShort': '{n} meses', 'est.onSite': 'Idioma de trabajo',
+      'est.mobility': 'Ayuda de movilidad', 'est.window': 'Ventana de fechas',
+      'est.today': 'hoy', 'est.plus24': '+24 meses',
+      'est.checklist': 'Qué falta para que la estancia se pueda hacer',
+      'est.checklistHint': 'Aquí no hay convenio que negociar: lo que decide es la ventana y quién firma la carta.',
+      'est.rHost': 'Grupo de acogida en otro país',
+      'est.rLetter': 'Carta de aceptación firmada',
+      'est.rMonths': 'Duración mínima',
+      'est.rWindow': 'Ventana de fechas declarada',
+      'est.rFunding': 'Movilidad financiada',
+      'est.monthsDetail': '{n} meses (mínimo {min} para la mención internacional)',
+      'est.callBy': '{call}, hasta el {date}',
+      'est.fund.cubierta': 'Concedida', 'est.fund.solicitada': 'Solicitada, sin resolver',
+      'est.fund.visitante': 'La aporta quien viene',
+      'est.noAgreement': 'Una estancia no necesita convenio entre instituciones ni segunda matrícula, y la tesis se defiende una sola vez en casa. Eso es lo que la separa de una cotutela.',
       'cot.role.busca': 'Busca institución de acogida', 'cot.role.ofrece': 'Ofrece acogida en cotutela',
       'cot.year': 'Año {n} del doctorado', 'cot.pending': 'por asignar',
       'cot.agreement': 'Convenio de cotutela', 'cot.signed': 'Firmado',
@@ -1190,7 +1223,23 @@
       'idea.whyFit': 'Why you fit', 'idea.whyFitPh': 'What you have done before that is directly relevant to this idea…',
       'idea.sendRequest': 'Send request', 'idea.simAccept': 'Simulate: the author accepts',
       'idea.simAccepted': 'The author accepted your request: level 2 is now open to you.',
-      'type.cotutela': 'Cotutelle',
+      'type.cotutela': 'Cotutelle', 'type.estancia': 'Research stay',
+      'est.role.busca': 'Seeking a host group', 'est.role.ofrece': 'Offering to host a stay',
+      'est.monthsShort': '{n} months', 'est.onSite': 'Working language',
+      'est.mobility': 'Mobility funding', 'est.window': 'Date window',
+      'est.today': 'today', 'est.plus24': '+24 months',
+      'est.checklist': 'What is missing for the stay to happen',
+      'est.checklistHint': 'There is no agreement to negotiate here: what decides it is the window and who signs the letter.',
+      'est.rHost': 'Host group in another country',
+      'est.rLetter': 'Signed acceptance letter',
+      'est.rMonths': 'Minimum duration',
+      'est.rWindow': 'Date window declared',
+      'est.rFunding': 'Mobility funded',
+      'est.monthsDetail': '{n} months (minimum {min} for the international mention)',
+      'est.callBy': '{call}, until {date}',
+      'est.fund.cubierta': 'Awarded', 'est.fund.solicitada': 'Applied for, undecided',
+      'est.fund.visitante': 'Brought by the visitor',
+      'est.noAgreement': 'A stay needs no inter-institutional agreement and no second enrolment, and the thesis is still defended once, at home. That is what separates it from a cotutelle.',
       'cot.role.busca': 'Seeking a host institution', 'cot.role.ofrece': 'Offering to host a cotutelle',
       'cot.year': 'Year {n} of the doctorate', 'cot.pending': 'to be assigned',
       'cot.agreement': 'Cotutelle agreement', 'cot.signed': 'Signed',
@@ -1396,7 +1445,23 @@
       'idea.whyFit': 'Pourquoi vous convenez', 'idea.whyFitPh': 'Ce que vous avez fait auparavant et qui touche directement à cette idée…',
       'idea.sendRequest': 'Envoyer la demande', 'idea.simAccept': 'Simuler : l’auteur accepte',
       'idea.simAccepted': 'L’auteur a accepté votre demande : le niveau 2 vous est ouvert.',
-      'type.cotutela': 'Cotutelle',
+      'type.cotutela': 'Cotutelle', 'type.estancia': 'Séjour de recherche',
+      'est.role.busca': 'Cherche un groupe d’accueil', 'est.role.ofrece': 'Propose d’accueillir un séjour',
+      'est.monthsShort': '{n} mois', 'est.onSite': 'Langue de travail',
+      'est.mobility': 'Aide à la mobilité', 'est.window': 'Fenêtre de dates',
+      'est.today': 'aujourd’hui', 'est.plus24': '+24 mois',
+      'est.checklist': 'Ce qu’il manque pour que le séjour ait lieu',
+      'est.checklistHint': 'Ici, pas de convention à négocier : ce qui décide, c’est la fenêtre et qui signe la lettre.',
+      'est.rHost': 'Groupe d’accueil dans un autre pays',
+      'est.rLetter': 'Lettre d’acceptation signée',
+      'est.rMonths': 'Durée minimale',
+      'est.rWindow': 'Fenêtre de dates déclarée',
+      'est.rFunding': 'Mobilité financée',
+      'est.monthsDetail': '{n} mois (minimum {min} pour la mention internationale)',
+      'est.callBy': '{call}, jusqu’au {date}',
+      'est.fund.cubierta': 'Accordée', 'est.fund.solicitada': 'Demandée, sans réponse',
+      'est.fund.visitante': 'Apportée par le visiteur',
+      'est.noAgreement': 'Un séjour n’exige ni convention entre établissements ni seconde inscription, et la thèse se soutient une seule fois, chez soi. C’est ce qui le distingue d’une cotutelle.',
       'cot.role.busca': 'Cherche un établissement d’accueil', 'cot.role.ofrece': 'Propose un accueil en cotutelle',
       'cot.year': 'Année {n} du doctorat', 'cot.pending': 'à définir',
       'cot.agreement': 'Convention de cotutelle', 'cot.signed': 'Signée',
@@ -1608,6 +1673,46 @@
      LAYER 2 — content language is a property of each idea
      ========================================================= */
   var ideas = [
+    {
+      id: 'SYN-2026-1510', mine: false, level: 1, field: 'lingcomp', lang: 'es', type: 'estancia',
+      title: 'Estancia de tres meses: busco grupo con corpus diacrónico anotado',
+      titleEn: 'Three-month stay: seeking a group with an annotated diachronic corpus',
+      summary: 'Necesito los tres meses fuera para la mención internacional y quiero que sirvan para algo: busco un grupo cuyo corpus anotado me permita validar el control por género textual que propongo.',
+      abstractEn: 'I need the three months abroad for the international doctorate mention, and I want them to count: I am looking for a group whose annotated corpus lets me validate the textual-genre control I propose.',
+      seeking: 'grupo con corpus histórico anotado por género textual y disposición a firmar la carta de aceptación',
+      seekingEn: 'group with a corpus annotated by textual genre, willing to sign the acceptance letter',
+      approach: 'Llevo la línea base entrenada sobre corpus español. Lo que no puedo hacer aquí es contrastarla contra un corpus anotado de forma independiente, que es lo único que distingue deriva real de sesgo de muestreo.',
+      data: 'Línea base de embeddings diacrónicos, corpus propio 1450–1900 con metadatos de género y el cuaderno de evaluación.',
+      skills: [{ name: 'Corpus anotados diacrónicos', w: 'key' }, { name: 'Anotación por género textual', w: 'key' }],
+      doc: {
+        role: 'busca', year: 2,
+        home: { inst: 'Universidad Autónoma de Madrid', country: 'ES', supervisor: 'Perfil verificado #5023', accredited: true },
+        host: { inst: null, country: null, supervisor: null, accepts: false },
+        months: 3, monthsRequired: 3, window: { from: '2027-01-15', to: '2027-04-15' },
+        mobility: { status: 'solicitada', call: 'Ayudas de movilidad predoctoral UAM', deadline: '2026-09-30' },
+        langOnSite: 'en'
+      },
+      author: 'Perfil verificado #5023', sealed: '2026-06-21T09:05:33Z', requestSent: false, access: []
+    },
+    {
+      id: 'SYN-2026-1533', mine: false, level: 1, field: 'matphys', lang: 'en', type: 'estancia',
+      title: 'We can host a 3–6 month stay: cluster time for high-entropy alloy calculations',
+      summary: 'We have compute allocation and a supervisor who will sign the acceptance letter. We cannot fund the mobility itself: the visitor brings their own grant.',
+      abstractEn: '',
+      seeking: 'doctoral candidate with a formation-energy problem large enough to justify the allocation, bringing their own mobility funding',
+      approach: 'Our contribution is the allocation and the workflow for large composition sweeps. What we do not have is a candidate with a well-posed thermodynamic question to spend it on.',
+      data: 'Cluster allocation of 400.000 CPU-hours, the sweep workflow and the convergence protocol used in two previous papers.',
+      skills: [{ name: 'DFT (VASP or Quantum ESPRESSO)', w: 'key' }, { name: 'HPC workflows', w: 'opt' }],
+      doc: {
+        role: 'ofrece', year: 0,
+        home: { inst: null, country: null, supervisor: null, accredited: false },
+        host: { inst: 'Chalmers tekniska högskola', country: 'SE', supervisor: 'Perfil verificado #8320', accepts: true },
+        months: 6, monthsRequired: 3, window: { from: '2026-11-01', to: '2027-06-30' },
+        mobility: { status: 'visitante', call: null, deadline: null },
+        langOnSite: 'en'
+      },
+      author: 'Perfil verificado #8320', sealed: '2026-07-04T11:47:12Z', requestSent: false, access: []
+    },
     {
       id: 'SYN-2026-1402', mine: false, level: 1, field: 'ecomar', lang: 'es', type: 'cotutela',
       title: 'Conectividad larvaria en el Mediterráneo occidental: busco institución de acogida',
@@ -1956,6 +2061,59 @@
     return { text: n === 1 ? t('cons.daysLeft1') : t('cons.daysLeft', { n: n }), urgent: n <= 60, closed: false };
   }
 
+  /* ---------- Estancia ----------
+     No es una cotutela pequeña: es otra cosa. No hay convenio entre
+     instituciones, no hay segunda matrícula y la defensa sigue siendo una.
+     Basta una carta de aceptación firmada por quien acoge.
+
+     Lo que manda aquí es la VENTANA: una estancia que no encaja en fechas no
+     encaja, por buena que sea la ciencia. */
+  function estanciaCheck(idea) {
+    var d = idea.doc, rows = [];
+    rows.push({ k: 'rHost', ok: !!(d.home.inst && d.host.inst && d.home.country !== d.host.country),
+      detail: (d.home.inst || t('cot.pending')) + ' → ' + (d.host.inst || t('cot.pending')) });
+    rows.push({ k: 'rLetter', ok: !!d.host.accepts,
+      detail: d.host.accepts ? d.host.supervisor : t('cot.pending') });
+    rows.push({ k: 'rMonths', ok: d.months >= d.monthsRequired,
+      detail: t('est.monthsDetail', { n: d.months, min: d.monthsRequired }) });
+    rows.push({ k: 'rWindow', ok: !!(d.window.from && d.window.to),
+      detail: fmtDate(d.window.from) + ' — ' + fmtDate(d.window.to) });
+    rows.push({ k: 'rFunding', ok: d.mobility.status === 'cubierta',
+      detail: t('est.fund.' + d.mobility.status) + (d.mobility.deadline
+        ? ' · ' + t('est.callBy', { call: d.mobility.call, date: fmtDate(d.mobility.deadline) }) : '') });
+    return { rows: rows, ok: rows.filter(function (r) { return r.ok; }).length, total: rows.length };
+  }
+  /* La fecha que aprieta es la de la ayuda de movilidad si la hay; si no, la
+     salida misma: sin plaza reservada no se viaja. */
+  function estDeadline(idea) {
+    var iso = idea.doc.mobility.deadline || idea.doc.window.from;
+    var n = daysUntil(iso);
+    if (n < 0) return { iso: iso, text: t('cons.closed'), urgent: false, closed: true };
+    return { iso: iso, text: n === 1 ? t('cons.daysLeft1') : t('cons.daysLeft', { n: n }), urgent: n <= 60, closed: false };
+  }
+  /* La ventana, dibujada sobre dos años desde hoy: cuándo se puede ir se ve
+     antes de leerse. */
+  function windowBar(win) {
+    var t0 = Date.now(), t1 = t0 + 730 * 86400000;
+    var pct = function (iso) {
+      return Math.max(0, Math.min(100, (new Date(iso) - t0) / (t1 - t0) * 100));
+    };
+    var a = pct(win.from), b = pct(win.to);
+    var wrap = el('div', 'winbar');
+    var track = el('div', 'winbar-track');
+    var span = el('div', 'winbar-span');
+    span.style.left = a + '%';
+    span.style.width = Math.max(1.5, b - a) + '%';
+    track.appendChild(span);
+    wrap.appendChild(track);
+    var lg = el('div', 'winbar-legend');
+    lg.appendChild(el('span', null, t('est.today')));
+    lg.appendChild(el('span', 'winbar-range', fmtDate(win.from) + ' — ' + fmtDate(win.to)));
+    lg.appendChild(el('span', null, t('est.plus24')));
+    wrap.appendChild(lg);
+    return wrap;
+  }
+
   function eligibility(idea) {
     var entities = [idea.coordinator].concat(idea.partners || []).filter(Boolean);
     var countries = [];
@@ -2046,6 +2204,16 @@
     if (ideaType(idea) === 'consortium') {
       base.call = idea.call || null;
       base.slots = idea.slots || [];
+    }
+    if (ideaType(idea) === 'estancia') {
+      // El marco, no el trámite: la carta firmada y la ayuda concedida son
+      // estado que cambia, y sellarlo rompería la huella al concederse.
+      base.doc = {
+        role: idea.doc.role, home: idea.doc.home, host: idea.doc.host,
+        months: idea.doc.months, monthsRequired: idea.doc.monthsRequired,
+        window: idea.doc.window, langOnSite: idea.doc.langOnSite,
+        mobilityCall: idea.doc.mobility.call || null
+      };
     }
     if (ideaType(idea) === 'cotutela') {
       // Se sella el marco acordado, no el estado del trámite: si se sellara
@@ -2210,7 +2378,8 @@
     wrap.textContent = '';
     var opts = [{ k: null, label: t('type.all') }, { k: 'idea', label: t('type.idea') },
                 { k: 'consortium', label: t('type.consortium') }, { k: 'comparative', label: t('type.comparative') },
-                { k: 'cotutela', label: t('type.cotutela') }];
+                { k: 'cotutela', label: t('type.cotutela') },
+                { k: 'estancia', label: t('type.estancia') }];
     opts.forEach(function (o) {
       var b = el('button', 'chip', o.label);
       b.type = 'button';
@@ -2351,6 +2520,17 @@
         meta3.appendChild(el('span', 'elig ' + (dc.ok === dc.total ? 'ok' : 'no'),
                              t('cot.reqs', { n: dc.ok, total: dc.total })));
         card.appendChild(meta3);
+      } else if (ideaType(idea) === 'estancia') {
+        var ec = estanciaCheck(idea), dl4 = estDeadline(idea);
+        var meta4 = el('p', 'card-meta');
+        meta4.appendChild(el('span', 'origin-chip', t('est.role.' + idea.doc.role)));
+        meta4.appendChild(el('span', 'sites-count', t('est.monthsShort', { n: idea.doc.months })));
+        var chip4 = el('span', 'deadline' + (dl4.closed ? ' closed' : dl4.urgent ? ' urgent' : ''));
+        chip4.textContent = fmtDate(dl4.iso) + ' · ' + dl4.text;
+        meta4.appendChild(chip4);
+        meta4.appendChild(el('span', 'elig ' + (ec.ok === ec.total ? 'ok' : 'no'),
+                             t('cot.reqs', { n: ec.ok, total: ec.total })));
+        card.appendChild(meta4);
       }
 
       card.appendChild(el('p', 'summary', dsp.summary));
@@ -2391,6 +2571,43 @@
 
   function renderTypeSections(idea, body) {
     var ty = ideaType(idea);
+
+    if (ty === 'estancia') {
+      var de = idea.doc, eck = estanciaCheck(idea);
+      var ebox = el('div', 'callbox');
+      var er = el('div', 'callbox-row');
+      er.appendChild(el('span', 'sec-label', t('est.role.' + de.role)));
+      er.appendChild(el('span', 'mono-sm', t('est.monthsShort', { n: de.months })
+        + ' · ' + t('est.onSite') + ': ' + langName(de.langOnSite)));
+      ebox.appendChild(er);
+      var er2 = el('div', 'callbox-row');
+      er2.appendChild(el('span', 'sec-label', t('est.mobility')));
+      var edl = estDeadline(idea);
+      var ec2 = el('span', 'deadline' + (edl.closed ? ' closed' : edl.urgent ? ' urgent' : ''));
+      ec2.textContent = fmtDate(edl.iso) + ' · ' + edl.text;
+      er2.appendChild(ec2);
+      ebox.appendChild(er2);
+      body.appendChild(ebox);
+
+      var wb = el('div', 'block');
+      wb.appendChild(el('span', 'sec-label', t('est.window')));
+      wb.appendChild(windowBar(de.window));
+      body.appendChild(wb);
+
+      var eblk = el('div', 'block');
+      eblk.appendChild(el('span', 'sec-label', t('est.checklist')));
+      eblk.appendChild(el('p', 'hint', t('est.checklistHint')));
+      var eul = el('ul', 'cotlist');
+      eck.rows.forEach(function (row) {
+        var li = el('li', row.ok ? 'done' : 'todo');
+        li.appendChild(el('span', 'cot-k', t('est.' + row.k)));
+        li.appendChild(el('span', 'cot-v', row.detail));
+        eul.appendChild(li);
+      });
+      eblk.appendChild(eul);
+      eblk.appendChild(el('p', 'est-note', t('est.noAgreement')));
+      body.appendChild(eblk);
+    }
 
     if (ty === 'cotutela') {
       var d = idea.doc, chk = cotutelaCheck(idea);
