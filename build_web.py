@@ -20,8 +20,7 @@ import sys
 RAIZ = Path(__file__).parent
 HOST = "https://synergium-seal.fly.dev"
 
-# La maqueta lleva sus tres idiomas dentro y se construye una sola vez.
-PAGINAS = {"app.html": "app.html"}
+PAGINAS = {}
 
 # La maqueta ya lleva sus tres idiomas dentro; la landing se genera una vez
 # por idioma, que es más simple y no deja texto sin traducir a medias.
@@ -33,10 +32,12 @@ NOMBRE_IDIOMA = {"es": "ES", "en": "EN", "fr": "FR"}
 RUTAS = {
     "index.html":       {"es": "/proyecto", "en": "/proyecto/en", "fr": "/proyecto/fr"},
     "herramienta.html": {"es": "/", "en": "/en", "fr": "/fr"},
+    "app.html":         {"es": "/app", "en": "/app/en", "fr": "/app/fr"},
 }
 SALIDAS = {
     "index.html":       {"es": "proyecto.html", "en": "proyecto.en.html", "fr": "proyecto.fr.html"},
     "herramienta.html": {"es": "herramienta.html", "en": "herramienta.en.html", "fr": "herramienta.fr.html"},
+    "app.html":         {"es": "app.html", "en": "app.en.html", "fr": "app.fr.html"},
 }
 
 # El artefacto necesita este apaño porque no controla su <head>. Aquí sí.
@@ -60,7 +61,11 @@ def traducir(doc: str, dic: dict) -> str:
     def literales(js: str) -> str:
         def cambia(m):
             interior = m.group(1)
-            return "'" + dic[interior] + "'" if interior in dic else m.group(0)
+            if interior not in dic:
+                return m.group(0)
+            # Escapar es obligatorio: «observers' calibration notebook» cierra
+            # el literal antes de tiempo y el script entero deja de cargar.
+            return "'" + dic[interior].replace("\\", "\\\\").replace("'", "\\'") + "'"
         return re.sub(r"'((?:[^'\\]|\\.)*)'", cambia, js)
 
     def nodos(html: str) -> str:
@@ -133,8 +138,22 @@ def construir(fuente: str, nombre: str, idioma: str = "es") -> str:
         sys.exit(f"{nombre}: quedan {len(sueltos)} enlaces absolutos sin convertir: {sueltos}")
 
     if idioma != "es":
-        dic = json.loads((RAIZ / "web" / "i18n.json").read_text(encoding="utf-8"))[idioma]
-        doc = traducir(doc, dic)
+        if nombre == "app.html":
+            # La maqueta ya trae su interfaz en los tres idiomas: aquí solo se
+            # traducen los DATOS de ejemplo, y solo dentro de su zona. Tocar el
+            # fichero entero reescribiría los diccionarios de la interfaz.
+            dic = json.loads((RAIZ / "web" / "i18n-app.json").read_text(encoding="utf-8"))[idioma]
+            ini = doc.index("var ideas = [")
+            fin = doc.index("  /* ---------- Helpers", ini)
+            # El fragmento es JavaScript puro: se envuelve para que traducir()
+            # lo trate como literales y no como nodos de texto HTML.
+            trozo = traducir("<script>" + doc[ini:fin] + "</script>", dic)
+            trozo = trozo[len("<script>"):-len("</script>")]
+            doc = doc[:ini] + trozo + doc[fin:]
+            doc = doc.replace("var uiLang = 'es';", f"var uiLang = '{idioma}';", 1)
+        else:
+            dic = json.loads((RAIZ / "web" / "i18n.json").read_text(encoding="utf-8"))[idioma]
+            doc = traducir(doc, dic)
 
     # La cabecera acaba donde empieza el cuerpo, y el cuerpo de las tres
     # fuentes empieza por <header>. Cortar por </style> fallaba con la
@@ -151,7 +170,7 @@ def construir(fuente: str, nombre: str, idioma: str = "es") -> str:
 
     # Selector de idioma y aviso, solo en las versiones servidas: el artefacto
     # de Claude no tiene las otras rutas y quedarían rotas.
-    if nombre in RUTAS:
+    if nombre in RUTAS and nombre != "app.html":
         cierre = "</nav>" if "</nav>" in cuerpo else "</div>"
         cuerpo = cuerpo.replace(cierre, selector_idiomas(nombre, idioma) + cierre, 1)
         cuerpo = aviso_de_idioma(nombre, idioma) + cuerpo

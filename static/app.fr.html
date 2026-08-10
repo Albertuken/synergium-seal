@@ -1,17 +1,9 @@
+<!doctype html>
+<html lang="fr">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Synergium — Maqueta de la aplicación</title>
-<script>
-  (function () {
-    var d = document;
-    if (d.head && !d.head.querySelector('meta[name="viewport"]')) {
-      var m = d.createElement('meta');
-      m.setAttribute('name', 'viewport');
-      m.setAttribute('content', 'width=device-width, initial-scale=1');
-      d.head.appendChild(m);
-    }
-  })();
-</script>
 <style>
   /* ═══════════════════════════════════════════════════════════
      Instrumento de medida, no folleto. Los mismos tokens de la
@@ -853,10 +845,11 @@
 </style>
 
 <div class="demo-note" data-i18n="demo.note">Maqueta interactiva · Nada se guarda ni se envía</div>
-
+</head>
+<body>
 <header class="appbar">
   <div class="shell">
-    <a class="brand" href="https://synergium-seal.fly.dev/proyecto"
+    <a class="brand" href="/proyecto"
        title="Volver a la página del proyecto">
       <img src="data:image/png;base64,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" alt="">
       <span>Synergium</span>
@@ -2063,7 +2056,7 @@
     }
   };
 
-  var uiLang = 'es';
+  var uiLang = 'fr';
   function t(key, vars) {
     var s = (DICT[uiLang] && DICT[uiLang][key]) || DICT.es[key] || key;
     if (vars) {
@@ -2151,251 +2144,251 @@
   var ideas = [
     {
       id: 'SYN-2026-1510', mine: false, level: 1, field: 'lingcomp', lang: 'es', type: 'estancia',
-      title: 'Estancia de tres meses: busco grupo con corpus diacrónico anotado',
-      summary: 'Necesito los tres meses fuera para la mención internacional y quiero que sirvan para algo: busco un grupo cuyo corpus anotado me permita validar el control por género textual que propongo.',
-      seeking: 'grupo con corpus histórico anotado por género textual y disposición a firmar la carta de aceptación',
-      approach: 'Llevo la línea base entrenada sobre corpus español. Lo que no puedo hacer aquí es contrastarla contra un corpus anotado de forma independiente, que es lo único que distingue deriva real de sesgo de muestreo.',
-      data: 'Línea base de embeddings diacrónicos, corpus propio 1450–1900 con metadatos de género y el cuaderno de evaluación.',
-      skills: [{ name: 'Corpus anotados diacrónicos', w: 'key' }, { name: 'Anotación por género textual', w: 'key' }],
+      title: 'Séjour de trois mois : je cherche un groupe avec un corpus diachronique annoté',
+      summary: 'J’ai besoin des trois mois à l’étranger pour la mention internationale et je veux qu’ils servent à quelque chose : je cherche un groupe dont le corpus annoté me permette de valider le contrôle par genre textuel que je propose.',
+      seeking: 'groupe disposant d’un corpus historique annoté par genre textuel et prêt à signer la lettre d’acceptation',
+      approach: 'J’ai déjà la ligne de base entraînée sur un corpus espagnol. Ce que je ne peux pas faire ici, c’est la confronter à un corpus annoté de façon indépendante, seule manière de distinguer une dérive réelle d’un biais d’échantillonnage.',
+      data: 'Ligne de base d’embeddings diachroniques, corpus propre 1450–1900 avec métadonnées de genre et le carnet d’évaluation.',
+      skills: [{ name: 'Corpus diachroniques annotés', w: 'key' }, { name: 'Annotation par genre textuel', w: 'key' }],
       doc: {
         role: 'busca', year: 2,
-        home: { inst: 'Universidad Autónoma de Madrid', country: 'ES', supervisor: 'Perfil verificado #5023', accredited: true },
+        home: { inst: 'Universidad Autónoma de Madrid', country: 'ES', supervisor: 'Profil vérifié #5023', accredited: true },
         host: { inst: null, country: null, supervisor: null, accepts: false },
         months: 3, monthsRequired: 3, window: { from: '2027-01-15', to: '2027-04-15' },
-        mobility: { status: 'solicitada', call: 'Ayudas de movilidad predoctoral UAM', deadline: '2026-09-30' },
+        mobility: { status: 'solicitada', call: 'Aides à la mobilité doctorale UAM', deadline: '2026-09-30' },
         langOnSite: 'en'
       },
-      author: 'Perfil verificado #5023', sealed: '2026-06-21T09:05:33Z', requestSent: false, access: []
+      author: 'Profil vérifié #5023', sealed: '2026-06-21T09:05:33Z', requestSent: false, access: []
     },
     {
       id: 'SYN-2026-1533', mine: false, level: 1, field: 'matphys', lang: 'en', type: 'estancia',
-      title: 'We can host a 3–6 month stay: cluster time for high-entropy alloy calculations',
-      summary: 'We have compute allocation and a supervisor who will sign the acceptance letter. We cannot fund the mobility itself: the visitor brings their own grant.',
-      seeking: 'doctoral candidate with a formation-energy problem large enough to justify the allocation, bringing their own mobility funding',
-      approach: 'Our contribution is the allocation and the workflow for large composition sweeps. What we do not have is a candidate with a well-posed thermodynamic question to spend it on.',
-      data: 'Cluster allocation of 400.000 CPU-hours, the sweep workflow and the convergence protocol used in two previous papers.',
-      skills: [{ name: 'DFT (VASP or Quantum ESPRESSO)', w: 'key' }, { name: 'HPC workflows', w: 'opt' }],
+      title: 'Nous pouvons accueillir un séjour de 3 à 6 mois : temps de calcul pour des alliages à haute entropie',
+      summary: 'Nous avons l’allocation de calcul et un encadrant qui signera la lettre d’acceptation. Nous ne pouvons pas financer la mobilité : le visiteur apporte sa propre bourse.',
+      seeking: 'doctorant·e avec un problème d’énergies de formation assez vaste pour justifier l’allocation, apportant son propre financement de mobilité',
+      approach: 'Notre apport, c’est l’allocation et le flux de travail pour les balayages de compositions. Ce qui nous manque, c’est un·e candidat·e avec une question thermodynamique bien posée à y consacrer.',
+      data: 'Allocation de 400 000 heures CPU, le flux de balayage et le protocole de convergence utilisé dans deux articles précédents.',
+      skills: [{ name: 'DFT (VASP or Quantum ESPRESSO)', w: 'key' }, { name: 'Flux de travail HPC', w: 'opt' }],
       doc: {
         role: 'ofrece', year: 0,
         home: { inst: null, country: null, supervisor: null, accredited: false },
-        host: { inst: 'Chalmers tekniska högskola', country: 'SE', supervisor: 'Perfil verificado #8320', accepts: true },
+        host: { inst: 'Chalmers tekniska högskola', country: 'SE', supervisor: 'Profil vérifié #8320', accepts: true },
         months: 6, monthsRequired: 3, window: { from: '2026-11-01', to: '2027-06-30' },
         mobility: { status: 'visitante', call: null, deadline: null },
         langOnSite: 'en'
       },
-      author: 'Perfil verificado #8320', sealed: '2026-07-04T11:47:12Z', requestSent: false, access: []
+      author: 'Profil vérifié #8320', sealed: '2026-07-04T11:47:12Z', requestSent: false, access: []
     },
     {
       id: 'SYN-2026-1402', mine: false, level: 1, field: 'ecomar', lang: 'es', type: 'cotutela',
-      title: 'Conectividad larvaria en el Mediterráneo occidental: busco institución de acogida',
-      summary: 'Tengo la tesis empezada y director en Barcelona. Me falta el grupo de fuera que aporte la modelización biofísica de dispersión y un programa de doctorado que admita cotutela.',
-      seeking: 'grupo con modelización biofísica de dispersión y programa de doctorado que admita cotutela',
-      approach: 'La hipótesis es que los corredores de conectividad entre reservas marinas no coinciden con los que predice el modelo hidrodinámico medio, porque los episodios de viento de tres días concentran el transporte. Propongo acoplar el modelo de dispersión a la serie de viento horaria, no a la media mensual.',
-      data: 'Serie de reclutamiento de 6 reservas (2018–2025), genotipado de 1.400 individuos y el código del modelo acoplado que ya corre con forzamiento medio.',
-      skills: [{ name: 'Modelización lagrangiana de dispersión', w: 'key' }, { name: 'Genética de poblaciones marinas', w: 'key' }, { name: 'Oceanografía física', w: 'opt' }],
+      title: 'Connectivité larvaire en Méditerranée occidentale : je cherche un établissement d’accueil',
+      summary: 'Ma thèse est commencée et j’ai un directeur à Barcelone. Il me manque le groupe étranger qui apporte la modélisation biophysique de la dispersion et un programme doctoral acceptant la cotutelle.',
+      seeking: 'groupe avec modélisation biophysique de la dispersion et programme doctoral acceptant la cotutelle',
+      approach: 'L’hypothèse est que les corridors de connectivité entre réserves marines ne coïncident pas avec ceux que prédit le modèle hydrodynamique moyen, car les épisodes de vent de trois jours concentrent le transport. Je propose de coupler le modèle de dispersion à la série de vent horaire, et non à la moyenne mensuelle.',
+      data: 'Série de recrutement de 6 réserves (2018–2025), génotypage de 1 400 individus et le code du modèle couplé qui tourne déjà avec un forçage moyen.',
+      skills: [{ name: 'Modélisation lagrangienne de la dispersion', w: 'key' }, { name: 'Génétique des populations marines', w: 'key' }, { name: 'Océanographie physique', w: 'opt' }],
       doc: {
         role: 'busca', year: 1,
-        home:    { inst: 'Universitat de Barcelona', country: 'ES', programme: 'Biodiversidad', supervisor: 'Perfil verificado #2210', accredited: true },
+        home:    { inst: 'Universitat de Barcelona', country: 'ES', programme: 'Biodiversidad', supervisor: 'Profil vérifié #2210', accredited: true },
         partner: { inst: null, country: null, programme: null, supervisor: null, accredited: false },
-        monthsAtPartner: 9, monthsRequired: 6, window: 'ene–sep 2027',
+        monthsAtPartner: 9, monthsRequired: 6, window: 'janv.–sept. 2027',
         thesisLang: 'en', defenceLang: 'en',
         agreement: { signed: false, deadline: '2026-11-30' },
         funding: 'parcial'
       },
-      author: 'Perfil verificado #6104', sealed: '2026-05-18T10:12:04Z', requestSent: false, access: []
+      author: 'Profil vérifié #6104', sealed: '2026-05-18T10:12:04Z', requestSent: false, access: []
     },
     {
       id: 'SYN-2026-1455', mine: false, level: 1, field: 'clim', lang: 'en', type: 'cotutela',
-      title: 'Cotutelle host offer: documentary palaeoclimate, Université Grenoble Alpes',
-      summary: 'We hold a funded three-year contract and can host a cotutelle. We are looking for a first-year candidate whose home institution will sign, and who already has a transcribed documentary series to work on.',
-      seeking: 'first-year doctoral candidate with a transcribed documentary series and a home institution willing to sign a cotutelle agreement',
-      approach: 'Our side contributes the calibration against instrumental series and the uncertainty propagation. What the candidate brings is the archive and the palaeographic work; what we do not have is a documented series long enough to calibrate.',
-      data: 'Instrumental series for the Alpine arc since 1760, the calibration code and two previous theses under the same framework.',
-      skills: [{ name: 'Palaeography', w: 'key' }, { name: 'Archival transcription', w: 'key' }, { name: 'Time-series calibration', w: 'opt' }],
+      title: 'Offre d’accueil en cotutelle : paléoclimat documentaire, Université Grenoble Alpes',
+      summary: 'Nous disposons d’un contrat financé de trois ans et pouvons accueillir une cotutelle. Nous cherchons un·e doctorant·e de première année dont l’établissement d’origine signera, et qui dispose déjà d’une série documentaire transcrite.',
+      seeking: 'doctorant·e de première année avec une série documentaire transcrite et un établissement d’origine prêt à signer une convention de cotutelle',
+      approach: 'De notre côté, nous apportons la calibration sur séries instrumentales et la propagation d’incertitude. Le·la candidat·e apporte l’archive et le travail paléographique ; ce qui nous manque, c’est une série documentée assez longue pour calibrer.',
+      data: 'Séries instrumentales de l’arc alpin depuis 1760, le code de calibration et deux thèses antérieures dans le même cadre.',
+      skills: [{ name: 'Palaeography', w: 'key' }, { name: 'Transcription d’archives', w: 'key' }, { name: 'Calibration de séries temporelles', w: 'opt' }],
       doc: {
         role: 'ofrece', year: 1,
         home:    { inst: null, country: null, programme: null, supervisor: null, accredited: false },
-        partner: { inst: 'Université Grenoble Alpes', country: 'FR', programme: 'Terre, Univers, Environnement', supervisor: 'Perfil verificado #7781', accredited: true },
-        monthsAtPartner: 12, monthsRequired: 6, window: 'sep 2026 – ago 2029',
+        partner: { inst: 'Université Grenoble Alpes', country: 'FR', programme: 'Terre, Univers, Environnement', supervisor: 'Profil vérifié #7781', accredited: true },
+        monthsAtPartner: 12, monthsRequired: 6, window: 'sept. 2026 – août 2029',
         thesisLang: 'en', defenceLang: 'fr',
         agreement: { signed: false, deadline: '2026-09-05' },
         funding: 'cubierta'
       },
-      author: 'Perfil verificado #7781', sealed: '2026-06-02T14:33:51Z', requestSent: false, access: []
+      author: 'Profil vérifié #7781', sealed: '2026-06-02T14:33:51Z', requestSent: false, access: []
     },
     {
       id: 'SYN-2026-0311', mine: false, level: 1, field: 'ecomar', lang: 'es',
-      title: 'Modelo bayesiano para biodiversidad de arrecifes',
-      summary: 'Las series de biodiversidad de arrecife se analizan casi siempre con medias anuales, que borran los episodios de blanqueo cortos. Quiero saber si un enfoque jerárquico recupera esa señal.',
-      seeking: 'especialista en modelos bayesianos jerárquicos para series temporales',
-      approach: 'La hipótesis es que la varianza intraanual, y no la media, es lo que predice el colapso de la comunidad doce meses después. Propongo un modelo jerárquico con efectos de sitio anidados en arrecife y una verosimilitud de cola pesada para los episodios extremos.',
-      data: 'Censos visuales propios de 11 arrecifes del Caribe (2009–2025, no publicados), con temperatura horaria in situ y el cuaderno de calibración de los observadores.',
-      skills: [{ name: 'Modelos bayesianos jerárquicos', w: 'key' }, { name: 'Stan o PyMC', w: 'key' }, { name: 'Ecología de arrecifes', w: 'opt' }],
-      author: 'Perfil verificado #2210', sealed: '2026-02-11T08:22:41Z', requestSent: false, access: []
+      title: 'Modèle bayésien pour la biodiversité récifale',
+      summary: 'Les séries de biodiversité récifale sont presque toujours analysées en moyennes annuelles, qui effacent les épisodes courts de blanchissement. Je veux savoir si une approche hiérarchique récupère ce signal.',
+      seeking: 'spécialiste des modèles bayésiens hiérarchiques pour séries temporelles',
+      approach: 'L’hypothèse est que la variance intra-annuelle, et non la moyenne, prédit l’effondrement de la communauté douze mois plus tard. Je propose un modèle hiérarchique avec effets de site emboîtés dans le récif et une vraisemblance à queue lourde pour les épisodes extrêmes.',
+      data: 'Recensements visuels propres de 11 récifs des Caraïbes (2009–2025, non publiés), avec température horaire in situ et le carnet de calibration des observateurs.',
+      skills: [{ name: 'Modèles bayésiens hiérarchiques', w: 'key' }, { name: 'Stan ou PyMC', w: 'key' }, { name: 'Écologie récifale', w: 'opt' }],
+      author: 'Profil vérifié #2210', sealed: '2026-02-11T08:22:41Z', requestSent: false, access: []
     },
     {
       id: 'SYN-2026-0842', mine: false, level: 2, field: 'bioinf', lang: 'en',
-      title: 'Denoising single-cell RNA sequencing with diffusion models',
-      summary: 'Technical noise in droplet platforms is corrected today with methods that flatten rare cell populations. I am looking for an alternative that does not sacrifice them.',
-      seeking: 'specialist in diffusion models applied to genomic time series',
-      approach: 'The hypothesis is that technical noise follows a predictable temporal structure across replicates, and that a diffusion model trained on them can separate it from biological signal without collapsing infrequent cell types.',
-      data: 'Count matrices from 14 unpublished in-house experiments, the library preparation protocol and the analysis notebook with the model parameters.',
-      skills: [{ name: 'Diffusion models', w: 'key' }, { name: 'scRNA-seq pipelines', w: 'key' }, { name: 'PyTorch', w: 'opt' }],
-      author: 'Perfil verificado #4471', sealed: '2026-03-14T09:41:07Z', requestSent: true, access: []
+      title: 'Débruitage du séquençage d’ARN sur cellule unique par modèles de diffusion',
+      summary: 'Le bruit technique des plateformes à gouttelettes se corrige aujourd’hui par des méthodes qui écrasent les populations cellulaires rares. Je cherche une alternative qui ne les sacrifie pas.',
+      seeking: 'spécialiste des modèles de diffusion appliqués aux séries temporelles génomiques',
+      approach: 'L’hypothèse est que le bruit technique suit une structure temporelle prévisible entre réplicats, et qu’un modèle de diffusion entraîné sur ceux-ci peut le séparer du signal biologique sans écraser les types cellulaires rares.',
+      data: 'Matrices de comptage de 14 expériences internes non publiées, le protocole de préparation de librairies et le carnet d’analyse avec les paramètres du modèle.',
+      skills: [{ name: 'Modèles de diffusion', w: 'key' }, { name: 'Chaînes de traitement scRNA-seq', w: 'key' }, { name: 'PyTorch', w: 'opt' }],
+      author: 'Profil vérifié #4471', sealed: '2026-03-14T09:41:07Z', requestSent: true, access: []
     },
     {
       id: 'SYN-2025-1907', mine: false, level: 3, field: 'hist', lang: 'es',
-      title: 'Corpus documental visigótico del siglo IX',
-      summary: 'Un fondo monástico inédito de unos 400 folios que nadie ha transcrito. La cuestión es si permite fechar el paso de la escritura visigótica a la carolina en el noroeste peninsular.',
-      seeking: 'investigador/a con dominio de escritura visigótica',
-      approach: 'La hipótesis es que el cambio de escritura no fue gradual sino que responde a la llegada de tres escribas concretos, identificables por rasgos de ductus. Propongo una datación por manos, no por documento.',
-      data: 'Digitalización completa del fondo en alta resolución, ficha codicológica por folio y la transcripción parcial (63 folios) que ya tengo hecha.',
-      skills: [{ name: 'Escritura visigótica', w: 'key' }, { name: 'Codicología', w: 'opt' }],
-      author: 'Perfil verificado #1188', sealed: '2025-11-03T16:05:12Z', requestSent: true, access: []
+      title: 'Corpus documentaire wisigothique du IXe siècle',
+      summary: 'Un fonds monastique inédit d’environ 400 folios que personne n’a transcrit. La question est de savoir s’il permet de dater le passage de l’écriture wisigothique à la caroline dans le nord-ouest de la péninsule.',
+      seeking: 'chercheur·se maîtrisant l’écriture wisigothique',
+      approach: 'L’hypothèse est que le changement d’écriture n’a pas été graduel mais répond à l’arrivée de trois scribes précis, identifiables par des traits de ductus. Je propose une datation par mains, non par document.',
+      data: 'Numérisation complète du fonds en haute résolution, fiche codicologique par folio et la transcription partielle (63 folios) déjà réalisée.',
+      skills: [{ name: 'Écriture wisigothique', w: 'key' }, { name: 'Codicología', w: 'opt' }],
+      author: 'Profil vérifié #1188', sealed: '2025-11-03T16:05:12Z', requestSent: true, access: []
     },
     {
       id: 'SYN-2026-0455', mine: false, level: 1, field: 'matphys', lang: 'en',
-      title: 'DFT validation of high-entropy alloys',
-      summary: 'I have a theoretical model predicting phase stability in five-component alloys, but I cannot test it without ab initio computation at scale.',
-      seeking: 'collaborator with DFT experience and access to compute',
-      approach: 'The model predicts that configurational entropy stops dominating above a certain atomic radius mismatch. This needs formation-energy calculations across roughly 200 compositions.',
-      data: 'The full analytical model, the composition generation code and preliminary results for 18 cases.',
-      skills: [{ name: 'DFT (VASP or Quantum ESPRESSO)', w: 'key' }, { name: 'HPC cluster access', w: 'key' }, { name: 'Alloy thermodynamics', w: 'opt' }],
-      author: 'Perfil verificado #3902', sealed: '2026-01-27T11:14:33Z', requestSent: false, access: []
+      title: 'Validation DFT d’alliages à haute entropie',
+      summary: 'J’ai un modèle théorique prédisant la stabilité de phase dans des alliages à cinq composants, mais je ne peux pas le tester sans calcul ab initio à grande échelle.',
+      seeking: 'collaborateur·rice avec expérience en DFT et accès au calcul',
+      approach: 'Le modèle prédit que l’entropie configurationnelle cesse de dominer au-delà d’un certain écart de rayon atomique. Cela demande des calculs d’énergie de formation sur environ 200 compositions.',
+      data: 'Le modèle analytique complet, le code de génération des compositions et des résultats préliminaires pour 18 cas.',
+      skills: [{ name: 'DFT (VASP or Quantum ESPRESSO)', w: 'key' }, { name: 'Accès à un cluster HPC', w: 'key' }, { name: 'Thermodynamique des alliages', w: 'opt' }],
+      author: 'Profil vérifié #3902', sealed: '2026-01-27T11:14:33Z', requestSent: false, access: []
     },
     {
       id: 'SYN-2026-0688', mine: false, level: 1, field: 'lingcomp', lang: 'es',
-      title: 'Deriva semántica en corpus diacrónicos del español',
-      summary: 'Los métodos de deriva semántica se han probado casi solo en inglés. Quiero saber si los cambios que detectan en español son reales o artefactos del desequilibrio de los corpus históricos.',
-      seeking: 'especialista en corpus históricos con criterio filológico, no solo computacional',
-      approach: 'La hipótesis es que buena parte de la deriva detectada por embeddings diacrónicos en español refleja cambios de género textual en el corpus, no cambio semántico. Propongo un control estratificado por tipo de documento.',
-      data: 'Corpus compilado de 1450–1900 con metadatos de género textual y la línea base de embeddings ya entrenada.',
-      skills: [{ name: 'Corpus históricos', w: 'key' }, { name: 'Embeddings diacrónicos', w: 'key' }, { name: 'Filología hispánica', w: 'opt' }],
-      author: 'Perfil verificado #5023', sealed: '2026-04-02T07:48:19Z', requestSent: false, access: []
+      title: 'Dérive sémantique dans les corpus diachroniques de l’espagnol',
+      summary: 'Les méthodes de dérive sémantique n’ont été testées presque que sur l’anglais. Je veux savoir si les changements qu’elles détectent en espagnol sont réels ou des artefacts du déséquilibre des corpus historiques.',
+      seeking: 'spécialiste des corpus historiques avec un jugement philologique, pas seulement computationnel',
+      approach: 'L’hypothèse est qu’une bonne part de la dérive détectée par les embeddings diachroniques en espagnol reflète des changements de genre textuel dans le corpus, non un changement sémantique. Je propose un contrôle stratifié par type de document.',
+      data: 'Corpus compilé de 1450–1900 avec métadonnées de genre textuel et la ligne de base d’embeddings déjà entraînée.',
+      skills: [{ name: 'Corpus historiques', w: 'key' }, { name: 'Embeddings diachroniques', w: 'key' }, { name: 'Philologie hispanique', w: 'opt' }],
+      author: 'Profil vérifié #5023', sealed: '2026-04-02T07:48:19Z', requestSent: false, access: []
     },
     {
       id: 'SYN-2026-0913', mine: true, level: 3, field: 'clim', lang: 'es',
-      title: 'Reconstrucción de olas de calor preinstrumentales a partir de archivos agrícolas',
-      summary: 'Las fechas de vendimia y siega de los archivos municipales son un termómetro indirecto sin explotar para episodios extremos anteriores a 1850.',
-      seeking: 'especialista en dendrocronología para calibrar la señal contra anillos de crecimiento',
-      approach: 'La hipótesis es que la dispersión entre municipios vecinos en la fecha de vendimia mide la intensidad del episodio de calor mejor que la fecha media, que es lo que se ha usado hasta ahora.',
-      data: 'Base de datos propia de 9.400 fechas de vendimia y siega (1420–1874) de 61 municipios, ya georreferenciada y normalizada.',
-      skills: [{ name: 'Dendrocronología', w: 'key' }, { name: 'Series climáticas proxy', w: 'key' }, { name: 'SIG', w: 'opt' }],
+      title: 'Reconstruction de canicules préinstrumentales à partir d’archives agricoles',
+      summary: 'Les dates de vendange et de moisson des archives municipales sont un thermomètre indirect inexploité pour les épisodes extrêmes antérieurs à 1850.',
+      seeking: 'spécialiste en dendrochronologie pour calibrer le signal sur les cernes de croissance',
+      approach: 'L’hypothèse est que la dispersion entre communes voisines dans la date de vendange mesure l’intensité de l’épisode de chaleur mieux que la date moyenne, qui est ce qu’on a utilisé jusqu’ici.',
+      data: 'Base de données propre de 9 400 dates de vendange et de moisson (1420–1874) de 61 communes, déjà géoréférencée et normalisée.',
+      skills: [{ name: 'Dendrocronología', w: 'key' }, { name: 'Séries climatiques indirectes', w: 'key' }, { name: 'SIG', w: 'opt' }],
       author: null, sealed: '2026-05-19T10:02:55Z',
       requests: [
-        { id: 'r1', who: 'Perfil verificado #7734', aff: 'Univ. de Berna · Dendrocronología', motive: 'Trabajo con cronologías de anillos de la vertiente norte de los Alpes desde 2016. Tengo series calibradas que solapan con tu ventana.', status: 'pendiente' },
-        { id: 'r2', who: 'Perfil verificado #6120', aff: 'CSIC · Historia moderna', motive: 'He vaciado archivos municipales del valle del Duero para otro proyecto y podría ampliar tu base con unos 1.200 registros más del XVII.', status: 'pendiente' }
+        { id: 'r1', who: 'Profil vérifié #7734', aff: 'Univ. de Berne · Dendrochronologie', motive: 'Je travaille sur des chronologies de cernes du versant nord des Alpes depuis 2016. Je dispose de séries calibrées qui recouvrent votre fenêtre.', status: 'pendiente' },
+        { id: 'r2', who: 'Profil vérifié #6120', aff: 'CSIC · Histoire moderne', motive: 'J’ai dépouillé des archives municipales de la vallée du Douro pour un autre projet et je pourrais enrichir votre base d’environ 1 200 enregistrements du XVIIe.', status: 'pendiente' }
       ],
-      access: [{ who: 'Perfil verificado #8801', aff: 'Univ. de Zaragoza', level: 2, since: '2026-06-02T09:15:00Z' }]
+      access: [{ who: 'Profil vérifié #8801', aff: 'Univ. de Saragosse', level: 2, since: '2026-06-02T09:15:00Z' }]
     },
     {
       id: 'SYN-2026-0770', mine: true, level: 1, field: 'econ', lang: 'es',
-      title: 'Efecto de las ferias medievales en la persistencia de mercados locales',
-      summary: 'Una intuición sin desarrollar: los municipios con feria concedida antes de 1400 siguen teniendo hoy más densidad de comercio minorista. Falta comprobar si es causal o pura geografía.',
-      seeking: 'economista con experiencia en identificación causal con datos históricos',
+      title: 'Effet des foires médiévales sur la persistance des marchés locaux',
+      summary: 'Une intuition non développée : les communes ayant obtenu une foire avant 1400 présentent encore aujourd’hui une densité de commerce de détail plus élevée. Reste à vérifier si c’est causal ou pure géographie.',
+      seeking: 'économiste expérimenté·e en identification causale sur données historiques',
       approach: '', data: '',
-      skills: [{ name: 'Identificación causal', w: 'key' }],
+      skills: [{ name: 'Identification causale', w: 'key' }],
       author: null, sealed: '2026-07-28T14:31:09Z', requests: [], access: []
     },
 
     /* --- Consortium under construction for a live call --- */
     {
       id: 'SYN-2026-1120', type: 'consortium', mine: false, level: 1, field: 'ecomar', lang: 'es',
-      title: 'Consorcio para HORIZON-CL6-2026-BIODIV-02 · Resiliencia de la pesca artesanal atlántica',
-      summary: 'Consorcio en formación para la convocatoria de biodiversidad marina. Tenemos coordinación y muestreo cubiertos; faltan la parte socioeconómica y la interlocución con las flotas.',
-      seeking: 'líder de WP4 (modelización socioeconómica) y socio de WP5 (participación de flotas)',
-      approach: 'El ángulo del que partimos es que la resiliencia de la flota artesanal depende más de la diversificación de artes que del tamaño de la cuota. La propuesta articula tres WP de campo y dos de síntesis, con una comparación explícita entre regiones con y sin cogestión.',
-      data: 'Borrador de propuesta (Parte B, 18 páginas), presupuesto preliminar por socio y cartas de interés ya firmadas por dos cofradías.',
-      skills: [{ name: 'Modelización socioeconómica', w: 'key' }, { name: 'Participación de actores', w: 'key' }],
+      title: 'Consortium pour HORIZON-CL6-2026-BIODIV-02 · Résilience de la pêche artisanale atlantique',
+      summary: 'Consortium en constitution pour l’appel biodiversité marine. La coordination et l’échantillonnage sont couverts ; il manque le volet socio-économique et le dialogue avec les flottes.',
+      seeking: 'responsable du WP4 (modélisation socio-économique) et partenaire du WP5 (participation des flottes)',
+      approach: 'Notre angle de départ est que la résilience de la flotte artisanale dépend davantage de la diversification des engins que de la taille du quota. La proposition articule trois WP de terrain et deux de synthèse, avec une comparaison explicite entre régions avec et sans cogestion.',
+      data: 'Brouillon de proposition (Partie B, 18 pages), budget préliminaire par partenaire et lettres d’intérêt déjà signées par deux confréries de pêcheurs.',
+      skills: [{ name: 'Modélisation socio-économique', w: 'key' }, { name: 'Participation des acteurs', w: 'key' }],
       call: { id: 'HORIZON-CL6-2026-BIODIV-02', deadline: '2026-09-17T17:00:00Z' },
       coordinator: { org: 'Universidade de Vigo', country: 'ES', kind: 'Universidad' },
       partners: [
-        { org: 'IFREMER', country: 'FR', kind: 'Centro tecnológico', wp: 'WP2 · Muestreo a bordo' }
+        { org: 'IFREMER', country: 'FR', kind: 'Centre technologique', wp: 'WP2 · Échantillonnage à bord' }
       ],
       slots: [
-        { role: 'Líder de WP4 · Modelización socioeconómica', kind: 'Universidad o centro tecnológico', country: 'Cualquier Estado miembro', widening: true },
-        { role: 'Socio de WP5 · Participación de flotas', kind: 'ONG, cofradía u organización de productores', country: 'Atlántico norte', widening: false }
+        { role: 'Responsable WP4 · Modélisation socio-économique', kind: 'Université ou centre technologique', country: 'N’importe quel État membre', widening: true },
+        { role: 'Partenaire WP5 · Participation des flottes', kind: 'ONG, confrérie ou organisation de producteurs', country: 'Atlantique nord', widening: false }
       ],
-      author: 'Perfil verificado #9310', sealed: '2026-06-30T08:00:00Z', requestSent: false, access: []
+      author: 'Profil vérifié #9310', sealed: '2026-06-30T08:00:00Z', requestSent: false, access: []
     },
 
     /* --- Multi-site comparative study (the fisheries case) --- */
     {
       id: 'SYN-2026-1044', type: 'comparative', mine: false, level: 1, field: 'ecomar', lang: 'es',
-      title: 'Ya analicé las capturas de arrastre en Gran Sol: busco quién repita el mismo análisis en su caladero',
-      summary: 'Tengo hecho y cerrado el análisis de CPUE para la zona 27.VII con flota española bajo TAC comunitario. Ofrezco el protocolo completo a quien lo aplique tal cual en su zona y su flota: su resultado es el contrafactual del mío.',
-      seeking: 'equipos con datos de desembarque y observadores a bordo dispuestos a repetir el mismo protocolo en su caladero',
-      approach: 'La hipótesis es que el régimen de cuotas explica más varianza en la CPUE estandarizada que las condiciones oceanográficas del caladero. Mi serie sola no puede separarlo: hace falta al menos una réplica bajo un régimen regulatorio distinto manteniendo el arte y la ventana idénticos.',
-      data: 'Protocolo completo de estandarización paso a paso, código R de ajuste del GLM, plantilla de volcado de datos y mi serie depurada de Gran Sol para que puedas contrastar tu implementación contra la mía antes de correrla.',
-      skills: [{ name: 'Estandarización de CPUE', w: 'key' }, { name: 'Acceso a datos de observadores', w: 'key' }],
-      protocol: 'Estandarización de CPUE mediante GLM con esfuerzo nominal corregido por potencia del motor, sobre desembarques mensuales por marea y especie objetivo.',
+      title: 'J’ai déjà analysé les captures au chalut en Grande Sole : je cherche qui répétera la même analyse sur son lieu de pêche',
+      summary: 'L’analyse de CPUE pour la zone 27.VII avec une flotte espagnole sous TAC communautaire est faite et close. J’offre le protocole complet à qui l’appliquera tel quel dans sa zone et sa flotte : son résultat est le contrefactuel du mien.',
+      seeking: 'équipes disposant de données de débarquement et d’observateurs à bord, prêtes à répéter le même protocole sur leur lieu de pêche',
+      approach: 'L’hypothèse est que le régime de quotas explique davantage de variance dans la CPUE standardisée que les conditions océanographiques du lieu de pêche. Ma série seule ne peut pas les séparer : il faut au moins une réplication sous un régime réglementaire différent, en gardant l’engin et la fenêtre identiques.',
+      data: 'Protocole complet de standardisation pas à pas, code R d’ajustement du GLM, modèle de saisie des données et ma série nettoyée de Grande Sole pour que vous puissiez confronter votre implémentation à la mienne avant de la lancer.',
+      skills: [{ name: 'Standardisation de la CPUE', w: 'key' }, { name: 'Accès aux données d’observateurs', w: 'key' }],
+      protocol: 'Standardisation de la CPUE par GLM avec effort nominal corrigé par la puissance moteur, sur les débarquements mensuels par marée et espèce cible.',
       origin: {
-        site: 'Gran Sol', zone: '27.VII', org: 'Universidade de Vigo', country: 'ES',
+        site: 'Grande Sole', zone: '27.VII', org: 'Universidade de Vigo', country: 'ES',
         period: '2019–2025',
-        result: 'CPUE estandarizada estable pese a un descenso del 18 % en el esfuerzo nominal. Sin réplica no se puede saber si eso es mérito de la regulación o del caladero.',
-        values: { 'Zona FAO': '27.VII', 'Bandera de la flota': 'España', 'Régimen de cuotas': 'TAC comunitario' }
+        result: 'CPUE standardisée stable malgré une baisse de 18 % de l’effort nominal. Sans réplication, impossible de savoir si c’est le mérite de la réglementation ou du lieu de pêche.',
+        values: { 'Zone FAO': '27.VII', 'Pavillon de la flotte': 'España', 'Régime de quotas': 'TAC communautaire' }
       },
-      constants: ['Arte de pesca: arrastre de fondo', 'Ventana temporal: 2019–2025', 'Métrica: CPUE estandarizada por GLM', 'Resolución: mensual por marea'],
-      contrasts: ['Zona FAO', 'Bandera de la flota', 'Régimen de cuotas'],
+      constants: ['Engin : chalut de fond', 'Fenêtre temporelle : 2019–2025', 'Métrique : CPUE standardisée par GLM', 'Résolution : mensuelle par marée'],
+      contrasts: ['Zone FAO', 'Pavillon de la flotte', 'Régime de quotas'],
       replicas: [
-        { org: 'IFREMER', site: 'Golfo de Vizcaya', country: 'FR', status: 'completada', keepsConstants: true,
-          values: { 'Zona FAO': '27.VIII', 'Bandera de la flota': 'Francia', 'Régimen de cuotas': 'TAC comunitario' } },
-        { org: 'IPMA', site: 'Plataforma portuguesa', country: 'PT', status: 'en curso', keepsConstants: true,
-          values: { 'Zona FAO': '27.IX', 'Bandera de la flota': 'Portugal', 'Régimen de cuotas': 'TAC comunitario' } },
-        { org: 'INRH', site: 'Atlántico marroquí', country: 'MA', status: 'propuesta', keepsConstants: true,
-          values: { 'Zona FAO': '34.1.1', 'Bandera de la flota': 'Marruecos', 'Régimen de cuotas': 'Acuerdo bilateral' } }
+        { org: 'IFREMER', site: 'Golfe de Gascogne', country: 'FR', status: 'completada', keepsConstants: true,
+          values: { 'Zone FAO': '27.VIII', 'Pavillon de la flotte': 'Francia', 'Régime de quotas': 'TAC communautaire' } },
+        { org: 'IPMA', site: 'Plateau portugais', country: 'PT', status: 'en cours', keepsConstants: true,
+          values: { 'Zone FAO': '27.IX', 'Pavillon de la flotte': 'Portugal', 'Régime de quotas': 'TAC communautaire' } },
+        { org: 'INRH', site: 'Atlantique marocain', country: 'MA', status: 'propuesta', keepsConstants: true,
+          values: { 'Zone FAO': '34.1.1', 'Pavillon de la flotte': 'Marruecos', 'Régime de quotas': 'Accord bilatéral' } }
       ],
-      wanted: 'Cualquier caladero bajo un régimen de cuotas que no sea el TAC comunitario. Las réplicas europeas confirman que el protocolo viaja bien, pero todas comparten regulación: sin salir de ella, la pregunta central se queda sin responder.',
-      authorship: 'Autoría para cada equipo que complete una réplica con al menos 24 meses de serie. Primera firma para el equipo de origen en el artículo conjunto; cada réplica conserva el derecho a publicar su propio caso por separado citando el protocolo. Grupo de redacción de cuatro personas.',
-      author: 'Perfil verificado #4102', sealed: '2026-05-08T12:20:00Z', requestSent: false, access: []
+      wanted: 'N’importe quel lieu de pêche sous un régime de quotas autre que le TAC communautaire. Les réplications européennes confirment que le protocole voyage bien, mais elles partagent toutes la même réglementation : sans en sortir, la question centrale reste sans réponse.',
+      authorship: 'Signature pour chaque équipe qui achève une réplication avec au moins 24 mois de série. Première signature à l’équipe d’origine sur l’article commun ; chaque réplication conserve le droit de publier son propre cas séparément en citant le protocole. Groupe de rédaction de quatre personnes.',
+      author: 'Profil vérifié #4102', sealed: '2026-05-08T12:20:00Z', requestSent: false, access: []
     },
 
     /* --- Comparative, coordinated mode: nothing run yet, everyone launches together --- */
     {
       id: 'SYN-2026-1188', type: 'comparative', mode: 'coordinado', mine: false, level: 1, field: 'ecomar', lang: 'es',
-      title: 'Microplásticos en playas: protocolo único con arranque simultáneo en marzo de 2027',
-      summary: 'Nadie ha ejecutado esto todavía. Buscamos sitios que se comprometan a muestrear con el mismo protocolo en la misma ventana de cuatro semanas, para que las diferencias entre playas no acaben siendo diferencias de método.',
-      seeking: 'grupos con acceso a playa y capacidad de tamizado en seco, en cualquier latitud',
-      approach: 'La hipótesis preregistrada es que la carga de microplásticos escala con la densidad de población costera dentro de un radio de 50 km, y que esa relación se aplana por encima de cierta latitud. Solo se puede contrastar con un muestreo simultáneo: si cada sitio muestrea en su propia estación, la variación estacional se confunde con la latitudinal.',
-      data: 'Protocolo de muestreo y tamizado paso a paso, plantilla de registro, material de calibración inter-laboratorio y el script de análisis ya escrito contra datos simulados.',
-      skills: [{ name: 'Tamizado y cuantificación de microplásticos', w: 'key' }, { name: 'Acceso a playa en la ventana acordada', w: 'key' }],
-      plan: 'Modelo mixto con sitio como efecto aleatorio y densidad de población costera, latitud y su interacción como efectos fijos. Contraste principal: el término de interacción. Exclusiones, transformaciones y criterio de parada fijados de antemano.',
-      launch: { window: 'marzo de 2027 · 4 semanas', commitBy: '2026-11-30T23:59:00Z' },
+      title: 'Microplastiques sur les plages : protocole unique avec démarrage simultané en mars 2027',
+      summary: 'Rien n’a encore été mené. Nous cherchons des sites qui s’engagent à échantillonner avec le même protocole dans la même fenêtre de quatre semaines, afin que les différences entre plages ne finissent pas par être des différences de méthode.',
+      seeking: 'groupes avec accès à une plage et capacité de tamisage à sec, à n’importe quelle latitude',
+      approach: 'L’hypothèse préenregistrée est que la charge en microplastiques varie avec la densité de population côtière dans un rayon de 50 km, et que cette relation s’aplatit au-delà d’une certaine latitude. Cela ne peut être testé qu’avec un échantillonnage simultané : si chaque site échantillonne à sa propre saison, la variation saisonnière se confond avec la latitudinale.',
+      data: 'Protocole d’échantillonnage et de tamisage pas à pas, modèle de saisie, matériel de calibration inter-laboratoires et le script d’analyse déjà écrit sur données simulées.',
+      skills: [{ name: 'Tamisage et quantification des microplastiques', w: 'key' }, { name: 'Accès à une plage dans la fenêtre convenue', w: 'key' }],
+      plan: 'Modèle mixte avec le site en effet aléatoire et la densité de population côtière, la latitude et leur interaction en effets fixes. Contraste principal : le terme d’interaction. Exclusions, transformations et critère d’arrêt fixés à l’avance.',
+      launch: { window: 'mars 2027 · 4 semaines', commitBy: '2026-11-30T23:59:00Z' },
       power: { needed: 15, committed: 7, interested: 4, effect: 'd = 0,35', level: '0,80' },
       strata: [
-        { name: 'Atlántico templado', needed: 4, have: 4 },
+        { name: 'Atlantique tempéré', needed: 4, have: 4 },
         { name: 'Mediterráneo', needed: 4, have: 3 },
         { name: 'Tropical', needed: 4, have: 0 },
         { name: 'Subártico', needed: 3, have: 0 }
       ],
       requirements: [
-        { name: 'Acceso a playa arenosa en la ventana de marzo', key: true },
-        { name: 'Tamiz de 1 mm y balanza de precisión', key: true },
-        { name: 'Participar en la calibración inter-laboratorio previa', key: true },
-        { name: 'Microscopio estereoscópico', key: false }
+        { name: 'Accès à une plage sableuse dans la fenêtre de mars', key: true },
+        { name: 'Tamis de 1 mm et balance de précision', key: true },
+        { name: 'Participer à la calibration inter-laboratoires préalable', key: true },
+        { name: 'Microscope stéréoscopique', key: false }
       ],
-      wanted: 'Sitios tropicales y subárticos. Los templados ya están cubiertos: un sitio más en el Atlántico templado no añade nada al contraste latitudinal, que es la pregunta.',
-      authorship: 'Autoría para todo sitio que complete el muestreo y entregue los datos en el formato acordado. Orden alfabético con grupo de redacción rotatorio; primera y última firma decididas por el comité de coordinación antes del arranque, no después de ver los resultados.',
-      author: 'Perfil verificado #7781', sealed: '2026-04-19T09:30:00Z', requestSent: false, access: []
+      wanted: 'Sites tropicaux et subarctiques. Les tempérés sont déjà couverts : un site de plus en Atlantique tempéré n’ajoute rien au contraste latitudinal, qui est la question.',
+      authorship: 'Signature pour tout site qui achève l’échantillonnage et livre les données au format convenu. Ordre alphabétique avec groupe de rédaction tournant ; première et dernière signatures décidées par le comité de coordination avant le démarrage, non après avoir vu les résultats.',
+      author: 'Profil vérifié #7781', sealed: '2026-04-19T09:30:00Z', requestSent: false, access: []
     }
   ];
 
   var specialists = [
-    { id: 'sp1', mine: false, field: 'bioinf', who: 'Perfil verificado #3310', aff: 'EMBL Heidelberg',
-      headline: 'Modelos generativos aplicados a datos ómicos de célula única',
-      techs: ['Modelos de difusión', 'scVI / scanpy', 'PyTorch', 'Integración multi-batch'], avail: 'open' },
-    { id: 'sp2', mine: false, field: 'clim', who: 'Perfil verificado #7734', aff: 'Univ. de Berna',
-      headline: 'Cronologías de anillos de crecimiento para reconstrucción climática',
-      techs: ['Dendrocronología', 'Calibración proxy-instrumental', 'R / dplR'], avail: 'open' },
-    { id: 'sp3', mine: false, field: 'matphys', who: 'Perfil verificado #9042', aff: 'CSIC · ICMM',
-      headline: 'Cálculo ab initio a gran escala con acceso a cluster propio',
-      techs: ['VASP', 'Quantum ESPRESSO', 'Cálculo de energías de formación', 'HPC'], avail: 'busy' },
-    { id: 'sp4', mine: false, field: 'hist', who: 'Perfil verificado #2477', aff: 'Univ. de Santiago',
-      headline: 'Transcripción y datación de escrituras altomedievales peninsulares',
-      techs: ['Escritura visigótica', 'Escritura carolina', 'Codicología', 'Edición TEI'], avail: 'open' },
-    { id: 'sp5', mine: false, field: 'lingcomp', who: 'Perfil verificado #6655', aff: 'UNED',
-      headline: 'Corpus históricos del español con control filológico de fuentes',
-      techs: ['Corpus diacrónicos', 'Anotación morfosintáctica', 'Embeddings temporales'], avail: 'open' }
+    { id: 'sp1', mine: false, field: 'bioinf', who: 'Profil vérifié #3310', aff: 'EMBL Heidelberg',
+      headline: 'Modèles génératifs appliqués aux données omiques sur cellule unique',
+      techs: ['Modèles de diffusion', 'scVI / scanpy', 'PyTorch', 'Intégration multi-lots'], avail: 'open' },
+    { id: 'sp2', mine: false, field: 'clim', who: 'Profil vérifié #7734', aff: 'Univ. de Berne',
+      headline: 'Chronologies de cernes de croissance pour la reconstruction climatique',
+      techs: ['Dendrocronología', 'Calibration indirecte-instrumentale', 'R / dplR'], avail: 'open' },
+    { id: 'sp3', mine: false, field: 'matphys', who: 'Profil vérifié #9042', aff: 'CSIC · ICMM',
+      headline: 'Calcul ab initio à grande échelle avec accès à un cluster propre',
+      techs: ['VASP', 'Quantum ESPRESSO', 'Calcul d’énergies de formation', 'HPC'], avail: 'busy' },
+    { id: 'sp4', mine: false, field: 'hist', who: 'Profil vérifié #2477', aff: 'Univ. de Saint-Jacques-de-Compostelle',
+      headline: 'Transcription et datation des écritures du haut Moyen Âge péninsulaire',
+      techs: ['Écriture wisigothique', 'Écriture caroline', 'Codicología', 'Édition TEI'], avail: 'open' },
+    { id: 'sp5', mine: false, field: 'lingcomp', who: 'Profil vérifié #6655', aff: 'UNED',
+      headline: 'Corpus historiques de l’espagnol avec contrôle philologique des sources',
+      techs: ['Corpus diachroniques', 'Annotation morphosyntaxique', 'Embeddings temporels'], avail: 'open' }
   ];
 
   var state = { view: 'explorar', type: null, field: null, q: '', step: 1, skills: [], specTechs: [], amend: null, consSlots: [], compConstants: [], compContrasts: [], compStrata: [] };
@@ -4265,3 +4258,5 @@
 })();
 
 </script>
+</body>
+</html>

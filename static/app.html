@@ -892,10 +892,6 @@
           <span class="fs-label" data-i18n="explore.lField"></span>
           <div class="chips" id="chips" role="group" data-i18n-aria="explore.byField"></div>
         </div>
-        <div class="fs-row">
-          <span class="fs-label" data-i18n="explore.lLang"></span>
-          <div class="chips chips-joined" id="lang-chips" role="group" data-i18n-aria="explore.byLang"></div>
-        </div>
         <div class="fs-row fs-state" id="filter-state" hidden>
           <span class="fs-label"></span>
           <div id="filter-state-body"></div>
@@ -2149,11 +2145,8 @@
     {
       id: 'SYN-2026-1510', mine: false, level: 1, field: 'lingcomp', lang: 'es', type: 'estancia',
       title: 'Estancia de tres meses: busco grupo con corpus diacrónico anotado',
-      titleEn: 'Three-month stay: seeking a group with an annotated diachronic corpus',
       summary: 'Necesito los tres meses fuera para la mención internacional y quiero que sirvan para algo: busco un grupo cuyo corpus anotado me permita validar el control por género textual que propongo.',
-      abstractEn: 'I need the three months abroad for the international doctorate mention, and I want them to count: I am looking for a group whose annotated corpus lets me validate the textual-genre control I propose.',
       seeking: 'grupo con corpus histórico anotado por género textual y disposición a firmar la carta de aceptación',
-      seekingEn: 'group with a corpus annotated by textual genre, willing to sign the acceptance letter',
       approach: 'Llevo la línea base entrenada sobre corpus español. Lo que no puedo hacer aquí es contrastarla contra un corpus anotado de forma independiente, que es lo único que distingue deriva real de sesgo de muestreo.',
       data: 'Línea base de embeddings diacrónicos, corpus propio 1450–1900 con metadatos de género y el cuaderno de evaluación.',
       skills: [{ name: 'Corpus anotados diacrónicos', w: 'key' }, { name: 'Anotación por género textual', w: 'key' }],
@@ -2171,7 +2164,6 @@
       id: 'SYN-2026-1533', mine: false, level: 1, field: 'matphys', lang: 'en', type: 'estancia',
       title: 'We can host a 3–6 month stay: cluster time for high-entropy alloy calculations',
       summary: 'We have compute allocation and a supervisor who will sign the acceptance letter. We cannot fund the mobility itself: the visitor brings their own grant.',
-      abstractEn: '',
       seeking: 'doctoral candidate with a formation-energy problem large enough to justify the allocation, bringing their own mobility funding',
       approach: 'Our contribution is the allocation and the workflow for large composition sweeps. What we do not have is a candidate with a well-posed thermodynamic question to spend it on.',
       data: 'Cluster allocation of 400.000 CPU-hours, the sweep workflow and the convergence protocol used in two previous papers.',
@@ -2189,11 +2181,8 @@
     {
       id: 'SYN-2026-1402', mine: false, level: 1, field: 'ecomar', lang: 'es', type: 'cotutela',
       title: 'Conectividad larvaria en el Mediterráneo occidental: busco institución de acogida',
-      titleEn: 'Larval connectivity in the western Mediterranean: seeking a host institution',
       summary: 'Tengo la tesis empezada y director en Barcelona. Me falta el grupo de fuera que aporte la modelización biofísica de dispersión y un programa de doctorado que admita cotutela.',
-      abstractEn: 'The thesis is under way with a supervisor in Barcelona. What is missing is the partner group contributing biophysical dispersal modelling, and a doctoral programme that accepts a cotutelle.',
       seeking: 'grupo con modelización biofísica de dispersión y programa de doctorado que admita cotutela',
-      seekingEn: 'group with biophysical dispersal modelling and a doctoral programme that accepts cotutelle',
       approach: 'La hipótesis es que los corredores de conectividad entre reservas marinas no coinciden con los que predice el modelo hidrodinámico medio, porque los episodios de viento de tres días concentran el transporte. Propongo acoplar el modelo de dispersión a la serie de viento horaria, no a la media mensual.',
       data: 'Serie de reclutamiento de 6 reservas (2018–2025), genotipado de 1.400 individuos y el código del modelo acoplado que ya corre con forzamiento medio.',
       skills: [{ name: 'Modelización lagrangiana de dispersión', w: 'key' }, { name: 'Genética de poblaciones marinas', w: 'key' }, { name: 'Oceanografía física', w: 'opt' }],
@@ -2212,7 +2201,6 @@
       id: 'SYN-2026-1455', mine: false, level: 1, field: 'clim', lang: 'en', type: 'cotutela',
       title: 'Cotutelle host offer: documentary palaeoclimate, Université Grenoble Alpes',
       summary: 'We hold a funded three-year contract and can host a cotutelle. We are looking for a first-year candidate whose home institution will sign, and who already has a transcribed documentary series to work on.',
-      abstractEn: '',
       seeking: 'first-year doctoral candidate with a transcribed documentary series and a home institution willing to sign a cotutelle agreement',
       approach: 'Our side contributes the calibration against instrumental series and the uncertainty propagation. What the candidate brings is the archive and the palaeographic work; what we do not have is a documented series long enough to calibrate.',
       data: 'Instrumental series for the Alpine arc since 1760, the calibration code and two previous theses under the same framework.',
@@ -2231,11 +2219,8 @@
     {
       id: 'SYN-2026-0311', mine: false, level: 1, field: 'ecomar', lang: 'es',
       title: 'Modelo bayesiano para biodiversidad de arrecifes',
-      titleEn: 'Bayesian model for reef biodiversity',
       summary: 'Las series de biodiversidad de arrecife se analizan casi siempre con medias anuales, que borran los episodios de blanqueo cortos. Quiero saber si un enfoque jerárquico recupera esa señal.',
-      abstractEn: 'Reef biodiversity series are almost always analysed as annual means, which erase short bleaching episodes. I want to test whether a hierarchical approach recovers that signal.',
       seeking: 'especialista en modelos bayesianos jerárquicos para series temporales',
-      seekingEn: 'specialist in hierarchical Bayesian models for time series',
       approach: 'La hipótesis es que la varianza intraanual, y no la media, es lo que predice el colapso de la comunidad doce meses después. Propongo un modelo jerárquico con efectos de sitio anidados en arrecife y una verosimilitud de cola pesada para los episodios extremos.',
       data: 'Censos visuales propios de 11 arrecifes del Caribe (2009–2025, no publicados), con temperatura horaria in situ y el cuaderno de calibración de los observadores.',
       skills: [{ name: 'Modelos bayesianos jerárquicos', w: 'key' }, { name: 'Stan o PyMC', w: 'key' }, { name: 'Ecología de arrecifes', w: 'opt' }],
@@ -2245,7 +2230,6 @@
       id: 'SYN-2026-0842', mine: false, level: 2, field: 'bioinf', lang: 'en',
       title: 'Denoising single-cell RNA sequencing with diffusion models',
       summary: 'Technical noise in droplet platforms is corrected today with methods that flatten rare cell populations. I am looking for an alternative that does not sacrifice them.',
-      abstractEn: '',
       seeking: 'specialist in diffusion models applied to genomic time series',
       approach: 'The hypothesis is that technical noise follows a predictable temporal structure across replicates, and that a diffusion model trained on them can separate it from biological signal without collapsing infrequent cell types.',
       data: 'Count matrices from 14 unpublished in-house experiments, the library preparation protocol and the analysis notebook with the model parameters.',
@@ -2256,7 +2240,6 @@
       id: 'SYN-2025-1907', mine: false, level: 3, field: 'hist', lang: 'es',
       title: 'Corpus documental visigótico del siglo IX',
       summary: 'Un fondo monástico inédito de unos 400 folios que nadie ha transcrito. La cuestión es si permite fechar el paso de la escritura visigótica a la carolina en el noroeste peninsular.',
-      abstractEn: '',
       seeking: 'investigador/a con dominio de escritura visigótica',
       approach: 'La hipótesis es que el cambio de escritura no fue gradual sino que responde a la llegada de tres escribas concretos, identificables por rasgos de ductus. Propongo una datación por manos, no por documento.',
       data: 'Digitalización completa del fondo en alta resolución, ficha codicológica por folio y la transcripción parcial (63 folios) que ya tengo hecha.',
@@ -2267,7 +2250,6 @@
       id: 'SYN-2026-0455', mine: false, level: 1, field: 'matphys', lang: 'en',
       title: 'DFT validation of high-entropy alloys',
       summary: 'I have a theoretical model predicting phase stability in five-component alloys, but I cannot test it without ab initio computation at scale.',
-      abstractEn: '',
       seeking: 'collaborator with DFT experience and access to compute',
       approach: 'The model predicts that configurational entropy stops dominating above a certain atomic radius mismatch. This needs formation-energy calculations across roughly 200 compositions.',
       data: 'The full analytical model, the composition generation code and preliminary results for 18 cases.',
@@ -2277,11 +2259,8 @@
     {
       id: 'SYN-2026-0688', mine: false, level: 1, field: 'lingcomp', lang: 'es',
       title: 'Deriva semántica en corpus diacrónicos del español',
-      titleEn: 'Semantic drift in diachronic corpora of Spanish',
       summary: 'Los métodos de deriva semántica se han probado casi solo en inglés. Quiero saber si los cambios que detectan en español son reales o artefactos del desequilibrio de los corpus históricos.',
-      abstractEn: 'Semantic drift methods have been tested almost exclusively on English. I want to know whether the changes they detect in Spanish are real or artefacts of imbalance in historical corpora.',
       seeking: 'especialista en corpus históricos con criterio filológico, no solo computacional',
-      seekingEn: 'specialist in historical corpora with philological, not merely computational, judgement',
       approach: 'La hipótesis es que buena parte de la deriva detectada por embeddings diacrónicos en español refleja cambios de género textual en el corpus, no cambio semántico. Propongo un control estratificado por tipo de documento.',
       data: 'Corpus compilado de 1450–1900 con metadatos de género textual y la línea base de embeddings ya entrenada.',
       skills: [{ name: 'Corpus históricos', w: 'key' }, { name: 'Embeddings diacrónicos', w: 'key' }, { name: 'Filología hispánica', w: 'opt' }],
@@ -2290,11 +2269,8 @@
     {
       id: 'SYN-2026-0913', mine: true, level: 3, field: 'clim', lang: 'es',
       title: 'Reconstrucción de olas de calor preinstrumentales a partir de archivos agrícolas',
-      titleEn: 'Reconstructing pre-instrumental heat waves from agricultural archives',
       summary: 'Las fechas de vendimia y siega de los archivos municipales son un termómetro indirecto sin explotar para episodios extremos anteriores a 1850.',
-      abstractEn: 'Grape-harvest and reaping dates in municipal archives are an unexploited proxy thermometer for extreme episodes before 1850.',
       seeking: 'especialista en dendrocronología para calibrar la señal contra anillos de crecimiento',
-      seekingEn: 'dendrochronology specialist to calibrate the signal against tree rings',
       approach: 'La hipótesis es que la dispersión entre municipios vecinos en la fecha de vendimia mide la intensidad del episodio de calor mejor que la fecha media, que es lo que se ha usado hasta ahora.',
       data: 'Base de datos propia de 9.400 fechas de vendimia y siega (1420–1874) de 61 municipios, ya georreferenciada y normalizada.',
       skills: [{ name: 'Dendrocronología', w: 'key' }, { name: 'Series climáticas proxy', w: 'key' }, { name: 'SIG', w: 'opt' }],
@@ -2308,11 +2284,8 @@
     {
       id: 'SYN-2026-0770', mine: true, level: 1, field: 'econ', lang: 'es',
       title: 'Efecto de las ferias medievales en la persistencia de mercados locales',
-      titleEn: 'The effect of medieval fairs on the persistence of local markets',
       summary: 'Una intuición sin desarrollar: los municipios con feria concedida antes de 1400 siguen teniendo hoy más densidad de comercio minorista. Falta comprobar si es causal o pura geografía.',
-      abstractEn: 'An undeveloped intuition: towns granted a fair before 1400 still show higher retail density today. Whether that is causal or plain geography remains untested.',
       seeking: 'economista con experiencia en identificación causal con datos históricos',
-      seekingEn: 'economist experienced in causal identification with historical data',
       approach: '', data: '',
       skills: [{ name: 'Identificación causal', w: 'key' }],
       author: null, sealed: '2026-07-28T14:31:09Z', requests: [], access: []
@@ -2322,11 +2295,8 @@
     {
       id: 'SYN-2026-1120', type: 'consortium', mine: false, level: 1, field: 'ecomar', lang: 'es',
       title: 'Consorcio para HORIZON-CL6-2026-BIODIV-02 · Resiliencia de la pesca artesanal atlántica',
-      titleEn: 'Consortium for HORIZON-CL6-2026-BIODIV-02 · Resilience of Atlantic small-scale fisheries',
       summary: 'Consorcio en formación para la convocatoria de biodiversidad marina. Tenemos coordinación y muestreo cubiertos; faltan la parte socioeconómica y la interlocución con las flotas.',
-      abstractEn: 'Consortium being assembled for the marine biodiversity call. Coordination and sampling are covered; socio-economic modelling and fleet engagement are still open.',
       seeking: 'líder de WP4 (modelización socioeconómica) y socio de WP5 (participación de flotas)',
-      seekingEn: 'WP4 lead (socio-economic modelling) and WP5 partner (fleet engagement)',
       approach: 'El ángulo del que partimos es que la resiliencia de la flota artesanal depende más de la diversificación de artes que del tamaño de la cuota. La propuesta articula tres WP de campo y dos de síntesis, con una comparación explícita entre regiones con y sin cogestión.',
       data: 'Borrador de propuesta (Parte B, 18 páginas), presupuesto preliminar por socio y cartas de interés ya firmadas por dos cofradías.',
       skills: [{ name: 'Modelización socioeconómica', w: 'key' }, { name: 'Participación de actores', w: 'key' }],
@@ -2346,11 +2316,8 @@
     {
       id: 'SYN-2026-1044', type: 'comparative', mine: false, level: 1, field: 'ecomar', lang: 'es',
       title: 'Ya analicé las capturas de arrastre en Gran Sol: busco quién repita el mismo análisis en su caladero',
-      titleEn: 'I have analysed trawl catches in the Great Sole Bank: looking for someone to repeat the same analysis in their own fishing ground',
       summary: 'Tengo hecho y cerrado el análisis de CPUE para la zona 27.VII con flota española bajo TAC comunitario. Ofrezco el protocolo completo a quien lo aplique tal cual en su zona y su flota: su resultado es el contrafactual del mío.',
-      abstractEn: 'I have completed the CPUE analysis for FAO area 27.VII with a Spanish fleet under EU TAC. I am offering the full protocol to anyone who applies it as-is in their own area and fleet: their result becomes the counterfactual to mine.',
       seeking: 'equipos con datos de desembarque y observadores a bordo dispuestos a repetir el mismo protocolo en su caladero',
-      seekingEn: 'teams with landing data and on-board observers willing to repeat the same protocol in their own fishing ground',
       approach: 'La hipótesis es que el régimen de cuotas explica más varianza en la CPUE estandarizada que las condiciones oceanográficas del caladero. Mi serie sola no puede separarlo: hace falta al menos una réplica bajo un régimen regulatorio distinto manteniendo el arte y la ventana idénticos.',
       data: 'Protocolo completo de estandarización paso a paso, código R de ajuste del GLM, plantilla de volcado de datos y mi serie depurada de Gran Sol para que puedas contrastar tu implementación contra la mía antes de correrla.',
       skills: [{ name: 'Estandarización de CPUE', w: 'key' }, { name: 'Acceso a datos de observadores', w: 'key' }],
@@ -2380,11 +2347,8 @@
     {
       id: 'SYN-2026-1188', type: 'comparative', mode: 'coordinado', mine: false, level: 1, field: 'ecomar', lang: 'es',
       title: 'Microplásticos en playas: protocolo único con arranque simultáneo en marzo de 2027',
-      titleEn: 'Microplastics on beaches: one shared protocol with a simultaneous start in March 2027',
       summary: 'Nadie ha ejecutado esto todavía. Buscamos sitios que se comprometan a muestrear con el mismo protocolo en la misma ventana de cuatro semanas, para que las diferencias entre playas no acaben siendo diferencias de método.',
-      abstractEn: 'Nothing has been run yet. We are looking for sites willing to sample with one shared protocol in the same four-week window, so that differences between beaches are not differences of method.',
       seeking: 'grupos con acceso a playa y capacidad de tamizado en seco, en cualquier latitud',
-      seekingEn: 'groups with beach access and dry-sieving capacity, at any latitude',
       approach: 'La hipótesis preregistrada es que la carga de microplásticos escala con la densidad de población costera dentro de un radio de 50 km, y que esa relación se aplana por encima de cierta latitud. Solo se puede contrastar con un muestreo simultáneo: si cada sitio muestrea en su propia estación, la variación estacional se confunde con la latitudinal.',
       data: 'Protocolo de muestreo y tamizado paso a paso, plantilla de registro, material de calibración inter-laboratorio y el script de análisis ya escrito contra datos simulados.',
       skills: [{ name: 'Tamizado y cuantificación de microplásticos', w: 'key' }, { name: 'Acceso a playa en la ventana acordada', w: 'key' }],
@@ -2427,7 +2391,7 @@
       techs: ['Corpus diacrónicos', 'Anotación morfosintáctica', 'Embeddings temporales'], avail: 'open' }
   ];
 
-  var state = { view: 'explorar', type: null, field: null, contentLang: null, q: '', step: 1, skills: [], specTechs: [], amend: null, consSlots: [], compConstants: [], compContrasts: [], compStrata: [] };
+  var state = { view: 'explorar', type: null, field: null, q: '', step: 1, skills: [], specTechs: [], amend: null, consSlots: [], compConstants: [], compContrasts: [], compStrata: [] };
 
   /* ---------- Helpers ---------- */
   function $(id) { return document.getElementById(id); }
@@ -2669,8 +2633,7 @@
   function sealPayload(idea) {
     var base = {
       type: ideaType(idea), title: idea.title, field: idea.field, lang: idea.lang,
-      summary: idea.summary, abstractEn: idea.abstractEn || '',
-      titleEn: idea.titleEn || '', seekingEn: idea.seekingEn || '',
+      summary: idea.summary,
       seeking: idea.seeking, approach: idea.approach || '', data: idea.data || '',
       skills: idea.skills || []
     };
@@ -2789,7 +2752,7 @@
     fillSelect($('s-field'), fieldItems, $('s-field').value || 'bioinf');
     fillSelect($('f-lang'), LANGS.map(function (l) { return { value: l.code, label: l.name }; }), $('f-lang').value || uiLang);
     // availability select options carry data-i18n, already handled by applyI18n
-    renderTypeChips(); renderChips(); renderLangChips(); renderGrid(); renderSpecialists();
+    renderTypeChips(); renderChips(); renderGrid(); renderSpecialists();
     if (state.view === 'mias') renderMine();
     renderVerifyPicker();
     updateAbstractRow(); updateTypeFields();
@@ -2815,7 +2778,7 @@
 
   /* ---------- Explore ---------- */
   function countWith(cambio) {
-    var st = { type: state.type, field: state.field, contentLang: state.contentLang, q: state.q };
+    var st = { type: state.type, field: state.field, q: state.q };
     for (var k in cambio) st[k] = cambio[k];
     return ideas.filter(function (i) { return matchesWith(i, st); }).length;
   }
@@ -2855,7 +2818,7 @@
       b.setAttribute('aria-pressed', state.field === o.k ? 'true' : 'false');
       b.addEventListener('click', function () {
         state.field = o.k;
-        renderChips(); renderLangChips(); renderTypeChips(); renderGrid(); renderFilterState();
+        renderChips(); renderTypeChips(); renderGrid(); renderFilterState();
       });
       wrap.appendChild(b);
     });
@@ -2868,28 +2831,6 @@
       mas.addEventListener('click', function () { fieldsOpen = !fieldsOpen; renderChips(); });
       wrap.appendChild(mas);
     }
-  }
-  function renderLangChips() {
-    var wrap = $('lang-chips');
-    wrap.textContent = '';
-    var used = [];
-    ideas.forEach(function (i) { if (used.indexOf(i.lang) === -1) used.push(i.lang); });
-    // Cuenta lo que puedes leer, no en lo que se escribió: una idea en
-    // castellano con versión inglesa completa entra también en «inglés».
-    var opts = [{ k: null, label: t('common.allLangs') }].concat(used.map(function (c) {
-      return { k: c, label: langName(c) };
-    }));
-    opts.forEach(function (o) {
-      var b = el('button', 'chip', o.label);
-      b.type = 'button';
-      chipCount(b, countWith({ contentLang: o.k }));
-      b.setAttribute('aria-pressed', state.contentLang === o.k ? 'true' : 'false');
-      b.addEventListener('click', function () {
-        state.contentLang = o.k;
-        renderLangChips(); renderChips(); renderTypeChips(); renderGrid(); renderFilterState();
-      });
-      wrap.appendChild(b);
-    });
   }
   /* Esta fila no es un filtro más: es lo que la web ofrece. Por eso va en
      segmentos unidos y con más peso que las de abajo. */
@@ -2909,7 +2850,7 @@
       b.setAttribute('aria-pressed', state.type === o.k ? 'true' : 'false');
       b.addEventListener('click', function () {
         state.type = o.k;
-        renderTypeChips(); renderChips(); renderLangChips(); renderGrid(); renderFilterState();
+        renderTypeChips(); renderChips(); renderGrid(); renderFilterState();
       });
       wrap.appendChild(b);
     });
@@ -2949,7 +2890,7 @@
      pantalla está vacía porque no hay nada o porque queda un filtro puesto. */
   function renderFilterState() {
     var fila = $('filter-state'), cuerpo = $('filter-state-body');
-    var activos = [state.type, state.field, state.contentLang, state.q].filter(Boolean).length;
+    var activos = [state.type, state.field, state.q].filter(Boolean).length;
     if (!activos) { fila.hidden = true; return; }
     fila.hidden = false;
     fila.querySelector('.fs-label').textContent = t('explore.lState');
@@ -2959,9 +2900,9 @@
     var limpiar = el('button', 'fs-clear', t('explore.clear'));
     limpiar.type = 'button';
     limpiar.addEventListener('click', function () {
-      state.type = null; state.field = null; state.contentLang = null; state.q = '';
+      state.type = null; state.field = null; state.q = '';
       $('q').value = '';
-      renderTypeChips(); renderChips(); renderLangChips(); renderGrid(); renderFilterState();
+      renderTypeChips(); renderChips(); renderGrid(); renderFilterState();
     });
     cuerpo.appendChild(limpiar);
   }
@@ -2984,10 +2925,9 @@
   function matchesWith(idea, st) {
     if (st.type && ideaType(idea) !== st.type) return false;
     if (st.field && idea.field !== st.field) return false;
-    if (st.contentLang && !readableIn(idea, st.contentLang)) return false;
     if (!st.q) return true;
     var q = st.q.toLowerCase();
-    var hay = [idea.title, idea.summary, idea.abstractEn || '', idea.seeking, fieldName(idea.field)].join(' ').toLowerCase();
+    var hay = [idea.title, idea.summary, idea.seeking, fieldName(idea.field)].join(' ').toLowerCase();
     return hay.indexOf(q) !== -1;
   }
   /* El nivel es una progresión, así que se dibuja como tal: tres marcas que
@@ -3005,44 +2945,11 @@
       mine ? t('common.mine') : t('common.level') + ' ' + idea.level));
     return span;
   }
-  /* Una idea NO se traduce sola: lo que está sellado es un texto concreto, y
-     traducirlo por nuestra cuenta rompería la correspondencia con la huella.
-     Lo único que existe es la versión que su autor haya escrito en inglés.
-
-     Y esa versión cuenta solo si está COMPLETA — título, resumen y perfil
-     buscado. Con media versión, la ficha salía con el título en castellano y
-     el cuerpo en inglés: incoherente, y por eso se leía como un error. */
-  function hasEn(idea) {
-    if (idea.lang === 'en') return true;
-    return !!(idea.titleEn && idea.titleEn.trim()
-           && idea.abstractEn && idea.abstractEn.trim()
-           && idea.seekingEn && idea.seekingEn.trim());
-  }
-  /* ¿Puede leerla alguien que lea este idioma? El inglés es la lengua franca:
-     es el único idioma al que una idea puede tener versión alternativa. */
-  function readableIn(idea, lang) {
-    return idea.lang === lang || (lang === 'en' && hasEn(idea));
-  }
-  function langTag(idea) {
-    var en = hasEn(idea);
-    var s = el('span', 'langtag' + (en ? ' has-abstract' : ''));
-    s.textContent = idea.lang.toUpperCase() + (en && idea.lang !== 'en' ? ' + EN' : '');
-    s.title = en ? t('idea.writtenIn', { lang: langName(idea.lang) }) + ' · ' + t('idea.hasAbstract')
-                 : t('idea.writtenIn', { lang: langName(idea.lang) });
-    return s;
-  }
-  /* Devuelve la ficha en un solo idioma, nunca a medias. */
+  /* Cada página se genera en un idioma y los datos de ejemplo vienen ya en
+     ese idioma, así que no hay nada que elegir: la ficha se muestra tal cual.
+     Antes cada idea llevaba media versión inglesa y salía mezclada. */
   function display(idea) {
-    if (idea.lang !== 'en' && uiLang !== idea.lang && hasEn(idea)) {
-      return {
-        title: idea.titleEn, summary: idea.abstractEn, seeking: idea.seekingEn,
-        translated: true, original: idea.title
-      };
-    }
-    return {
-      title: idea.title, summary: idea.summary, seeking: idea.seeking,
-      translated: false, original: null
-    };
+    return { title: idea.title, summary: idea.summary, seeking: idea.seeking };
   }
 
   function renderGrid() {
@@ -3061,7 +2968,6 @@
       top.appendChild(left);
       var right = el('div');
       right.style.cssText = 'display:flex; gap:6px; align-items:center;';
-      right.appendChild(langTag(idea));
       right.appendChild(levelPill(idea));
       top.appendChild(right);
       card.appendChild(top);
@@ -3069,7 +2975,6 @@
       card.appendChild(el('h3', null, dsp.title));
       // El título original va debajo, como en las tesis con título bilingüe:
       // lo sellado es ese, no la versión inglesa.
-      if (dsp.original) card.appendChild(el('p', 'title-orig', dsp.original));
 
       // type-specific status line: what a scanner needs to know first
       if (ideaType(idea) === 'consortium') {
@@ -3123,12 +3028,8 @@
       }
 
       card.appendChild(el('p', 'summary', dsp.summary));
-      if (dsp.translated) card.appendChild(el('p', 'translated-note', t('idea.writtenByAuthorEn')));
       // Sin versión inglesa y con la interfaz en otro idioma, se dice: es un
       // estado de la idea, no un descuido de la página.
-      if (!dsp.translated && idea.lang !== uiLang) {
-        card.appendChild(el('p', 'only-in', t('idea.onlyIn', { lang: langName(idea.lang) })));
-      }
       var seeks = el('p', 'seeks');
       seeks.appendChild(el('b', null, t('idea.seeks')));
       seeks.appendChild(document.createTextNode(' ' + dsp.seeking));
@@ -3139,7 +3040,7 @@
   }
   $('q').addEventListener('input', function (e) {
     state.q = e.target.value.trim();
-    renderGrid(); renderTypeChips(); renderChips(); renderLangChips(); renderFilterState();
+    renderGrid(); renderTypeChips(); renderChips(); renderFilterState();
   });
 
   /* ---------- Idea detail ---------- */
@@ -3502,7 +3403,6 @@
     top.appendChild(fieldLabel(idea.field));
     var right = el('div');
     right.style.cssText = 'display:flex; gap:6px; align-items:center;';
-    right.appendChild(langTag(idea));
     right.appendChild(levelPill(idea));
     top.appendChild(right);
     head.appendChild(top);
@@ -3511,7 +3411,6 @@
     h.id = 'panel-title';
     h.style.marginTop = '12px';
     head.appendChild(h);
-    if (dTit.original) head.appendChild(el('p', 'title-orig', dTit.original));
     body.appendChild(head);
 
     // seal
@@ -3532,15 +3431,8 @@
     body.appendChild(seal);
 
     var d = display(idea);
-    body.appendChild(block(d.translated ? t('idea.abstractEn') : t('idea.summaryPublic'), d.summary));
+    body.appendChild(block(t('idea.summaryPublic'), d.summary));
     // En el detalle sí se enseña el original completo: es lo que quedó sellado.
-    // El título original ya va bajo el titular del panel; aquí solo el resumen.
-    if (d.translated) {
-      body.appendChild(block(t('idea.originalIn', { lang: langName(idea.lang) }), idea.summary));
-    }
-    if (!d.translated && idea.lang !== uiLang) {
-      body.appendChild(el('p', 'translated-note', t('idea.onlyIn', { lang: langName(idea.lang) })));
-    }
     body.appendChild(block(t('idea.seeks'), d.seeking));
     renderTypeSections(idea, body);
 
@@ -3790,7 +3682,6 @@
       var tags = el('div');
       tags.style.cssText = 'display:flex; gap:6px; align-items:center; flex-wrap:wrap; margin-bottom:6px;';
       tags.appendChild(fieldLabel(idea.field));
-      tags.appendChild(langTag(idea));
       left.appendChild(tags);
       left.appendChild(el('h3', null, idea.title));
       var meta = el('p', 'own-meta');
@@ -4213,7 +4104,7 @@
       go.style.marginTop = '14px';
       go.addEventListener('click', function () { resetWizard(); setView('mias'); });
       area.appendChild(go);
-      renderChips(); renderLangChips(); renderGrid(); renderTabs(); renderVerifyPicker();
+      renderChips(); renderGrid(); renderTabs(); renderVerifyPicker();
       toast(t('publish.toast'));
     }).catch(function () {
       area.textContent = '';
@@ -4318,11 +4209,14 @@
     });
     sel.value = uiLang;
     sel.addEventListener('change', function () {
+      // Cada idioma es una página distinta: los datos de ejemplo vienen ya
+      // traducidos, así que cambiar de idioma es cambiar de dirección.
+      var destino = { es: '/app', en: '/app/en', fr: '/app/fr' }[sel.value];
+      if (destino && destino !== location.pathname) { location.href = destino; return; }
       uiLang = sel.value;
       // Cambiar de idioma filtra por lo que puedes leer. Si no hay contenido en
       // ese idioma —el francés, hoy— se cae al inglés, que es la lengua franca.
       // Queda visible en el chip, y con un clic se ven todas.
-      state.contentLang = ideas.some(function (i) { return readableIn(i, uiLang); }) ? uiLang : 'en';
       rebuildLanguageDependentUI();
       // El acuerdo se compone en JS, así que applyI18n no lo alcanza: si está
       // abierto, se vuelve a pintar entero en el idioma nuevo.
@@ -4350,7 +4244,7 @@
     $('f-mode').addEventListener('change', updateTypeFields);
     $('f-type').addEventListener('change', updateTypeFields);
     updateTypeFields();
-    renderTabs(); renderTypeChips(); renderChips(); renderLangChips();
+    renderTabs(); renderTypeChips(); renderChips();
     renderFilterState();
     renderSkills(); renderSpecTechs(); renderSpecialists();
     setStep(1);

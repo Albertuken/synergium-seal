@@ -71,6 +71,8 @@ def paginas_a_medir(tmp: Path):
         "proyecto-en": RAIZ / "static" / "proyecto.en.html",
         "proyecto-fr": RAIZ / "static" / "proyecto.fr.html",
         "maqueta": RAIZ / "static" / "app.html",
+        "maqueta-en": RAIZ / "static" / "app.en.html",
+        "maqueta-fr": RAIZ / "static" / "app.fr.html",
     }
 
     # La herramienta también es estática ya; solo hay que darle rutas
@@ -168,7 +170,7 @@ def test_la_sonda_detecta_desbordamiento(medidas):
 
 @pytest.mark.parametrize("pagina", ["proyecto", "proyecto-en", "proyecto-fr",
                                     "herramienta", "herramienta-en", "herramienta-fr",
-                                    "maqueta"])
+                                    "maqueta", "maqueta-en", "maqueta-fr"])
 @pytest.mark.parametrize("ancho", ANCHOS)
 def test_sin_desbordamiento_lateral(medidas, pagina, ancho):
     m = medidas[f"{pagina}@{ancho}"]

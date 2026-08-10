@@ -80,10 +80,20 @@ def proyecto_idioma(idioma: str):
     return send_from_directory(app.static_folder, PROYECTO[idioma])
 
 
+MAQUETA = {"es": "app.html", "en": "app.en.html", "fr": "app.fr.html"}
+
+
 @app.get("/app")
 def maqueta():
-    """La maqueta navegable de la aplicación. Datos simulados, sin servidor."""
-    return send_from_directory(app.static_folder, "app.html")
+    """La maqueta navegable. Datos simulados, sin servidor."""
+    return send_from_directory(app.static_folder, MAQUETA["es"])
+
+
+@app.get("/app/<idioma>")
+def maqueta_idioma(idioma: str):
+    if idioma not in MAQUETA or idioma == "es":
+        return redirect("/app")
+    return send_from_directory(app.static_folder, MAQUETA[idioma])
 
 
 # Las dos salen de build_web.py a partir de web/*.html. Se sirven con
