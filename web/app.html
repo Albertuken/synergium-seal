@@ -523,6 +523,13 @@
   .modal-head { padding: 20px 24px 0; }
   .modal-head h2 { font-size: 1.25rem; }
   .modal-body { padding: 18px 24px; display: flex; flex-direction: column; gap: 14px; }
+  /* La huella del propio acuerdo, visible antes de firmarlo. */
+  .memo-seal {
+    margin-top: 14px; padding: 11px 14px; border: 1px dashed var(--line-strong);
+    border-radius: var(--radius); display: flex; gap: 12px; align-items: baseline;
+    flex-wrap: wrap; background: var(--bg);
+  }
+  .memo-seal .mono-sm { color: var(--wax); word-break: break-all; }
   .memo-terms { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
   .memo-terms li { background: var(--paper-alt); padding: 11px 14px; display: grid; grid-template-columns: 130px 1fr; gap: 12px; font-size: 0.88rem; }
   @media (max-width: 520px) { .memo-terms li { grid-template-columns: 1fr; gap: 4px; } }
@@ -927,17 +934,21 @@
 <div class="modal-wrap" id="memo-wrap" hidden>
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="memo-title">
     <div class="modal-head">
-      <span class="eyebrow" data-i18n="memo.eyebrow"></span>
-      <h2 id="memo-title" data-i18n="memo.title"></h2>
+      <span class="eyebrow"></span>
+      <h2 id="memo-title"></h2>
     </div>
     <div class="modal-body">
-      <p class="hint" data-i18n="memo.intro"></p>
+      <p class="hint"></p>
       <ul class="memo-terms" id="memo-terms"></ul>
-      <p class="hint" data-i18n="memo.simNote"></p>
+      <div class="memo-seal" id="memo-seal" hidden>
+        <span class="mt" id="memo-seal-label"></span>
+        <span class="mono-sm" id="memo-seal-hash">—</span>
+      </div>
+      <p class="hint" id="memo-note"></p>
     </div>
     <div class="modal-foot">
       <button class="btn btn-ghost" type="button" id="memo-cancel" data-i18n="common.cancel"></button>
-      <button class="btn btn-ok" type="button" id="memo-sign" data-i18n="memo.sign"></button>
+      <button class="btn btn-ok" type="button" id="memo-sign"></button>
     </div>
   </div>
 </div>
@@ -1170,6 +1181,25 @@
       'mine.gapApproach': 'Esta idea no tiene planteamiento detallado: nadie puede evaluarla más allá del resumen.',
       'mine.gapData': 'Esta idea no tiene datos ni protocolos adjuntos.',
       'mine.addApproach': 'Añadir planteamiento', 'mine.addData': 'Añadir datos',
+      'idea.signAgreement': 'Firmar acuerdo de dirección',
+      'memo.docEyebrow': 'Antes de abrir el nivel 3',
+      'memo.docTitle': 'Acuerdo de dirección',
+      'memo.docIntro': 'Lo que se firma antes de empezar, no cuando la tesis ya está hecha. Queda sellado con huella y fecha, así que después nadie puede reescribirlo.',
+      'memo.docOfficial': 'El compromiso documental de supervisión que exige tu programa ya es obligatorio, y no dice nada de autoría: de ahí salen casi todos los conflictos. Esto no lo sustituye, cubre lo que aquel deja fuera.',
+      'memo.docSign': 'Firmar el acuerdo y abrir nivel 3',
+      'memo.dHash': 'Huella del acuerdo',
+      'memo.dThesis': 'Tesis',
+      'memo.dSupervision': 'Dirección',
+      'memo.dAuthorship': 'Autoría',
+      'memo.vdAuthorship': 'Primera firma para el doctorando en los artículos que salgan de capítulos de su tesis. El orden del resto se acuerda por escrito antes de enviar cada uno, nunca después de tener los resultados.',
+      'memo.dData': 'Datos',
+      'memo.vdData': 'El doctorando conserva copia íntegra y puede seguir usándolos al terminar. El grupo los mantiene para la línea. Embargo hasta el depósito de la tesis.',
+      'memo.dContinuity': 'Continuidad de la línea',
+      'memo.vdContinuity': 'El grupo puede seguir la línea tras la lectura citando la tesis. El doctorando se lleva sus protocolos y puede abrir línea propia sin permiso.',
+      'memo.dFollowup': 'Seguimiento',
+      'memo.vdFollowup': 'Reunión de dirección al menos cada seis semanas, con acta breve por escrito. No es burocracia: el abandono por desatención es la primera causa de tesis que no se leen.',
+      'memo.dBreak': 'Si se rompe',
+      'memo.vdBreak': 'Cualquiera puede pedir cambio de dirección sin dar motivos. Ninguna parte publica el material compartido en solitario sin consentimiento escrito de la otra. Media la comisión académica del programa.',
       'memo.eyebrow': 'Antes de abrir el nivel 3', 'memo.title': 'Memorando de colaboración',
       'memo.intro': 'Ambas partes fijan por escrito el reparto antes de que se abran los datos y protocolos. Queda sellado con la misma huella con fecha.',
       'memo.simNote': 'En la maqueta la contraparte firma automáticamente. En el producto real, el memorando queda pendiente hasta que ambos firman.',
@@ -1392,6 +1422,25 @@
       'mine.gapApproach': 'This idea has no detailed proposal: nobody can assess it beyond the summary.',
       'mine.gapData': 'This idea has no data or protocols attached.',
       'mine.addApproach': 'Add proposal', 'mine.addData': 'Add data',
+      'idea.signAgreement': 'Sign supervision agreement',
+      'memo.docEyebrow': 'Before opening level 3',
+      'memo.docTitle': 'Supervision agreement',
+      'memo.docIntro': 'Signed before starting, not once the thesis is written. It is sealed with a timestamped hash, so no one can rewrite it afterwards.',
+      'memo.docOfficial': 'The formal supervision commitment your programme requires is already mandatory, and it says nothing about authorship — which is where almost every dispute comes from. This does not replace it; it covers what it leaves out.',
+      'memo.docSign': 'Sign the agreement and open level 3',
+      'memo.dHash': 'Agreement hash',
+      'memo.dThesis': 'Thesis',
+      'memo.dSupervision': 'Supervision',
+      'memo.dAuthorship': 'Authorship',
+      'memo.vdAuthorship': 'First author for the candidate on papers arising from chapters of their thesis. The order of the rest is agreed in writing before each submission, never after the results are in.',
+      'memo.dData': 'Data',
+      'memo.vdData': 'The candidate keeps a full copy and may go on using it after finishing. The group keeps it for the line of work. Embargo until the thesis is deposited.',
+      'memo.dContinuity': 'Continuity of the line',
+      'memo.vdContinuity': 'The group may continue the line after the defence, citing the thesis. The candidate takes their protocols with them and may open their own line without permission.',
+      'memo.dFollowup': 'Follow-up',
+      'memo.vdFollowup': 'A supervision meeting at least every six weeks, with a short written record. This is not bureaucracy: neglect is the leading cause of theses that are never defended.',
+      'memo.dBreak': 'If it breaks down',
+      'memo.vdBreak': 'Either party may request a change of supervision without giving reasons. Neither publishes the shared material alone without the other’s written consent. The programme committee mediates.',
       'memo.eyebrow': 'Before opening level 3', 'memo.title': 'Collaboration memorandum',
       'memo.intro': 'Both parties set the split in writing before data and protocols open. It is sealed with the same timestamped hash.',
       'memo.simNote': 'In this mockup the counterparty signs automatically. In the real product the memorandum stays pending until both sign.',
@@ -1614,6 +1663,25 @@
       'mine.gapApproach': 'Cette idée n’a pas d’exposé détaillé : personne ne peut l’évaluer au-delà du résumé.',
       'mine.gapData': 'Cette idée n’a ni données ni protocoles joints.',
       'mine.addApproach': 'Ajouter l’exposé', 'mine.addData': 'Ajouter les données',
+      'idea.signAgreement': 'Signer la convention d’encadrement',
+      'memo.docEyebrow': 'Avant d’ouvrir le niveau 3',
+      'memo.docTitle': 'Convention d’encadrement',
+      'memo.docIntro': 'Signée avant de commencer, et non une fois la thèse écrite. Elle est scellée avec une empreinte horodatée : personne ne pourra la réécrire ensuite.',
+      'memo.docOfficial': 'La convention de formation exigée par votre programme est déjà obligatoire et ne dit rien de la signature des articles — d’où viennent presque tous les conflits. Ceci ne la remplace pas : cela couvre ce qu’elle laisse de côté.',
+      'memo.docSign': 'Signer la convention et ouvrir le niveau 3',
+      'memo.dHash': 'Empreinte de la convention',
+      'memo.dThesis': 'Thèse',
+      'memo.dSupervision': 'Encadrement',
+      'memo.dAuthorship': 'Signature des articles',
+      'memo.vdAuthorship': 'Premier auteur pour le doctorant sur les articles issus des chapitres de sa thèse. L’ordre des autres est convenu par écrit avant chaque soumission, jamais une fois les résultats obtenus.',
+      'memo.dData': 'Données',
+      'memo.vdData': 'Le doctorant conserve une copie intégrale et peut continuer à s’en servir après la soutenance. Le groupe les conserve pour la ligne de recherche. Embargo jusqu’au dépôt.',
+      'memo.dContinuity': 'Continuité de la ligne',
+      'memo.vdContinuity': 'Le groupe peut poursuivre la ligne après la soutenance en citant la thèse. Le doctorant emporte ses protocoles et peut ouvrir sa propre ligne sans autorisation.',
+      'memo.dFollowup': 'Suivi',
+      'memo.vdFollowup': 'Une réunion d’encadrement au moins toutes les six semaines, avec un bref compte rendu écrit. Ce n’est pas de la bureaucratie : l’abandon par négligence est la première cause de thèses non soutenues.',
+      'memo.dBreak': 'En cas de rupture',
+      'memo.vdBreak': 'Chacune des parties peut demander un changement d’encadrement sans se justifier. Aucune ne publie seule le matériel commun sans l’accord écrit de l’autre. Le comité du programme assure la médiation.',
       'memo.eyebrow': 'Avant d’ouvrir le niveau 3', 'memo.title': 'Mémorandum de collaboration',
       'memo.intro': 'Les deux parties fixent la répartition par écrit avant l’ouverture des données et protocoles. Le tout est scellé avec la même empreinte datée.',
       'memo.simNote': 'Dans la maquette, la contrepartie signe automatiquement. Dans le produit réel, le mémorandum reste en attente jusqu’à la double signature.',
@@ -3002,7 +3070,7 @@
           acts.appendChild(reqBtn);
         }
       } else if (idea.level === 2) {
-        var memoBtn = el('button', 'btn btn-ok', t('idea.signMemo'));
+        var memoBtn = el('button', 'btn btn-ok', t(memoKind(idea) === 'doc' ? 'idea.signAgreement' : 'idea.signMemo'));
         memoBtn.type = 'button';
         memoBtn.addEventListener('click', function () { openMemo(idea.id); });
         acts.appendChild(memoBtn);
@@ -3057,24 +3125,80 @@
 
   /* ---------- Memo ---------- */
   var releaseMemo = null, memoId = null;
+  /* Un acuerdo de dirección no es el memorando de colaboración con otro título.
+     En España el «compromiso documental de supervisión» ya es obligatorio
+     (RD 99/2011) y no dice una palabra de autoría, que es de donde salen los
+     conflictos. Esto cubre exactamente ese hueco, y se sella. */
+  function memoKind(idea) {
+    var ty = ideaType(idea);
+    return (ty === 'cotutela' || ty === 'estancia') ? 'doc' : 'colab';
+  }
+  function memoTerms(idea) {
+    if (memoKind(idea) === 'colab') {
+      return [
+        [t('memo.tIdea'), display(idea).title],
+        [t('memo.tReg'), idea.id + ' · ' + t('common.sealed').toLowerCase() + ' ' + fmtDate(idea.sealed)],
+        [t('memo.tAuthorship'), t('memo.vAuthorship')],
+        [t('memo.tScope'), t('memo.vScope')],
+        [t('memo.tDeadlines'), t('memo.vDeadlines')],
+        [t('memo.tBreak'), t('memo.vBreak')]
+      ];
+    }
+    var d = idea.doc;
+    var sitios = ideaType(idea) === 'cotutela'
+      ? [d.home.inst, d.partner.inst].map(function (x) { return x || t('cot.pending'); }).join(' ⇄ ')
+      : [d.home.inst, d.host.inst].map(function (x) { return x || t('cot.pending'); }).join(' → ');
+    var meses = ideaType(idea) === 'cotutela' ? d.monthsAtPartner : d.months;
+    return [
+      [t('memo.dThesis'), display(idea).title],
+      [t('memo.tReg'), idea.id + ' · ' + t('common.sealed').toLowerCase() + ' ' + fmtDate(idea.sealed)],
+      [t('memo.dSupervision'), sitios + ' · ' + t('est.monthsShort', { n: meses })],
+      [t('memo.dAuthorship'), t('memo.vdAuthorship')],
+      [t('memo.dData'), t('memo.vdData')],
+      [t('memo.dContinuity'), t('memo.vdContinuity')],
+      [t('memo.dFollowup'), t('memo.vdFollowup')],
+      [t('memo.dBreak'), t('memo.vdBreak')]
+    ];
+  }
+  /* Lo que se firma es exactamente lo que se sella: el texto de las cláusulas,
+     no un resumen de ellas. Por eso la huella se calcula sobre esto mismo. */
+  function agreementPayload(idea) {
+    return JSON.stringify({
+      kind: memoKind(idea), idea: idea.id, type: ideaType(idea),
+      terms: memoTerms(idea).map(function (p) { return { k: p[0], v: p[1] }; })
+    }, null, 2);
+  }
+
   function openMemo(id) {
     memoId = id;
     var idea = ideas.filter(function (i) { return i.id === id; })[0];
+    var doc = memoKind(idea) === 'doc';
+    $('memo-title').textContent = t(doc ? 'memo.docTitle' : 'memo.title');
+    $('memo-wrap').querySelector('.eyebrow').textContent = t(doc ? 'memo.docEyebrow' : 'memo.eyebrow');
+    $('memo-wrap').querySelector('.modal-body .hint').textContent = t(doc ? 'memo.docIntro' : 'memo.intro');
+    $('memo-note').textContent = t(doc ? 'memo.docOfficial' : 'memo.simNote');
+    $('memo-sign').textContent = t(doc ? 'memo.docSign' : 'memo.sign');
+
     var terms = $('memo-terms');
     terms.textContent = '';
-    [
-      [t('memo.tIdea'), idea.title],
-      [t('memo.tReg'), idea.id + ' · ' + t('common.sealed').toLowerCase() + ' ' + fmtDate(idea.sealed)],
-      [t('memo.tAuthorship'), t('memo.vAuthorship')],
-      [t('memo.tScope'), t('memo.vScope')],
-      [t('memo.tDeadlines'), t('memo.vDeadlines')],
-      [t('memo.tBreak'), t('memo.vBreak')]
-    ].forEach(function (p) {
+    memoTerms(idea).forEach(function (p) {
       var li = document.createElement('li');
       li.appendChild(el('span', 'mt', p[0]));
       li.appendChild(el('span', null, p[1]));
       terms.appendChild(li);
     });
+
+    // La huella del acuerdo, calculada antes de firmar: se ve qué se sella.
+    var box = $('memo-seal');
+    box.hidden = !doc;
+    if (doc) {
+      $('memo-seal-label').textContent = t('memo.dHash');
+      $('memo-seal-hash').textContent = '…';
+      sha256Hex(agreementPayload(idea)).then(function (h) {
+        if (memoId === id) $('memo-seal-hash').textContent = h.slice(0, 16) + '…' + h.slice(-8);
+      }).catch(function () { $('memo-seal-hash').textContent = t('publish.noSubtle'); });
+    }
+
     var wrap = $('memo-wrap');
     wrap.hidden = false;
     releaseMemo = trapFocus(wrap.querySelector('.modal'), closeMemo);
@@ -3685,6 +3809,9 @@
       // Queda visible en el chip, y con un clic se ven todas.
       state.contentLang = ideas.some(function (i) { return readableIn(i, uiLang); }) ? uiLang : 'en';
       rebuildLanguageDependentUI();
+      // El acuerdo se compone en JS, así que applyI18n no lo alcanza: si está
+      // abierto, se vuelve a pintar entero en el idioma nuevo.
+      if (memoId) openMemo(memoId);
     });
   }
 
