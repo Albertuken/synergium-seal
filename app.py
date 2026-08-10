@@ -12,6 +12,7 @@ from datetime import datetime, timezone
 from flask import (
     Flask,
     jsonify,
+    redirect,
     render_template,
     request,
     send_file,
@@ -51,10 +52,27 @@ def index():
     return render_template("index.html")
 
 
+PAGINAS_IDIOMA = {"es": "proyecto.html", "en": "proyecto.en.html", "fr": "proyecto.fr.html"}
+
+
 @app.get("/proyecto")
 def proyecto():
-    """La página del proyecto."""
-    return send_from_directory(app.static_folder, "proyecto.html")
+    """La página del proyecto, en castellano."""
+    return send_from_directory(app.static_folder, PAGINAS_IDIOMA["es"])
+
+
+@app.get("/proyecto/<idioma>")
+def proyecto_idioma(idioma: str):
+    """La misma página en otro idioma.
+
+    Una página por idioma en vez de un diccionario en el navegador: así no hay
+    parpadeo de texto sin traducir y cada versión se puede compartir por su
+    propia dirección.
+    """
+    fichero = PAGINAS_IDIOMA.get(idioma)
+    if not fichero:
+        return redirect("/proyecto")
+    return send_from_directory(app.static_folder, fichero)
 
 
 @app.get("/app")

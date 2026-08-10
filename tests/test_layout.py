@@ -68,6 +68,8 @@ def paginas_a_medir(tmp: Path):
 
     paginas = {
         "proyecto": RAIZ / "static" / "proyecto.html",
+        "proyecto-en": RAIZ / "static" / "proyecto.en.html",
+        "proyecto-fr": RAIZ / "static" / "proyecto.fr.html",
         "maqueta": RAIZ / "static" / "app.html",
     }
 
@@ -162,7 +164,7 @@ def test_la_sonda_detecta_desbordamiento(medidas):
             f"la sonda no ve desbordar al canario en {ancho}px: no es de fiar")
 
 
-@pytest.mark.parametrize("pagina", ["proyecto", "maqueta", "herramienta"])
+@pytest.mark.parametrize("pagina", ["proyecto", "proyecto-en", "proyecto-fr", "maqueta", "herramienta"])
 @pytest.mark.parametrize("ancho", ANCHOS)
 def test_sin_desbordamiento_lateral(medidas, pagina, ancho):
     m = medidas[f"{pagina}@{ancho}"]
