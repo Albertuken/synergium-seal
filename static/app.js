@@ -19,6 +19,23 @@
 
   function esc(s) { return String(s == null ? '' : s); }
 
+  /* La misma escala que la del panel de entrada, pero de una huella ya fija.
+     Se usa en el resultado: el momento en que el sello existe merece verse,
+     no solo leerse en una fila de texto. */
+  function scaleOf(hex) {
+    var wrap = document.createElement('div');
+    wrap.className = 'scale';
+    wrap.setAttribute('role', 'img');
+    wrap.setAttribute('aria-label', 'Huella SHA-256 del documento sellado');
+    for (var i = 0; i < 64; i++) {
+      var b = document.createElement('i');
+      var v = parseInt(hex[i], 16);
+      b.style.height = (4 + (isNaN(v) ? 0 : v / 15) * 96) + '%';
+      wrap.appendChild(b);
+    }
+    return wrap;
+  }
+
   /* ── Un panel de medida: entrada (fichero o texto) → huella → escala ──
      La escala son 64 barras, una por dígito hexadecimal. Cambia un byte del
      fichero y salta entera: eso es lo que hace útil a un hash, mostrado. */
@@ -163,6 +180,10 @@
           + '<h2>Sellado</h2>'
           + '<p>Queda <b>pendiente</b> hasta entrar en un bloque de Bitcoin, normalmente unas horas. '
           + 'Ya es válido desde ahora: la fecha registrada es esta.</p>'
+          + '<div class="j-scale"></div>'
+          + '<div class="scale-legend"><span class="tag">dígito 1</span>'
+          +   '<span class="tag">esta es la huella que ha quedado registrada</span>'
+          +   '<span class="tag">64</span></div>'
           + '<dl>'
           +   '<div><dt>Registro</dt><dd class="j-id"></dd></div>'
           +   '<div><dt>Sellado</dt><dd class="j-at"></dd></div>'
@@ -170,6 +191,7 @@
           + '</dl>'
           + '<div class="actions"><a class="btn btn-2 j-p" href="#" download>Descargar prueba .ots</a></div>'
           + '</div>';
+        box.querySelector('.j-scale').replaceWith(scaleOf(s.digest));
         box.querySelector('.j-id').textContent = esc(s.id);
         box.querySelector('.j-at').textContent = esc(s.created_at);
         box.querySelector('.j-h').textContent = esc(s.digest);

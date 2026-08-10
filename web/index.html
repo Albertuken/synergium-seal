@@ -594,6 +594,12 @@
         cualquiera comprueba la fecha con la herramienta oficial — <strong>sin pasar por este
         servidor y aunque el servicio deje de existir</strong>. La evidencia es tuya, no nuestra.
       </p>
+      <div class="scale" role="img" aria-label="Representación gráfica de la huella"></div>
+      <div class="scale-legend">
+        <span class="tag">la huella que has escrito arriba</span>
+        <span class="tag">esto es lo que se ancla, no tu texto</span>
+      </div>
+
       <pre><code>pip install opentimestamps-client
 ots verify SYN-2026-XXXX.ots -f tu-fichero.pdf</code></pre>
       <p class="note">
@@ -768,16 +774,22 @@ ots verify SYN-2026-XXXX.ots -f tu-fichero.pdf</code></pre>
   var $ = function (id) { return document.getElementById(id); };
 
   /* ═══ El instrumento: texto → huella → escala ═══════════════════ */
-  var src = $('src'), out = $('hash'), len = $('len'), scale = $('scale');
+  var src = $('src'), out = $('hash'), len = $('len');
   var subtle = window.crypto && window.crypto.subtle;
 
-  /* 64 barras: una por dígito hexadecimal de la huella. */
-  var bars = [];
-  for (var i = 0; i < 64; i++) {
-    var b = document.createElement('i');
-    scale.appendChild(b);
-    bars.push(b);
-  }
+  /* 64 barras por escala, una por dígito hexadecimal. Hay dos escalas en la
+     página —la del titular y la de «la prueba no depende de nosotros»— y las
+     dos dibujan LA MISMA huella: la que ha escrito quien está leyendo. Ahí
+     abajo el argumento deja de ser abstracto, porque la huella es la suya. */
+  var scales = [].slice.call(document.querySelectorAll('.scale')).map(function (nodo) {
+    var barras = [];
+    for (var i = 0; i < 64; i++) {
+      var b = document.createElement('i');
+      nodo.appendChild(b);
+      barras.push(b);
+    }
+    return barras;
+  });
 
   var VACIO = '—'.repeat(24);
 
@@ -797,13 +809,16 @@ ots verify SYN-2026-XXXX.ots -f tu-fichero.pdf</code></pre>
 
     for (var i = 0; i < 64; i++) {
       var v = parseInt(h[i], 16);            // 0–15
-      bars[i].style.height = (4 + (v / 15) * 96) + '%';
+      var alto = (4 + (v / 15) * 96) + '%';
+      scales.forEach(function (barras) { barras[i].style.height = alto; });
     }
   }
 
   function vaciar() {
     out.textContent = VACIO;
-    for (var i = 0; i < 64; i++) bars[i].style.height = '4%';
+    scales.forEach(function (barras) {
+      for (var i = 0; i < 64; i++) barras[i].style.height = '4%';
+    });
   }
 
   var turno = 0;
