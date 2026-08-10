@@ -73,15 +73,17 @@ def paginas_a_medir(tmp: Path):
         "maqueta": RAIZ / "static" / "app.html",
     }
 
-    import app as flask_app
-    cliente = flask_app.app.test_client()
-    html = cliente.get("/").get_data(as_text=True)
+    # La herramienta también es estática ya; solo hay que darle rutas
+    # absolutas al CSS y al JS para que carguen desde file://.
     estatico = url_de(RAIZ / "static")
-    html = html.replace('href="/static/', f'href="{estatico}/').replace(
-        'src="/static/', f'src="{estatico}/')
-    herramienta = tmp / "herramienta.html"
-    herramienta.write_text(html, encoding="utf-8")
-    paginas["herramienta"] = herramienta
+    for idi, fichero in (("es", "herramienta.html"), ("en", "herramienta.en.html"),
+                         ("fr", "herramienta.fr.html")):
+        html = (RAIZ / "static" / fichero).read_text(encoding="utf-8")
+        html = html.replace('href="/static/', f'href="{estatico}/').replace(
+            'src="/static/', f'src="{estatico}/')
+        copia = tmp / fichero
+        copia.write_text(html, encoding="utf-8")
+        paginas["herramienta" if idi == "es" else f"herramienta-{idi}"] = copia
 
     # El canario: desborda a propósito, y la sonda tiene que verlo.
     canario = tmp / "canario.html"
@@ -164,7 +166,9 @@ def test_la_sonda_detecta_desbordamiento(medidas):
             f"la sonda no ve desbordar al canario en {ancho}px: no es de fiar")
 
 
-@pytest.mark.parametrize("pagina", ["proyecto", "proyecto-en", "proyecto-fr", "maqueta", "herramienta"])
+@pytest.mark.parametrize("pagina", ["proyecto", "proyecto-en", "proyecto-fr",
+                                    "herramienta", "herramienta-en", "herramienta-fr",
+                                    "maqueta"])
 @pytest.mark.parametrize("ancho", ANCHOS)
 def test_sin_desbordamiento_lateral(medidas, pagina, ancho):
     m = medidas[f"{pagina}@{ancho}"]

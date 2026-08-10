@@ -68,6 +68,30 @@ header {
   position: sticky; top: 0; z-index: 20;
 }
 header .rail { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 54px; }
+/* Con el selector de idioma dentro, la cabecera ya no cabe en una línea a
+   375px: se sale 31px. Se deja envolver y el rótulo «Sellado» se retira,
+   que es el elemento con menos trabajo que hacer. */
+@media (max-width: 620px) {
+  header .rail { flex-wrap: wrap; height: auto; padding-top: 9px; padding-bottom: 9px; gap: 8px 14px; }
+  .mark .tag { display: none; }
+}
+/* Selector de idioma: tres rótulos unidos, como en la landing. */
+.langs { display: inline-flex; align-items: center; margin-left: 14px; }
+.langs a {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em;
+  color: var(--ink-3); text-decoration: none; padding: 3px 6px;
+  border: 1px solid var(--rule); margin-left: -1px;
+}
+.langs a:first-child { margin-left: 0; }
+.langs a:hover { color: var(--signal); border-color: var(--signal); position: relative; z-index: 1; }
+.langs a.on { background: var(--ink); border-color: var(--ink); color: var(--panel); position: relative; z-index: 2; }
+.lang-hint { border-bottom: 1px solid var(--rule); background: var(--panel); padding: 8px var(--rail); }
+.lang-hint a {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--signal); text-decoration: none;
+  border-bottom: 1px solid var(--signal);
+}
+.lang-hint a:hover { color: var(--ink); border-bottom-color: var(--ink); }
 .mark { display: flex; align-items: baseline; gap: 10px; }
 .mark b { font-size: 15px; font-weight: 700; letter-spacing: -0.015em; }
 

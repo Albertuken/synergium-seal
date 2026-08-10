@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synergium · Priority sealing</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="lang-hint" id="lang-hint" hidden><a id="lang-hint-a" href="#"></a></div>
+<script>(function(){var otros={"es": "/", "fr": "/fr"},textos={"es": "Esta p\u00e1gina tambi\u00e9n est\u00e1 en espa\u00f1ol", "en": "This page is also available in English", "fr": "Cette page existe aussi en fran\u00e7ais"};var n=(navigator.language||'').slice(0,2).toLowerCase();if(!otros[n])return;var a=document.getElementById('lang-hint-a');a.href=otros[n];a.textContent=textos[n]+' →';document.getElementById('lang-hint').hidden=false;})();</script>
+<header>
+  <div class="rail">
+    <span class="mark"><b>Synergium</b> <span class="tag">Sealing</span></span>
+    <nav class="tabs" aria-label="Secciones">
+      <button class="tab" type="button" data-view="sellar" aria-current="page">Seal</button>
+      <button class="tab" type="button" data-view="verificar">Verify</button>
+    <span class="langs" aria-label="Idioma"><a href="/">ES</a><a href="/en" class="on">EN</a><a href="/fr">FR</a></span></nav>
+  </div>
+</header>
+
+<!-- ══════════════ SELLAR ══════════════ -->
+<main id="view-sellar">
+
+  <section class="head">
+    <div class="rail">
+      <span class="tag sig">SHA-256 · anchored in Bitcoin</span>
+      <h1>Date a document before you share it.</h1>
+      <p class="sub">
+        Your file's fingerprint is computed and recorded in the Bitcoin chain through OpenTimestamps. Anyone can check the certificate without depending on us.
+      </p>
+    </div>
+  </section>
+
+  <div class="rail">
+    <p class="privacy">
+      <span class="tag sig">Privacy</span>
+      <span><b>Your file is not uploaded.</b> The fingerprint is computed in this browser, and all that travels to the server is that sixty-four character line.</span>
+    </p>
+  </div>
+
+  <section class="rig">
+    <div class="rail">
+      <div class="rig-bar">
+        <span class="tag">Input — file or text</span>
+        <span class="tag sig lamp"><i></i>measuring</span>
+      </div>
+
+      <div class="drop" id="drop-s" tabindex="0" role="button">
+        <input type="file" id="file-s" hidden>
+        <span class="n" id="drop-s-n">Drag a file here</span>
+        <span class="m" id="drop-s-m">or click to choose one</span>
+      </div>
+
+      <label class="sr-only" for="text-s">Text to seal</label>
+      <textarea id="text-s" rows="2" spellcheck="false"
+        placeholder="…o escribe el texto aquí"></textarea>
+
+      <div class="read">
+        <div class="read-top">
+          <span class="tag">Output — SHA-256 fingerprint</span>
+          <span class="tag" id="len-s">no input</span>
+        </div>
+        <div class="hash" id="hash-s" aria-live="off"></div>
+        <div class="scale" id="scale-s" role="img" aria-label="Representación gráfica de la huella"></div>
+        <div class="scale-legend">
+          <span class="tag">digit 1</span>
+          <span class="tag">change one byte and the whole scale jumps</span>
+          <span class="tag">64</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="rail">
+    <div class="field">
+      <label class="lbl" for="label-s">Label — optional</label>
+      <input type="text" id="label-s" maxlength="200" placeholder="Protocolo CPUE Gran Sol v3">
+      <p class="hint">Stored in the clear on the server. Do not put anything confidential here.</p>
+    </div>
+
+    <div class="actions">
+      <button class="btn" id="btn-s" type="button" disabled>Seal</button>
+    </div>
+
+    <div id="res-s" aria-live="polite"></div>
+  </div>
+</main>
+
+<!-- ══════════════ VERIFICAR ══════════════ -->
+<main id="view-verificar" hidden>
+
+  <section class="head">
+    <div class="rail">
+      <span class="tag sig">Verification</span>
+      <h1>Check whether a document is sealed.</h1>
+      <p class="sub">
+        The fingerprint is recomputed and looked up in the registry. If a single character changed, the fingerprint is a different one and there will be no match.
+      </p>
+    </div>
+  </section>
+
+  <section class="rig">
+    <div class="rail">
+      <div class="rig-bar">
+        <span class="tag">Input — file or text</span>
+        <span class="tag sig lamp"><i></i>measuring</span>
+      </div>
+
+      <div class="drop" id="drop-v" tabindex="0" role="button">
+        <input type="file" id="file-v" hidden>
+        <span class="n" id="drop-v-n">Drag the file to check</span>
+        <span class="m" id="drop-v-m">or click to choose one</span>
+      </div>
+
+      <label class="sr-only" for="text-v">Text to check</label>
+      <textarea id="text-v" rows="2" spellcheck="false"
+        placeholder="…o escribe el texto aquí"></textarea>
+
+      <div class="read">
+        <div class="read-top">
+          <span class="tag">Output — SHA-256 fingerprint</span>
+          <span class="tag" id="len-v">no input</span>
+        </div>
+        <div class="hash" id="hash-v" aria-live="off"></div>
+        <div class="scale" id="scale-v" role="img" aria-label="Representación gráfica de la huella"></div>
+        <div class="scale-legend">
+          <span class="tag">digit 1</span>
+          <span class="tag">change one byte and the whole scale jumps</span>
+          <span class="tag">64</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="rail">
+    <div class="actions">
+      <button class="btn" id="btn-v" type="button" disabled>Check</button>
+    </div>
+
+    <div id="res-v" aria-live="polite"></div>
+  </div>
+
+  <div class="rail">
+    <section class="indep">
+      <span class="tag">The check that does not depend on us</span>
+      <h2>Validate the seal against Bitcoin, without going through this server</h2>
+      <p>
+        The above queries our registry. The real proof is in the <code>.ots</code>
+        file you download with every seal: it validates with the official tool even if this service disappears.
+      </p>
+      <pre><code>pip install opentimestamps-client
+ots verify SYN-2026-XXXX.ots -f your-file.pdf</code></pre>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="rail">
+    <a class="tag lnk" href="/proyecto">What Synergium is</a>
+    <span class="tag">Sealing built on OpenTimestamps</span>
+    <span class="tag">A seal stays pending for a few hours</span>
+  </div>
+</footer>
+
+<script src="/static/app.en.js"></script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synergium · Sellado de anterioridad</title>
+<link rel="stylesheet" href="/static/style.css">
+
+<header>
+  <div class="rail">
+    <span class="mark"><b>Synergium</b> <span class="tag">Sellado</span></span>
+    <nav class="tabs" aria-label="Secciones">
+      <button class="tab" type="button" data-view="sellar" aria-current="page">Sellar</button>
+      <button class="tab" type="button" data-view="verificar">Verificar</button>
+    </nav>
+  </div>
+</header>
+
+<!-- ══════════════ SELLAR ══════════════ -->
+<main id="view-sellar">
+
+  <section class="head">
+    <div class="rail">
+      <span class="tag sig">SHA-256 · anclaje en Bitcoin</span>
+      <h1>Fecha un documento antes de compartirlo.</h1>
+      <p class="sub">
+        Se calcula la huella de tu fichero y se registra en la cadena de Bitcoin a través de
+        OpenTimestamps. El certificado lo puede comprobar cualquiera, sin depender de nosotros.
+      </p>
+    </div>
+  </section>
+
+  <div class="rail">
+    <p class="privacy">
+      <span class="tag sig">Privacidad</span>
+      <span><b>Tu fichero no se sube.</b> La huella se calcula en este navegador y al servidor
+      solo viaja esa línea de sesenta y cuatro caracteres.</span>
+    </p>
+  </div>
+
+  <section class="rig">
+    <div class="rail">
+      <div class="rig-bar">
+        <span class="tag">Entrada — fichero o texto</span>
+        <span class="tag sig lamp"><i></i>midiendo</span>
+      </div>
+
+      <div class="drop" id="drop-s" tabindex="0" role="button">
+        <input type="file" id="file-s" hidden>
+        <span class="n" id="drop-s-n">Arrastra un fichero</span>
+        <span class="m" id="drop-s-m">o pulsa para elegirlo</span>
+      </div>
+
+      <label class="sr-only" for="text-s">Texto a sellar</label>
+      <textarea id="text-s" rows="2" spellcheck="false"
+        placeholder="…o escribe el texto aquí"></textarea>
+
+      <div class="read">
+        <div class="read-top">
+          <span class="tag">Salida — huella SHA-256</span>
+          <span class="tag" id="len-s">sin entrada</span>
+        </div>
+        <div class="hash" id="hash-s" aria-live="off"></div>
+        <div class="scale" id="scale-s" role="img" aria-label="Representación gráfica de la huella"></div>
+        <div class="scale-legend">
+          <span class="tag">dígito 1</span>
+          <span class="tag">cambia un byte y salta la escala entera</span>
+          <span class="tag">64</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="rail">
+    <div class="field">
+      <label class="lbl" for="label-s">Etiqueta — opcional</label>
+      <input type="text" id="label-s" maxlength="200" placeholder="Protocolo CPUE Gran Sol v3">
+      <p class="hint">Se guarda en claro en el servidor. No pongas aquí nada confidencial.</p>
+    </div>
+
+    <div class="actions">
+      <button class="btn" id="btn-s" type="button" disabled>Sellar</button>
+    </div>
+
+    <div id="res-s" aria-live="polite"></div>
+  </div>
+</main>
+
+<!-- ══════════════ VERIFICAR ══════════════ -->
+<main id="view-verificar" hidden>
+
+  <section class="head">
+    <div class="rail">
+      <span class="tag sig">Comprobación</span>
+      <h1>Comprueba si un documento está sellado.</h1>
+      <p class="sub">
+        Se recalcula la huella y se busca en el registro. Si cambió un solo carácter, la huella
+        será otra y no habrá coincidencia.
+      </p>
+    </div>
+  </section>
+
+  <section class="rig">
+    <div class="rail">
+      <div class="rig-bar">
+        <span class="tag">Entrada — fichero o texto</span>
+        <span class="tag sig lamp"><i></i>midiendo</span>
+      </div>
+
+      <div class="drop" id="drop-v" tabindex="0" role="button">
+        <input type="file" id="file-v" hidden>
+        <span class="n" id="drop-v-n">Arrastra el fichero a comprobar</span>
+        <span class="m" id="drop-v-m">o pulsa para elegirlo</span>
+      </div>
+
+      <label class="sr-only" for="text-v">Texto a comprobar</label>
+      <textarea id="text-v" rows="2" spellcheck="false"
+        placeholder="…o escribe el texto aquí"></textarea>
+
+      <div class="read">
+        <div class="read-top">
+          <span class="tag">Salida — huella SHA-256</span>
+          <span class="tag" id="len-v">sin entrada</span>
+        </div>
+        <div class="hash" id="hash-v" aria-live="off"></div>
+        <div class="scale" id="scale-v" role="img" aria-label="Representación gráfica de la huella"></div>
+        <div class="scale-legend">
+          <span class="tag">dígito 1</span>
+          <span class="tag">cambia un byte y salta la escala entera</span>
+          <span class="tag">64</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="rail">
+    <div class="actions">
+      <button class="btn" id="btn-v" type="button" disabled>Comprobar</button>
+    </div>
+
+    <div id="res-v" aria-live="polite"></div>
+  </div>
+
+  <div class="rail">
+    <section class="indep">
+      <span class="tag">La comprobación que no depende de nosotros</span>
+      <h2>Valida el sello contra Bitcoin, sin pasar por este servidor</h2>
+      <p>
+        Lo anterior consulta nuestro registro. La prueba real está en el fichero <code>.ots</code>
+        que descargas con cada sello: se valida con la herramienta oficial aunque este servicio
+        desaparezca.
+      </p>
+      <pre><code>pip install opentimestamps-client
+ots verify SYN-2026-XXXX.ots -f tu-fichero.pdf</code></pre>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="rail">
+    <a class="tag lnk" href="/proyecto">Qué es Synergium</a>
+    <span class="tag">Sellado sobre OpenTimestamps</span>
+    <span class="tag">Un sello queda pendiente unas horas</span>
+  </div>
+</footer>
+
+<script src="/static/app.js"></script>

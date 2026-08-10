@@ -13,7 +13,6 @@ from flask import (
     Flask,
     jsonify,
     redirect,
-    render_template,
     request,
     send_file,
     send_from_directory,
@@ -47,32 +46,38 @@ def _public(row: dict) -> dict:
     }
 
 
+# Una página por idioma en vez de un diccionario en el navegador: así no hay
+# parpadeo de texto sin traducir y cada versión se comparte por su dirección.
+IDIOMAS = ("es", "en", "fr")
+HERRAMIENTA = {"es": "herramienta.html", "en": "herramienta.en.html", "fr": "herramienta.fr.html"}
+PROYECTO = {"es": "proyecto.html", "en": "proyecto.en.html", "fr": "proyecto.fr.html"}
+
+
 @app.get("/")
 def index():
-    return render_template("index.html")
+    """El sellado, en castellano."""
+    return send_from_directory(app.static_folder, HERRAMIENTA["es"])
 
 
-PAGINAS_IDIOMA = {"es": "proyecto.html", "en": "proyecto.en.html", "fr": "proyecto.fr.html"}
+@app.get("/<idioma>")
+def index_idioma(idioma: str):
+    """El sellado en otro idioma. Cualquier otra cosa vuelve a la raíz."""
+    if idioma not in HERRAMIENTA or idioma == "es":
+        return redirect("/")
+    return send_from_directory(app.static_folder, HERRAMIENTA[idioma])
 
 
 @app.get("/proyecto")
 def proyecto():
     """La página del proyecto, en castellano."""
-    return send_from_directory(app.static_folder, PAGINAS_IDIOMA["es"])
+    return send_from_directory(app.static_folder, PROYECTO["es"])
 
 
 @app.get("/proyecto/<idioma>")
 def proyecto_idioma(idioma: str):
-    """La misma página en otro idioma.
-
-    Una página por idioma en vez de un diccionario en el navegador: así no hay
-    parpadeo de texto sin traducir y cada versión se puede compartir por su
-    propia dirección.
-    """
-    fichero = PAGINAS_IDIOMA.get(idioma)
-    if not fichero:
+    if idioma not in PROYECTO or idioma == "es":
         return redirect("/proyecto")
-    return send_from_directory(app.static_folder, fichero)
+    return send_from_directory(app.static_folder, PROYECTO[idioma])
 
 
 @app.get("/app")

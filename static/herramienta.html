@@ -4,17 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Synergium · Sellado de anterioridad</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-
+<div class="lang-hint" id="lang-hint" hidden><a id="lang-hint-a" href="#"></a></div>
+<script>(function(){var otros={"en": "/en", "fr": "/fr"},textos={"es": "Esta p\u00e1gina tambi\u00e9n est\u00e1 en espa\u00f1ol", "en": "This page is also available in English", "fr": "Cette page existe aussi en fran\u00e7ais"};var n=(navigator.language||'').slice(0,2).toLowerCase();if(!otros[n])return;var a=document.getElementById('lang-hint-a');a.href=otros[n];a.textContent=textos[n]+' →';document.getElementById('lang-hint').hidden=false;})();</script>
 <header>
   <div class="rail">
     <span class="mark"><b>Synergium</b> <span class="tag">Sellado</span></span>
     <nav class="tabs" aria-label="Secciones">
       <button class="tab" type="button" data-view="sellar" aria-current="page">Sellar</button>
       <button class="tab" type="button" data-view="verificar">Verificar</button>
-    </nav>
+    <span class="langs" aria-label="Idioma"><a href="/" class="on">ES</a><a href="/en">EN</a><a href="/fr">FR</a></span></nav>
   </div>
 </header>
 
@@ -166,6 +167,6 @@ ots verify SYN-2026-XXXX.ots -f tu-fichero.pdf</code></pre>
   </div>
 </footer>
 
-<script src="{{ url_for('static', filename='app.js') }}"></script>
+<script src="/static/app.js"></script>
 </body>
 </html>

@@ -20,16 +20,24 @@ import sys
 RAIZ = Path(__file__).parent
 HOST = "https://synergium-seal.fly.dev"
 
-PAGINAS = {
-    "index.html": "proyecto.html",   # la landing   → /proyecto
-    "app.html": "app.html",          # la maqueta   → /app
-}
+# La maqueta lleva sus tres idiomas dentro y se construye una sola vez.
+PAGINAS = {"app.html": "app.html"}
 
 # La maqueta ya lleva sus tres idiomas dentro; la landing se genera una vez
 # por idioma, que es más simple y no deja texto sin traducir a medias.
-IDIOMAS = {"es": None, "en": "proyecto.en.html", "fr": "proyecto.fr.html"}
+IDIOMAS = ["es", "en", "fr"]
 NOMBRE_IDIOMA = {"es": "ES", "en": "EN", "fr": "FR"}
-RUTA_IDIOMA = {"es": "/proyecto", "en": "/proyecto/en", "fr": "/proyecto/fr"}
+
+# Cada página conoce sus propias rutas por idioma: el selector tiene que
+# llevarte a la misma página en otro idioma, no siempre a la landing.
+RUTAS = {
+    "index.html":       {"es": "/proyecto", "en": "/proyecto/en", "fr": "/proyecto/fr"},
+    "herramienta.html": {"es": "/", "en": "/en", "fr": "/fr"},
+}
+SALIDAS = {
+    "index.html":       {"es": "proyecto.html", "en": "proyecto.en.html", "fr": "proyecto.fr.html"},
+    "herramienta.html": {"es": "herramienta.html", "en": "herramienta.en.html", "fr": "herramienta.fr.html"},
+}
 
 # El artefacto necesita este apaño porque no controla su <head>. Aquí sí.
 # Se busca por lo que hace el bloque, no por cómo esté comentado: las dos
@@ -80,21 +88,21 @@ def traducir(doc: str, dic: dict) -> str:
     return "".join(salida)
 
 
-def selector_idiomas(actual: str) -> str:
+def selector_idiomas(pagina: str, actual: str) -> str:
     piezas = []
     for c in IDIOMAS:
         clase = ' class="on"' if c == actual else ""
-        piezas.append(f'<a href="{RUTA_IDIOMA[c]}"{clase}>{NOMBRE_IDIOMA[c]}</a>')
+        piezas.append(f'<a href="{RUTAS[pagina][c]}"{clase}>{NOMBRE_IDIOMA[c]}</a>')
     return '<span class="langs" aria-label="Idioma">' + "".join(piezas) + "</span>"
 
 
-def aviso_de_idioma(actual: str) -> str:
+def aviso_de_idioma(pagina: str, actual: str) -> str:
     """Una línea discreta si el navegador está en otro idioma.
 
     No redirige: quien comparte el enlace debe poder fiarse de que el otro ve
     lo mismo que él. Solo avisa de que existe su versión.
     """
-    otros = {c: RUTA_IDIOMA[c] for c in IDIOMAS if c != actual}
+    otros = {c: RUTAS[pagina][c] for c in IDIOMAS if c != actual}
     textos = {"es": "Esta página también está en español",
               "en": "This page is also available in English",
               "fr": "Cette page existe aussi en français"}
@@ -128,19 +136,27 @@ def construir(fuente: str, nombre: str, idioma: str = "es") -> str:
         dic = json.loads((RAIZ / "web" / "i18n.json").read_text(encoding="utf-8"))[idioma]
         doc = traducir(doc, dic)
 
-    if "</style>" not in doc:
-        sys.exit(f"{nombre}: no encuentro dónde acaba la cabecera")
-    corte = doc.index("</style>") + len("</style>")
+    # La cabecera acaba donde empieza el cuerpo, y el cuerpo de las tres
+    # fuentes empieza por <header>. Cortar por </style> fallaba con la
+    # herramienta, que lleva el CSS en un fichero aparte y no tiene <style>.
+    if "<header" not in doc:
+        sys.exit(f"{nombre}: no encuentro dónde empieza el cuerpo")
+    corte = doc.index("<header")
     cabeza, cuerpo = doc[:corte], doc[corte:]
 
-    if "<body" in cabeza or "<header" in cabeza:
+    if "<body" in cabeza:
         sys.exit(f"{nombre}: el corte de la cabecera se ha llevado contenido del cuerpo")
+    if "<style" in cuerpo:
+        sys.exit(f"{nombre}: ha quedado CSS fuera de la cabecera")
 
     # Selector de idioma y aviso, solo en las versiones servidas: el artefacto
     # de Claude no tiene las otras rutas y quedarían rotas.
-    if nombre == "index.html":
-        cuerpo = cuerpo.replace("</nav>", selector_idiomas(idioma) + "</nav>", 1)
-        cuerpo = aviso_de_idioma(idioma) + cuerpo
+    if nombre in RUTAS:
+        cierre = "</nav>" if "</nav>" in cuerpo else "</div>"
+        cuerpo = cuerpo.replace(cierre, selector_idiomas(nombre, idioma) + cierre, 1)
+        cuerpo = aviso_de_idioma(nombre, idioma) + cuerpo
+        if nombre == "herramienta.html" and idioma != "es":
+            cuerpo = cuerpo.replace("/static/app.js", f"/static/app.{idioma}.js")
 
     return (
         f'<!doctype html>\n<html lang="{idioma}">\n<head>\n'
@@ -158,11 +174,21 @@ if __name__ == "__main__":
         (RAIZ / "static" / destino).write_text(salida, encoding="utf-8")
         print(f"web/{origen}  →  static/{destino}  ({len(salida):,} bytes)")
 
-    fuente = (RAIZ / "web" / "index.html").read_text(encoding="utf-8")
-    for idioma, destino in IDIOMAS.items():
-        if destino is None:
+    for pagina in RUTAS:
+        fuente = (RAIZ / "web" / pagina).read_text(encoding="utf-8")
+        for idioma in IDIOMAS:
+            destino = SALIDAS[pagina][idioma]
+            salida = construir(fuente, pagina, idioma)
+            (RAIZ / "static" / destino).write_text(salida, encoding="utf-8")
+            print(f"web/{pagina} [{idioma}]  →  static/{destino}  ({len(salida):,} bytes)")
+
+    # El JavaScript de la herramienta lleva los mensajes dentro, así que se
+    # genera una copia por idioma. Es la misma sustitución de literales.
+    js = (RAIZ / "static" / "app.js").read_text(encoding="utf-8")
+    for idioma in IDIOMAS:
+        if idioma == "es":
             continue
-        salida = construir(fuente, "index.html", idioma)
-        (RAIZ / "static" / destino).write_text(salida, encoding="utf-8")
-        restos = len(re.findall(r"[áéíóúñ¿¡]", re.sub(r"<style>.*?</style>", "", salida, flags=re.DOTALL)))
-        print(f"web/index.html [{idioma}]  →  static/{destino}  ({len(salida):,} bytes)")
+        dic = json.loads((RAIZ / "web" / "i18n.json").read_text(encoding="utf-8"))[idioma]
+        salida = traducir("<script>" + js + "</script>", dic)[len("<script>"):-len("</script>")]
+        (RAIZ / "static" / f"app.{idioma}.js").write_text(salida, encoding="utf-8")
+        print(f"static/app.js [{idioma}]  →  static/app.{idioma}.js  ({len(salida):,} bytes)")
