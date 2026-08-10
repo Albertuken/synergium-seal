@@ -609,6 +609,12 @@
     display: grid; grid-template-columns: 104px minmax(0, 1fr); gap: 0 18px;
     align-items: start; padding: 11px 0; border-bottom: 1px solid var(--line);
   }
+  /* Sin esto, el ancho mínimo del contenido manda sobre la pista: los
+     segmentos no envuelven, así que estiraban la fila hasta 560 px dentro de
+     una pantalla de 375 y sacaban la página 201 px por el lado. El
+     overflow-x del hijo no basta si el abuelo puede crecer. */
+  .fs-row > * { min-width: 0; }
+  .fs-row > div > .segs, .fs-row > div > .type-guide { min-width: 0; }
   .fs-label {
     font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.16em;
     text-transform: uppercase; color: var(--ink-faint); padding-top: 7px;
@@ -616,7 +622,7 @@
   .fs-primary { padding: 9px 0; }
   .fs-primary .fs-label { color: var(--ink); padding-top: 9px; }
   @media (max-width: 640px) {
-    .fs-row { grid-template-columns: 1fr; gap: 6px; }
+    .fs-row { grid-template-columns: minmax(0, 1fr); gap: 6px; }
     .fs-label { padding-top: 0; }
     /* En móvil cada grupo se desliza en una línea. Envolviendo, los tres
        grupos ocupaban 471 px: la pantalla entera antes del primer resultado. */
