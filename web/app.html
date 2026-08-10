@@ -13,34 +13,63 @@
   })();
 </script>
 <style>
+  /* ═══════════════════════════════════════════════════════════
+     Instrumento de medida, no folleto. Los mismos tokens de la
+     landing y del sellado, para que las tres piezas se lean como
+     una sola cosa.
+
+     Cuatro prohibiciones, porque son el vocabulario donde se
+     agolpa el diseño automático:
+       · Nada redondeado.   · Ninguna sombra.
+       · Ninguna tarjeta.   · Ningún degradado.
+     La profundidad sale del filete y del valor.
+     ═══════════════════════════════════════════════════════════ */
   :root {
-    --bg: #f4f6fa;
-    --paper: #ffffff;
-    --paper-alt: #fbfcfe;
-    --ink: #0f2038;
-    --ink-soft: #33496b;
-    --ink-faint: #5b7096;
-    --accent: #2f6fd6;
-    --accent-deep: #1a3f7a;
-    --accent-soft: #e2ebf7;
-    --gold: #e3b94a;
-    --gold-ink: #8a6a15;
-    --gold-soft: #fbf1dc;
-    --ok: #2f7d5c;
-    --ok-soft: #e2f2ea;
-    --wait: #9a6a12;
-    --wait-soft: #fbf0d9;
-    --bad: #a83232;
-    --bad-soft: #f8e6e6;
-    --line: rgba(15, 32, 56, 0.12);
-    --line-strong: rgba(15, 32, 56, 0.22);
-    --shadow-sm: 0 1px 2px rgba(15, 32, 56, 0.06);
-    --shadow: 0 1px 2px rgba(15, 32, 56, 0.05), 0 16px 32px -20px rgba(15, 32, 56, 0.25);
-    --shadow-lg: 0 2px 4px rgba(15, 32, 56, 0.06), 0 32px 60px -28px rgba(15, 32, 56, 0.42);
-    --radius: 4px;
-    --font-display: "Big Caslon", "Hoefler Text", Georgia, serif;
-    --font-body: Futura, "Century Gothic", "Trebuchet MS", system-ui, -apple-system, sans-serif;
-    --font-mono: "Courier New", Courier, ui-monospace, monospace;
+    color-scheme: light;
+
+    --bg: #f0f0ee;
+    --paper: #fbfbfa;
+    --paper-alt: #f6f6f4;
+    --ink: #0c1116;
+    --ink-soft: #4a545d;
+    --ink-faint: #8a939b;
+
+    /* El acento es el rojo de señal: medida y atención. El azul queda
+       para el dato, nunca para la decoración. */
+    --accent: #b3202f;
+    --accent-deep: #0c1116;
+    --accent-soft: #f2dfe1;
+    --live: #16305a;
+
+    /* Sin oro: el estado pendiente es tinta apagada, no un color nuevo. */
+    --gold: #8a939b;
+    --gold-ink: #4a545d;
+    --gold-soft: #ececea;
+
+    --ok: #1c6b4b;
+    --ok-soft: #e6efea;
+    --wait: #4a545d;
+    --wait-soft: #ececea;
+    --bad: #b3202f;
+    --bad-soft: #f2dfe1;
+
+    --line: #d8d9d6;
+    --line-strong: #cdcecb;
+
+    --shadow-sm: none;
+    --shadow: none;
+    --shadow-lg: none;
+    --radius: 0;
+
+    /* Ni un remate: grotesca de sistema para todo, monoespaciada para
+       lo que produce una máquina. Nada de Inter ni de Space Grotesk. */
+    --font-display: "Helvetica Neue", Helvetica, Arimo, "Liberation Sans", Arial, sans-serif;
+    --font-body: "Helvetica Neue", Helvetica, Arimo, "Liberation Sans", Arial, sans-serif;
+    --font-mono: "SF Mono", SFMono-Regular, Menlo, Consolas, "DejaVu Sans Mono", "Courier New", monospace;
+  }
+
+  @media (prefers-contrast: more) {
+    :root { --line: #9aa0a4; --line-strong: #b8bdc0; --ink-faint: #5d666e; }
   }
 
   * { box-sizing: border-box; }
@@ -561,6 +590,128 @@
     font-size: 0.88rem; box-shadow: var(--shadow-lg); z-index: 80; max-width: 90vw;
   }
   .toast[hidden] { display: none; }
+  /* ═══════════════════════════════════════════════════════════
+     Capa de instrumento: lo que los tokens no alcanzan por sí solos.
+     Va al final para ganar por orden, no por especificidad inflada.
+     ═══════════════════════════════════════════════════════════ */
+
+  *, *::before, *::after { border-radius: 0 !important; box-shadow: none !important; }
+  /* Único redondeo tolerado: un punto de estado es un punto. */
+  .dot, .bench-live i, .lamp i { border-radius: 50% !important; }
+
+  /* Titulares en grotesca: a este tamaño el tracking tiene que cerrarse. */
+  h1, h2, h3 { font-weight: 700; }
+  h1 { letter-spacing: -0.032em; line-height: 1.04; }
+  h2 { letter-spacing: -0.022em; }
+  h3 { letter-spacing: -0.014em; }
+  body { font-size: 15px; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* El aviso de maqueta es serigrafía de panel, no una cinta de color. */
+  .demo-note {
+    background: var(--bg); border-bottom: 1px solid var(--ink); color: var(--accent);
+    font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.16em;
+    text-transform: uppercase; padding: 8px 16px;
+  }
+
+  /* Barra superior: filete negro abajo, como el borde de una carátula. */
+  .appbar { background: var(--bg); border-bottom: 1px solid var(--ink); }
+  .brand span { font-family: var(--font-display); font-size: 1.02rem; letter-spacing: -0.015em; }
+
+  /* Pestañas: solapas de panel, no botones rellenos. */
+  .tabs { gap: 0; }
+  .tab {
+    background: transparent !important; color: var(--ink-faint);
+    font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.14em;
+    text-transform: uppercase; font-weight: 400;
+    padding: 9px 14px; border-bottom: 2px solid transparent;
+  }
+  .tab:hover { color: var(--ink); }
+  .tab[aria-pressed="true"], .tab.on, .tab[aria-current="page"] {
+    color: var(--accent); border-bottom-color: var(--accent);
+  }
+  .tab .count {
+    background: var(--accent); color: var(--paper);
+    font-family: var(--font-mono); font-size: 0.6rem; padding: 1px 5px;
+  }
+
+  /* Botones rectos: tinta, y rojo al pasar. */
+  .btn {
+    font-family: var(--font-body); font-weight: 700; font-size: 0.82rem;
+    border: 1px solid var(--ink); transition: background .12s linear, color .12s linear;
+  }
+  .btn-primary, .btn-ok { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .btn-primary:hover, .btn-ok:hover { background: var(--accent); border-color: var(--accent); }
+  .btn-ghost { background: transparent; color: var(--ink); border-color: var(--ink); }
+  .btn-ghost:hover { background: var(--accent); border-color: var(--accent); color: var(--paper); }
+  .btn-sim { background: transparent; color: var(--ink-soft); border: 1px dashed var(--line-strong); }
+  .btn:hover { transform: none; }
+
+  /* Chips: rectángulos de filete con rótulo monoespaciado. */
+  .chip {
+    background: transparent; border: 1px solid var(--line-strong); color: var(--ink-soft);
+    font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 5px 10px;
+  }
+  .chip:hover { border-color: var(--accent); color: var(--accent); }
+  .chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+
+  /* Buscador: una línea, no una caja. */
+  .search {
+    background: transparent; border: none; border-bottom: 1px solid var(--line-strong);
+    padding-left: 0;
+  }
+  .search:focus-within { border-bottom: 2px solid var(--accent); }
+
+  /* Las fichas dejan de ser tarjetas: rectángulos delimitados por filete. */
+  .card {
+    background: var(--paper); border: 1px solid var(--line);
+    transition: border-color .12s linear;
+  }
+  .card:hover { border-color: var(--ink); }
+  .card h3 { font-size: 1rem; }
+
+  /* Insignias: rótulo de instrumento, sin relleno de color. */
+  .field, .langtag, .lvl, .typetag, .elig, .sites-count, .origin-chip, .status, .deadline {
+    font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.08em;
+    text-transform: uppercase; font-weight: 400; padding: 2px 6px;
+    background: transparent; border: 1px solid var(--line-strong); color: var(--ink-soft);
+  }
+  .typetag { border-color: var(--ink); color: var(--ink); }
+  .langtag.has-abstract { border-color: var(--live); color: var(--live); }
+  .lvl-mine { border-color: var(--accent); color: var(--accent); }
+  .elig.ok, .status.acc { border-color: var(--ok); color: var(--ok); }
+  .elig.no, .status.pend { border-color: var(--gold-ink); color: var(--gold-ink); }
+  .deadline.urgent { border-color: var(--accent); color: var(--accent); }
+  .deadline.closed { border-color: var(--line); color: var(--ink-faint); }
+  .sites-count, .origin-chip { border-color: var(--live); color: var(--live); }
+
+  /* Rótulos pequeños: todos hablan el mismo idioma. */
+  .eyebrow, .sec-label {
+    font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--ink-faint); font-weight: 400;
+  }
+  .eyebrow { color: var(--accent); }
+
+  /* Panel y modal: filete negro, nada flotando. */
+  .panel { border-left: 1px solid var(--ink); }
+  .modal { border: 1px solid var(--ink); }
+  .modal-wrap { background: rgba(12, 17, 22, 0.34); }
+
+  /* Listas de términos y tablas: filas, no celdas de color. */
+  .memo-terms, .memo-terms li { background: var(--paper); }
+  .memo-terms { border-color: var(--ink); }
+  .memo-seal { border: 1px dashed var(--line-strong); background: var(--paper-alt); }
+  .memo-seal .mono-sm { color: var(--accent); }
+
+  /* La barra de ventana usa el azul del dato, no el rojo de señal. */
+  .winbar-track { background: var(--gold-soft); border-left: 2px solid var(--accent); }
+  .winbar-span { background: var(--live); }
+  .winbar-range { color: var(--live); }
+  .est-note { border-left: 2px solid var(--accent); }
+
+  /* Lo tapado se dibuja en barras: sigue sin enviarse a la página. */
+  .redacted i { background: var(--gold-soft); }
 </style>
 
 <div class="demo-note" data-i18n="demo.note">Maqueta interactiva · Nada se guarda ni se envía</div>
