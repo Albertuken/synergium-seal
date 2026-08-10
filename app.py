@@ -9,7 +9,14 @@ import io
 import os
 from datetime import datetime, timezone
 
-from flask import Flask, jsonify, render_template, request, send_file
+from flask import (
+    Flask,
+    jsonify,
+    render_template,
+    request,
+    send_file,
+    send_from_directory,
+)
 
 import db
 import seal
@@ -42,6 +49,17 @@ def _public(row: dict) -> dict:
 @app.get("/")
 def index():
     return render_template("index.html")
+
+
+@app.get("/proyecto")
+def proyecto():
+    """La landing, servida como fichero estático.
+
+    Se genera con build_landing.py a partir de landing/index.html. Va por
+    send_from_directory y no por render_template a propósito: es HTML literal
+    y no tiene por qué pasar por Jinja.
+    """
+    return send_from_directory(app.static_folder, "proyecto.html")
 
 
 @app.get("/health")

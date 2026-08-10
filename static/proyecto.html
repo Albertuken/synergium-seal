@@ -1,0 +1,919 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synergium — Sella la idea antes de contarla</title>
+<style>
+  /* ═══════════════════════════════════════════════════════════════
+     Instrumento de medida, no folleto.
+
+     Prohibiciones que se respetan en todo el fichero, porque son el
+     vocabulario donde se agolpa el diseño automático:
+       · Ningún border-radius. Nada redondeado.
+       · Ninguna sombra. La profundidad sale del filete y del valor.
+       · Ninguna tarjeta. Los bloques se delimitan con reglas.
+       · Ningún degradado.
+     La retícula manda: todo cuelga de un mismo filo izquierdo.
+
+     Un solo tema, a propósito: esto es un panel iluminado, y la
+     herramienta real (synergium-seal.fly.dev) es igual. Se declara
+     color-scheme para que los controles nativos no se oscurezcan
+     por su cuenta.
+     ═══════════════════════════════════════════════════════════════ */
+
+  :root {
+    color-scheme: light;
+
+    --bg:      #f0f0ee;
+    --panel:   #fbfbfa;
+    --ink:     #0c1116;
+    --ink-2:   #4a545d;
+    --ink-3:   #8a939b;
+    --rule:    #cdcecb;
+    --rule-2:  #e2e3e0;
+    --signal:  #b3202f;   /* rojo de señal: alarma, medida, atención */
+    --signal-2:#f2dfe1;
+    --live:    #16305a;   /* azul del instrumento, secundario */
+    --ok:      #1c6b4b;
+
+    --grot: "Helvetica Neue", Helvetica, Arimo, "Liberation Sans", Arial, sans-serif;
+    --mono: "SF Mono", SFMono-Regular, Menlo, Consolas, "DejaVu Sans Mono", "Courier New", monospace;
+
+    --rail: clamp(18px, 6vw, 92px);
+  }
+
+  @media (prefers-contrast: more) {
+    :root { --rule: #9aa0a4; --rule-2: #b8bdc0; --ink-3: #5d666e; }
+  }
+
+  *, *::before, *::after { box-sizing: border-box; border-radius: 0 !important; }
+
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--grot);
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    font-synthesis: none;
+  }
+
+  img { max-width: 100%; display: block; }
+  p { margin: 0; }
+  a { color: var(--signal); }
+  :focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
+
+  .rail { padding-left: var(--rail); padding-right: clamp(18px, 5vw, 72px); max-width: 1240px; }
+
+  /* Etiqueta de instrumento: pequeña, monoespaciada, muy espaciada. */
+  .tag {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--ink-3);
+  }
+  .tag.sig { color: var(--signal); }
+  .tag.ok  { color: var(--ok); }
+
+  /* ── Barra superior ─────────────────────────────────────────────── */
+  header {
+    position: sticky; top: 0; z-index: 30;
+    background: color-mix(in srgb, var(--bg) 90%, transparent);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--rule);
+  }
+  header .rail {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 18px; height: 54px;
+  }
+  .mark { display: flex; align-items: center; gap: 9px; }
+  .mark img { height: 21px; width: auto; }
+  .mark b { font-size: 15px; font-weight: 700; letter-spacing: -0.015em; }
+  header nav { display: flex; gap: 22px; align-items: center; }
+  header nav a {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--ink-2); text-decoration: none;
+  }
+  header nav a:hover { color: var(--signal); }
+  header nav a.live { color: var(--signal); display: inline-flex; align-items: center; gap: 6px; }
+  header nav a.live::before { content: ""; width: 6px; height: 6px; background: var(--signal); flex: none; }
+  @media (max-width: 760px) { header nav a.hide-s { display: none; } }
+
+  /* ── Titular ────────────────────────────────────────────────────── */
+  .head { padding: clamp(46px, 8vw, 84px) 0 30px; }
+  h1 {
+    margin: 12px 0 0;
+    font-size: clamp(2.1rem, 5.2vw, 3.55rem);
+    line-height: 1.02;
+    letter-spacing: -0.035em;   /* tracking negativo: obligatorio a este tamaño */
+    font-weight: 700;
+    max-width: 17ch;
+    text-wrap: balance;
+  }
+  .head .sub {
+    margin-top: 20px; max-width: 54ch; font-size: 1.02rem; color: var(--ink-2);
+    line-height: 1.55;
+  }
+
+  /* ── El instrumento ─────────────────────────────────────────────── */
+  .rig { border-top: 1px solid var(--ink); border-bottom: 1px solid var(--rule); background: var(--panel); }
+  .rig-in { padding-top: 0; padding-bottom: 0; }
+
+  .rig-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 14px; flex-wrap: wrap;
+    padding: 10px 0; border-bottom: 1px solid var(--rule-2);
+  }
+  .lamp { display: inline-flex; align-items: center; gap: 7px; }
+  .lamp i { width: 6px; height: 6px; background: var(--signal); display: block; }
+  @media (prefers-reduced-motion: no-preference) {
+    .lamp i { animation: pulse 2.2s steps(1) infinite; }
+  }
+  @keyframes pulse { 0%, 50% { opacity: 1 } 51%, 100% { opacity: .25 } }
+
+  #src {
+    display: block; width: 100%; border: none; outline: none; resize: none;
+    background: transparent; color: var(--ink);
+    font-family: var(--grot); font-size: clamp(1rem, 1.4vw + .6rem, 1.32rem);
+    line-height: 1.42; letter-spacing: -0.011em;
+    padding: 22px 0 20px; min-height: 88px;
+  }
+  #src::placeholder { color: var(--ink-3); }
+
+  /* Lectura: el valor grande, la etiqueta diminuta. Como un panel. */
+  .read { border-top: 1px solid var(--rule-2); padding: 16px 0 4px; }
+  .read-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  #hash {
+    font-family: var(--mono);
+    font-size: clamp(.66rem, 1.15vw + .34rem, .84rem);
+    line-height: 1.85; letter-spacing: 0.04em;
+    word-break: break-all; color: var(--ink);
+    margin-top: 7px;
+  }
+  #hash b { color: var(--signal); font-weight: inherit; }
+
+  /* LA PIEZA: los 64 dígitos como escala de barras.
+     Cambia una letra del texto y salta la escala entera. */
+  .scale {
+    display: flex; align-items: flex-end; gap: 2px;
+    height: 62px; margin: 18px 0 0; padding-bottom: 1px;
+    border-bottom: 1px solid var(--ink);
+  }
+  .scale i {
+    display: block; flex: 1 1 0; min-width: 0;
+    background: var(--live); height: 4%;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .scale i { transition: height .28s cubic-bezier(.2,.8,.25,1); }
+  }
+  .scale-legend {
+    display: flex; justify-content: space-between; gap: 12px;
+    padding: 6px 0 22px;
+  }
+  .scale-legend .mid { text-align: center; }
+  @media (max-width: 560px) { .scale-legend .mid { display: none; } }
+
+  /* ── Bloques de texto ───────────────────────────────────────────── */
+  .block { padding: 46px 0; border-top: 1px solid var(--rule); }
+  .block-in { display: grid; grid-template-columns: 132px minmax(0, 1fr); gap: 0 40px; }
+  /* minmax(0,1fr) y no 1fr: una pista «1fr» toma como mínimo el min-content
+     de su contenido, y el <pre> del comando ots no parte línea — eso ensanchaba
+     la columna y sacaba la página 12px por el lado en móvil. */
+  @media (max-width: 820px) { .block-in { grid-template-columns: minmax(0, 1fr); gap: 14px; } }
+  .block h2 {
+    margin: 0 0 14px; font-size: clamp(1.22rem, 1.8vw + .55rem, 1.62rem);
+    letter-spacing: -0.024em; line-height: 1.14; font-weight: 700; max-width: 24ch;
+    text-wrap: balance;
+  }
+  .block p { max-width: 60ch; color: var(--ink-2); }
+  .block p + p { margin-top: 12px; }
+  .block strong { color: var(--ink); font-weight: 600; }
+  .note { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--rule-2); }
+
+  /* Filas: sustituyen a cualquier rejilla de tarjetas. */
+  .rows { margin: 22px 0 0; border-top: 1px solid var(--rule-2); }
+  .row {
+    display: grid; grid-template-columns: 26px minmax(0, 1fr) auto;
+    gap: 0 16px; align-items: baseline;
+    padding: 13px 0; border-bottom: 1px solid var(--rule-2);
+  }
+  @media (max-width: 620px) { .row { grid-template-columns: 26px minmax(0,1fr); } .row .meta { grid-column: 2; padding-top: 4px; } }
+  .row .k { font-family: var(--mono); font-size: 10px; color: var(--ink-3); letter-spacing: .1em; }
+  .row .t { font-weight: 600; font-size: .98rem; }
+  .row .t span { display: block; font-weight: 400; color: var(--ink-2); font-size: .93rem; margin-top: 3px; max-width: 56ch; }
+  .row .meta { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
+
+  /* Las puertas de entrada no son una secuencia: se rotulan por el
+     sentido del intercambio, no con 01 / 02 / 03. */
+  .doors { margin: 22px 0 0; border-top: 1px solid var(--rule-2); }
+  .door {
+    display: grid; grid-template-columns: 152px minmax(0, 1fr);
+    gap: 0 24px; padding: 15px 0; border-bottom: 1px solid var(--rule-2);
+  }
+  @media (max-width: 700px) { .door { grid-template-columns: 1fr; gap: 6px; } }
+  .door .way { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--signal); padding-top: 3px; }
+  .door .n { font-weight: 600; font-size: .98rem; }
+  .door p { font-size: .93rem; margin-top: 3px; }
+  .door .do { display: block; font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); margin-top: 7px; }
+
+  /* Los pasos sí son una secuencia: aquí el número dice algo cierto. */
+  .steps { margin: 22px 0 0; border-top: 1px solid var(--rule-2); counter-reset: s; }
+  .step {
+    display: grid; grid-template-columns: 44px minmax(0, 1fr);
+    gap: 0 20px; padding: 15px 0; border-bottom: 1px solid var(--rule-2);
+  }
+  .step::before {
+    counter-increment: s; content: counter(s, decimal-leading-zero);
+    font-family: var(--mono); font-size: 12px; color: var(--signal);
+    font-variant-numeric: tabular-nums; padding-top: 2px;
+  }
+  .step .n { font-weight: 600; font-size: .98rem; }
+  .step p { font-size: .93rem; margin-top: 3px; }
+
+  /* ── Apertura por niveles: se opera, no se lee ───────────────────── */
+  .gate { margin: 22px 0 0; border-top: 1px solid var(--rule-2); }
+  .gate button {
+    display: grid; grid-template-columns: 92px minmax(0,1fr) auto;
+    gap: 0 18px; align-items: baseline; width: 100%; text-align: left;
+    padding: 14px 0; border: none; border-bottom: 1px solid var(--rule-2);
+    background: transparent; font: inherit; color: inherit; cursor: pointer;
+    transition: background .12s linear;
+  }
+  .gate button:hover { background: var(--signal-2); }
+  @media (max-width: 620px) {
+    .gate button { grid-template-columns: 1fr auto; }
+    .gate .lvl { grid-column: 1 / -1; }
+  }
+  .gate .lvl { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
+  .gate .n { font-weight: 600; font-size: .98rem; }
+  .gate .n span { display: block; font-weight: 400; color: var(--ink-2); font-size: .93rem; margin-top: 3px; max-width: 52ch; }
+  .gate .st { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
+  .gate [aria-pressed="true"] .lvl,
+  .gate [aria-pressed="true"] .st { color: var(--signal); }
+
+  /* La pantalla del que mira: lo cerrado no está borroso, no está. */
+  .screen { margin-top: 24px; border: 1px solid var(--ink); background: var(--panel); }
+  .screen-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px; flex-wrap: wrap;
+    padding: 9px 14px; border-bottom: 1px solid var(--rule-2);
+  }
+  .screen-body { padding: 4px 14px 16px; }
+  .screen-body dl { margin: 0; }
+  .screen-body dt {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--ink-3); padding-top: 13px;
+  }
+  .screen-body dd { margin: 3px 0 0; font-size: .93rem; color: var(--ink-2); max-width: 58ch; }
+  .screen-body dd b { color: var(--ink); font-weight: 600; }
+  .screen-foot {
+    padding: 12px 14px; border-top: 1px solid var(--rule-2);
+    font-family: var(--mono); font-size: 10px; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--ink-3);
+  }
+
+  /* ── Botón / enlace de acción ───────────────────────────────────── */
+  .go {
+    display: inline-block; margin-top: 20px;
+    border: 1px solid var(--ink); background: var(--ink); color: var(--panel);
+    font-family: var(--grot); font-size: 13px; font-weight: 700;
+    padding: 12px 22px; text-decoration: none;
+    transition: background .12s linear;
+  }
+  .go:hover { background: var(--signal); border-color: var(--signal); color: var(--panel); }
+  .go:active { transform: translateY(1px); }
+
+  pre {
+    margin: 16px 0 0; padding: 14px 16px; overflow-x: auto;
+    background: var(--ink); color: #e6e9ec;
+    font-family: var(--mono); font-size: 12px; line-height: 1.7;
+  }
+  :not(pre) > code { font-family: var(--mono); font-size: .85em; }
+
+  /* Preguntas */
+  .q details { border-bottom: 1px solid var(--rule-2); }
+  .q details:first-of-type { border-top: 1px solid var(--rule-2); }
+  .q summary {
+    list-style: none; cursor: pointer; padding: 14px 0;
+    font-weight: 600; font-size: .97rem;
+    display: flex; gap: 14px; align-items: baseline;
+  }
+  .q summary::-webkit-details-marker { display: none; }
+  .q summary::before { content: "[+]"; font-family: var(--mono); font-size: 11px; color: var(--signal); flex-shrink: 0; }
+  .q details[open] summary::before { content: "[−]"; }
+  .q .a { padding: 0 0 16px 32px; max-width: 62ch; }
+  .q .a p { font-size: .93rem; }
+  .q .a p + p { margin-top: 10px; }
+
+  /* Estado: una línea de tiempo con estado real, no una promesa */
+  .plan { margin: 22px 0 0; border-top: 1px solid var(--rule-2); }
+  .plan > div {
+    display: grid; grid-template-columns: 116px minmax(0,1fr);
+    gap: 0 20px; padding: 14px 0; border-bottom: 1px solid var(--rule-2);
+  }
+  @media (max-width: 620px) { .plan > div { grid-template-columns: 1fr; gap: 5px; } }
+  .plan .when { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); padding-top: 3px; }
+  .plan .done .when { color: var(--ok); }
+  .plan .now .when { color: var(--signal); }
+  .plan .n { font-weight: 600; font-size: .98rem; }
+  .plan p { font-size: .93rem; margin-top: 3px; }
+
+  /* Cierre */
+  .end { padding: 46px 0 30px; border-top: 1px solid var(--ink); }
+  .end h2 { font-size: clamp(1.3rem, 2vw + .5rem, 1.7rem); letter-spacing: -.026em; margin: 0 0 12px; font-weight: 700; text-wrap: balance; }
+  .end p { max-width: 56ch; color: var(--ink-2); }
+  /* Dos acciones, y las dos hacen algo de verdad: una abre la herramienta,
+     la otra abre el correo. No hay formulario porque no hay dónde guardarlo. */
+  .acts { display: flex; gap: 10px; flex-wrap: wrap; }
+  .go-2 { background: transparent; color: var(--ink); }
+  .go-2:hover { background: var(--signal); border-color: var(--signal); color: var(--panel); }
+  .addr {
+    margin-top: 18px; padding-top: 13px; border-top: 1px solid var(--rule-2);
+    display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;
+  }
+  .addr span:last-child { font-size: .9rem; color: var(--ink-2); max-width: 52ch; }
+  .addr a {
+    font-family: var(--mono); font-size: 13px; letter-spacing: .02em;
+    color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--rule);
+  }
+  .addr a:hover { color: var(--signal); border-bottom-color: var(--signal); }
+
+  footer { padding: 20px 0 40px; }
+  footer .rail { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+</style>
+</head>
+<body>
+<header>
+  <div class="rail">
+    <div class="mark"><img src="data:image/png;base64,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" alt=""><b>Synergium</b></div>
+    <nav>
+      <a href="#objeto" class="hide-s">Qué registra</a>
+      <a href="#apertura" class="hide-s">Niveles</a>
+      <a href="#estado" class="hide-s">Estado</a>
+      <a class="live" href="/">Sellar</a>
+    </nav>
+  </div>
+</header>
+
+<section class="head">
+  <div class="rail">
+    <span class="tag sig">SHA-256 · anclaje en Bitcoin</span>
+    <h1>Sella la idea antes de contarla.</h1>
+    <p class="sub">
+      Publicas una pregunta de investigación que aún no has ejecutado y el perfil que te falta
+      para hacerlo. Queda fechada con una huella verificable en el instante en que la escribes, y
+      se abre por niveles solo a quien acuerde colaborar contigo.
+    </p>
+  </div>
+</section>
+
+<!-- ══ El instrumento ══ -->
+<section class="rig" id="prueba">
+  <div class="rail rig-in">
+    <div class="rig-bar">
+      <span class="tag">Entrada — escribe cualquier cosa</span>
+      <span class="tag sig lamp"><i></i>midiendo</span>
+    </div>
+
+    <label class="sr-only" for="src">Texto a sellar</label>
+    <textarea id="src" rows="2" spellcheck="false"
+      placeholder="Nada de lo que escribas sale de este navegador…"></textarea>
+
+    <div class="read">
+      <div class="read-top">
+        <span class="tag">Salida — huella SHA-256</span>
+        <span class="tag" id="len">0 caracteres</span>
+      </div>
+      <div id="hash" aria-live="off"></div>
+      <div class="scale" id="scale" role="img" aria-label="Representación gráfica de la huella"></div>
+      <div class="scale-legend">
+        <span class="tag">dígito 1</span>
+        <span class="tag mid">cambia una letra y salta la escala entera</span>
+        <span class="tag">64</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ Qué registra ══ -->
+<section class="block" id="objeto">
+  <div class="rail block-in">
+    <span class="tag">01 / Objeto</span>
+    <div>
+      <h2>Lo publicado ya tiene vitrina. Lo que falta por hacer, no.</h2>
+      <p>
+        Las redes académicas muestran currículum: artículos, citas, méritos. Sirven para encontrar
+        trabajo terminado. Aquí se registra la etapa anterior — la idea que todavía necesita a
+        alguien más para poder existir.
+      </p>
+
+      <div class="rows">
+        <div class="row">
+          <span class="k">01</span>
+          <span class="t">Una idea busca especialista
+            <span>Tienes la pregunta y te falta el método, el dato o la competencia.</span></span>
+          <span class="meta">emparejamiento</span>
+        </div>
+        <div class="row">
+          <span class="k">02</span>
+          <span class="t">Un consorcio busca socios
+            <span>Hay convocatoria y reloj. Se comprueba solo si llegas al mínimo de tres entidades de tres Estados.</span></span>
+          <span class="meta">elegibilidad</span>
+        </div>
+        <div class="row">
+          <span class="k">03</span>
+          <span class="t">Un estudio busca dónde repetirse
+            <span>Ya analizaste tu zona; otro aplica tu protocolo en la suya y su resultado es tu contrafactual.</span></span>
+          <span class="meta">contraste</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ Puertas de entrada ══ -->
+<section class="block" id="entrada">
+  <div class="rail block-in">
+    <span class="tag">02 / Entrada</span>
+    <div>
+      <h2>Una colaboración necesita las dos partes.</h2>
+      <p>
+        Puedes entrar por donde estés hoy: con una idea que necesita manos, con una técnica que
+        busca dónde aplicarse, o buscando la relación de dirección que sostiene una tesis.
+      </p>
+
+      <div class="doors">
+        <div class="door">
+          <span class="way">Idea → especialista</span>
+          <div>
+            <span class="n">Tienes una idea</span>
+            <p>Sabes qué quieres investigar, pero te falta una técnica, un acceso a datos o una
+            competencia que no está en tu grupo.</p>
+            <span class="do">Publicas la idea sellada y describes el perfil que necesitas</span>
+          </div>
+        </div>
+        <div class="door">
+          <span class="way">Especialista → idea</span>
+          <div>
+            <span class="n">Tienes una técnica</span>
+            <p>Dominas un método, un instrumento o un conjunto de datos y quieres aplicarlo a
+            problemas nuevos, no solo a los de tu propio departamento.</p>
+            <span class="do">Publicas lo que sabes hacer y recibes ideas que encajan</span>
+          </div>
+        </div>
+        <div class="door">
+          <span class="way">Dirección ↔ tesis</span>
+          <div>
+            <span class="n">Buscas dirección</span>
+            <p>Eres doctorando sin supervisor para una línea concreta, o diriges un grupo y buscas a
+            alguien que empuje una idea que no tienes tiempo de llevar.</p>
+            <span class="do">Publicas la línea de trabajo y el tipo de vínculo que buscas</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ Proceso ══ -->
+<section class="block" id="proceso">
+  <div class="rail block-in">
+    <span class="tag">03 / Proceso</span>
+    <div>
+      <h2>Cuatro pasos, y el tercero no ocurre hasta que quieres.</h2>
+
+      <div class="steps">
+        <div class="step">
+          <div>
+            <span class="n">Describe la idea</span>
+            <p>Planteas la pregunta de investigación, qué falta por resolver y qué tipo de perfil
+            necesitas para avanzar.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div>
+            <span class="n">Se sella con huella y fecha</span>
+            <p>Se genera la huella del documento y se registra en la cadena de Bitcoin. La fecha ya
+            no depende de que nadie te crea.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div>
+            <span class="n">Recibe propuestas</span>
+            <p>Quien encaje con el perfil puede solicitar sumarse, mostrando su experiencia
+            relevante para tu caso concreto.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div>
+            <span class="n">Firmáis el memorando</span>
+            <p>Antes de abrir el documento completo, ambas partes fijan por escrito el reparto de
+            autoría, los plazos y qué aporta cada quien.</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="note">
+        <strong>El memorando es donde esto deja de ser una promesa.</strong> Una idea sellada
+        demuestra que era tuya; un reparto de autoría firmado antes de empezar es lo que evita la
+        discusión cuando el trabajo ya está hecho. Se genera desde la propia ficha de la idea y se
+        sella con la misma huella con fecha, así que después nadie puede reescribirlo.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ Apertura por niveles ══ -->
+<section class="block" id="apertura">
+  <div class="rail block-in">
+    <span class="tag">04 / Apertura</span>
+    <div>
+      <h2>Se abre por partes, no de golpe.</h2>
+      <p>
+        Lo que sigue cerrado no se muestra borroso ni tachado: sencillamente <strong>no se
+        envía</strong> a la pantalla de quien no tiene acceso. Abre niveles y mira qué llega.
+      </p>
+
+      <div class="gate" id="gate"></div>
+
+      <div class="screen">
+        <div class="screen-bar">
+          <span class="tag">Lo que ve quien mira</span>
+          <span class="tag sig" id="lvl-now">Acceso nivel 1</span>
+        </div>
+        <div class="screen-body" id="screen" aria-live="polite"></div>
+        <div class="screen-foot" id="screen-foot"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ Prueba ══ -->
+<section class="block" id="fe">
+  <div class="rail block-in">
+    <span class="tag">05 / Fe</span>
+    <div>
+      <h2>La prueba no depende de nosotros.</h2>
+      <p>
+        La huella se ancla en Bitcoin a través de OpenTimestamps. Con el fichero que te descargas,
+        cualquiera comprueba la fecha con la herramienta oficial — <strong>sin pasar por este
+        servidor y aunque el servicio deje de existir</strong>. La evidencia es tuya, no nuestra.
+      </p>
+      <pre><code>pip install opentimestamps-client
+ots verify SYN-2026-XXXX.ots -f tu-fichero.pdf</code></pre>
+      <p class="note">
+        Esta parte ya no es un plan: <strong>el servicio de sellado está funcionando</strong>. Puedes
+        sellar un documento ahora mismo y descargarte el certificado.
+      </p>
+      <a class="go" href="/">Sellar un documento →</a>
+      <p class="note">
+        No sustituye a una patente ni a un registro de propiedad intelectual: prueba que un
+        contenido existía en una fecha, no concede derechos. Si tu trabajo es patentable, habla con
+        tu oficina de transferencia antes de publicar nada, esto incluido.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ Preguntas ══ -->
+<section class="block" id="objeciones">
+  <div class="rail block-in">
+    <span class="tag">06 / Objeciones</span>
+    <div class="q">
+      <h2>Lo que seguramente estás pensando.</h2>
+      <details>
+        <summary>¿Y si alguien me copia la idea de todas formas?</summary>
+        <div class="a">
+          <p>Puede pasar, y sería deshonesto decir lo contrario. Lo que cambia es tu posición: hay
+          una huella con fecha anterior y un registro de quién accedió a cada nivel. Pasas de «mi
+          palabra contra la suya» a tener prueba técnica y lista de accesos.</p>
+          <p>Por eso el material sensible solo se abre después de firmar el memorando: quien llega a
+          tus datos ya ha aceptado por escrito un reparto de autoría.</p>
+        </div>
+      </details>
+      <details>
+        <summary>¿Cuánto cuesta?</summary>
+        <div class="a">
+          <p>Registrar ideas, sellarlas, ofrecer tu especialidad y presentarte a colaboraciones será
+          gratis para investigadores: sin ambos lados de la mesa esto no sirve de nada.</p>
+          <p>El sostenimiento vendría de suscripciones institucionales para universidades y oficinas
+          de transferencia que quieran gestionar sus propias convocatorias, y de una comisión sobre
+          la financiación del piloto. Nunca de vender datos ni de cobrar por aparecer antes en las
+          búsquedas.</p>
+        </div>
+      </details>
+      <details>
+        <summary>¿Quién comprueba que los perfiles son reales?</summary>
+        <div class="a">
+          <p>ORCID y correo institucional: identificadores que ya existen y son públicos. Un perfil
+          sin verificar puede mirar, pero no solicitar acceso a un nivel detallado ni firmar un
+          memorando.</p>
+        </div>
+      </details>
+      <details>
+        <summary>¿De quién son los datos y las ideas que subo?</summary>
+        <div class="a">
+          <p>Tuyos. Synergium no reclama ningún derecho sobre lo que publicas ni lo usa para
+          entrenar nada. El certificado de anterioridad se ancla fuera de la plataforma, así que si
+          un día cerramos, tu prueba sigue siendo verificable sin nosotros.</p>
+        </div>
+      </details>
+      <details>
+        <summary>¿En qué se diferencia de ResearchGate o del buscador de socios de Horizon Europe?</summary>
+        <div class="a">
+          <p>ResearchGate es un escaparate de lo ya publicado: sirve para encontrar trabajo
+          terminado, no para arrancar el que todavía no existe. El buscador oficial de Horizon
+          Europe empareja organizaciones para consorcios formales.</p>
+          <p>Synergium trabaja en el hueco entre ambos: personas concretas, con una competencia
+          concreta, para una idea que aún no se ha ejecutado. Es el paso informal previo a que un
+          consorcio llegue siquiera a existir.</p>
+        </div>
+      </details>
+      <details>
+        <summary>¿Esto sustituye a una patente?</summary>
+        <div class="a">
+          <p>No, y no deberías usarlo como tal. Es evidencia de anterioridad: demuestra que un
+          contenido existía en una fecha. Si tu trabajo es patentable, habla con la oficina de
+          transferencia de tu institución antes de publicar nada, incluso aquí.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ══ Estado ══ -->
+<section class="block" id="estado">
+  <div class="rail block-in">
+    <span class="tag">07 / Estado</span>
+    <div>
+      <h2>Sin promesas de fecha.</h2>
+      <p>
+        Synergium todavía no existe como servicio completo. Prefiero decirte exactamente en qué
+        punto está antes de pedirte nada.
+      </p>
+
+      <div class="plan">
+        <div class="done">
+          <span class="when">Hecho</span>
+          <div>
+            <span class="n">Sellado real, en línea</span>
+            <p>Un servicio que calcula la huella en tu navegador, la ancla en Bitcoin vía
+            OpenTimestamps y te devuelve un certificado que se valida sin nosotros.</p>
+          </div>
+        </div>
+        <div class="done">
+          <span class="when">Hecho</span>
+          <div>
+            <span class="n">Maqueta de la aplicación</span>
+            <p>Publicar una idea, los tres tipos de colaboración, los niveles de acceso y el
+            memorando, en tres idiomas. Simulada, para poder enseñarla y discutirla.</p>
+          </div>
+        </div>
+        <div class="now">
+          <span class="when">Ahora</span>
+          <div>
+            <span class="n">Ponerla delante de investigadores</span>
+            <p>Lo único que decide si esto sigue: saber si alguien registraría de verdad una idea sin
+            publicar, y si el emparejamiento le resulta creíble.</p>
+          </div>
+        </div>
+        <div>
+          <span class="when">Después</span>
+          <div>
+            <span class="n">Piloto cerrado</span>
+            <p>Un puñado de grupos de disciplinas distintas usándolo en serio, para ver si el
+            emparejamiento funciona fuera del papel.</p>
+          </div>
+        </div>
+        <div>
+          <span class="when">Si funciona</span>
+          <div>
+            <span class="n">Apertura</span>
+            <p>Acceso abierto y las piezas de después del acuerdo: memorando y financiación del
+            piloto.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ Cierre ══ -->
+<section class="end" id="aviso">
+  <div class="rail">
+    <span class="tag">Lo que puedes hacer hoy</span>
+    <h2>Sellar ya funciona. El resto depende de si te interesa.</h2>
+    <p>
+      Si te dedicas a investigar, la pregunta que necesito responder es una sola: ¿registrarías una
+      idea antes de ejecutarla, o te parece que no hace falta?
+    </p>
+    <div class="acts">
+      <a class="go" href="/">Sellar un documento →</a>
+    </div>
+    <p class="addr">
+      <span class="tag">Contacto</span>
+      <span>Responde al mensaje por el que te llegó esta página. Todavía no hay dirección del
+      proyecto: irá aquí en cuanto la haya.</span>
+    </p>
+  </div>
+</section>
+
+<footer>
+  <div class="rail">
+    <span class="tag">Synergium — concepto en fase de diseño</span>
+    <span class="tag">Sellado sobre OpenTimestamps</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  var $ = function (id) { return document.getElementById(id); };
+
+  /* ═══ El instrumento: texto → huella → escala ═══════════════════ */
+  var src = $('src'), out = $('hash'), len = $('len'), scale = $('scale');
+  var subtle = window.crypto && window.crypto.subtle;
+
+  /* 64 barras: una por dígito hexadecimal de la huella. */
+  var bars = [];
+  for (var i = 0; i < 64; i++) {
+    var b = document.createElement('i');
+    scale.appendChild(b);
+    bars.push(b);
+  }
+
+  var VACIO = '—'.repeat(24);
+
+  function hex(buf) {
+    return Array.prototype.map.call(new Uint8Array(buf), function (x) {
+      return ('0' + x.toString(16)).slice(-2);
+    }).join('');
+  }
+
+  function pintar(h) {
+    // Los ocho primeros dígitos en rojo: es lo que uno compara de un vistazo.
+    out.innerHTML = '';
+    var b = document.createElement('b');
+    b.textContent = h.slice(0, 8);
+    out.appendChild(b);
+    out.appendChild(document.createTextNode(h.slice(8)));
+
+    for (var i = 0; i < 64; i++) {
+      var v = parseInt(h[i], 16);            // 0–15
+      bars[i].style.height = (4 + (v / 15) * 96) + '%';
+    }
+  }
+
+  function vaciar() {
+    out.textContent = VACIO;
+    for (var i = 0; i < 64; i++) bars[i].style.height = '4%';
+  }
+
+  var turno = 0;
+  function medir() {
+    var v = src.value;
+    len.textContent = v.length + ' caracteres';
+    if (!v) { vaciar(); return; }
+    var mio = ++turno;
+    subtle.digest('SHA-256', new TextEncoder().encode(v)).then(function (buf) {
+      if (mio === turno) pintar(hex(buf));
+    });
+  }
+
+  if (!subtle) {
+    vaciar();
+    src.disabled = true;
+    len.textContent = 'requiere conexión segura';
+  } else {
+    src.addEventListener('input', medir);
+    vaciar();
+
+    /* Demostración al cargar. Va por tiempo transcurrido, no por pasos
+       encadenados, para que una pestaña estrangulada se ponga al día. */
+    var DEMO = 'Las fechas de vendimia de los archivos municipales como termómetro de olas de calor anteriores a 1850.';
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      src.value = DEMO; medir();
+    } else {
+      var n = 0, fin = false, t0 = null, CPS = 42, ESPERA = 380;
+      var rematar = function () { if (fin) return; fin = true; src.value = DEMO; medir(); };
+      ['focus', 'keydown', 'pointerdown'].forEach(function (e) {
+        src.addEventListener(e, function () { fin = true; }, { once: true });
+      });
+      var paso = function (t) {
+        if (fin) return;
+        if (t0 === null) t0 = t;
+        var ms = t - t0 - ESPERA;
+        if (ms > 0) {
+          var k = Math.min(DEMO.length, Math.floor(ms / 1000 * CPS));
+          if (k !== n) { n = k; src.value = DEMO.slice(0, k); medir(); }
+        }
+        if (n < DEMO.length) requestAnimationFrame(paso); else fin = true;
+      };
+      requestAnimationFrame(paso);
+      // La animación es adorno; el ejemplo no puede depender de que corra.
+      setTimeout(rematar, ESPERA + (DEMO.length / CPS) * 1000 + 1400);
+    }
+  }
+
+  /* ═══ Apertura por niveles ══════════════════════════════════════
+     El texto de cada nivel vive aquí, en JavaScript, y solo entra en
+     el documento cuando ese nivel se abre. No hay nada difuminado ni
+     tachado que un inspector de elementos pueda destapar: lo cerrado
+     sencillamente no está en la página. Es el mecanismo real. */
+  var NIVELES = [
+    {
+      nombre: 'Resumen público',
+      quien: 'Cualquiera, sin registro',
+      dice: 'Disciplina, tipo de pregunta y perfil buscado. Suficiente para que alguien se reconozca; insuficiente para ejecutar la idea.',
+      campos: [
+        ['Disciplina', 'Paleoclimatología · historia ambiental'],
+        ['Se busca', '<b>Historiador/a con acceso a archivos municipales</b> del arco mediterráneo, siglos XVI–XIX.'],
+        ['Pregunta', '¿Pueden las fechas de vendimia asentadas en actas municipales reconstruir olas de calor anteriores al registro instrumental?']
+      ],
+      pie: 'Nivel 1 de 3 — el resto no se ha enviado a esta página'
+    },
+    {
+      nombre: 'Planteamiento detallado',
+      quien: 'Quien tú apruebas, uno a uno',
+      dice: 'Hipótesis, enfoque y estado real del trabajo. Queda registrado quién accedió y cuándo.',
+      campos: [
+        ['Hipótesis', 'El adelanto de la vendimia respecto a la media local es un termómetro sustitutivo del trimestre abril–agosto, con una resolución de un año.'],
+        ['Enfoque', 'Calibrar contra series instrumentales 1870–1950 en las comarcas donde ambas existen, y proyectar hacia atrás con el error propagado explícito.'],
+        ['Estado', 'Método probado en 31 municipios de una sola comarca. Falta cobertura geográfica: es exactamente lo que no puedo conseguir solo.']
+      ],
+      pie: 'Nivel 2 de 3 — acceso registrado con fecha y hora'
+    },
+    {
+      nombre: 'Datos y protocolos',
+      quien: 'Solo con memorando firmado',
+      dice: 'El material de trabajo. Se abre cuando el reparto de autoría ya está por escrito.',
+      campos: [
+        ['Datos', 'Serie transcrita de 4.180 asientos de vendimia (1521–1904) con referencia de legajo, más el código de calibración.'],
+        ['Protocolo', 'Criterio de transcripción, tratamiento de los años con doble asiento y prueba de homogeneidad antes de unir comarcas.'],
+        ['Reparto acordado', 'Primera autoría del proponente; coautoría y autoría correspondiente compartida en los artículos derivados de las comarcas aportadas.']
+      ],
+      pie: 'Nivel 3 de 3 — abierto tras el acuerdo de autoría'
+    }
+  ];
+
+  var abierto = 1;   // niveles visibles: siempre desde 1 hasta este número
+  var gate = $('gate'), pantalla = $('screen'), pie = $('screen-foot'), ahora = $('lvl-now');
+  var botones = [];
+
+  NIVELES.forEach(function (niv, idx) {
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.setAttribute('aria-pressed', idx === 0 ? 'true' : 'false');
+    btn.innerHTML =
+      '<span class="lvl">Nivel ' + (idx + 1) + '</span>'
+      + '<span class="n"></span>'
+      + '<span class="st"></span>';
+    btn.querySelector('.n').innerHTML = '';
+    var n = btn.querySelector('.n');
+    n.appendChild(document.createTextNode(niv.nombre));
+    var sub = document.createElement('span');
+    sub.textContent = niv.dice;
+    n.appendChild(sub);
+    btn.addEventListener('click', function () { abrir(idx + 1); });
+    gate.appendChild(btn);
+    botones.push(btn);
+  });
+
+  function abrir(hasta) {
+    abierto = hasta;
+    ahora.textContent = 'Acceso nivel ' + hasta;
+
+    botones.forEach(function (b, i) {
+      var on = i < hasta;
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      b.querySelector('.st').textContent = on ? 'abierto' : 'cerrado';
+    });
+
+    var dl = document.createElement('dl');
+    for (var i = 0; i < hasta; i++) {
+      NIVELES[i].campos.forEach(function (c) {
+        var dt = document.createElement('dt');
+        dt.textContent = c[0];
+        var dd = document.createElement('dd');
+        dd.innerHTML = c[1];          // solo negritas nuestras, texto fijo del fichero
+        dl.appendChild(dt);
+        dl.appendChild(dd);
+      });
+    }
+    pantalla.innerHTML = '';
+    pantalla.appendChild(dl);
+    pie.textContent = NIVELES[hasta - 1].pie;
+  }
+
+  abrir(1);
+})();
+</script>
+</body>
+</html>

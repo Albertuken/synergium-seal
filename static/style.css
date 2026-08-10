@@ -211,5 +211,8 @@ pre {
 
 footer { border-top: 1px solid var(--rule); padding: 18px 0 38px; }
 footer .rail { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+/* Enlace con vestido de etiqueta: mismo tamaño, subrayado que aparece al pasar. */
+.lnk { color: var(--ink-2); text-decoration: none; border-bottom: 1px solid transparent; }
+.lnk:hover { color: var(--signal); border-bottom-color: var(--signal); }
 
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
