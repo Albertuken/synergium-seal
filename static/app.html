@@ -649,6 +649,34 @@
   .chips-joined .chip { margin: 0 0 -1px -1px; }
   .chips-joined .chip:first-child { margin-left: 0; }
 
+  /* La explicación de cada opción: una línea siempre, el resto plegado.
+     Va pegada al selector porque es ahí donde surge la pregunta. */
+  .seg-help {
+    display: flex; gap: 16px; align-items: baseline; justify-content: space-between;
+    flex-wrap: wrap; margin-top: 9px; font-size: 0.85rem; color: var(--ink-soft);
+    max-width: 92ch;
+  }
+  .seg-help-more {
+    background: transparent; border: none; padding: 0; cursor: pointer; flex: none;
+    font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--accent); border-bottom: 1px solid var(--accent);
+  }
+  .seg-help-more:hover { color: var(--ink); border-bottom-color: var(--ink); }
+  .type-guide { margin-top: 12px; border-top: 1px solid var(--line); }
+  .tg-row {
+    display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 4px 20px;
+    padding: 11px 0; border-bottom: 1px solid var(--line);
+  }
+  .tg-row.on { background: var(--accent-soft); }
+  .tg-name { display: block; font-size: 0.9rem; font-weight: 700; color: var(--ink); }
+  .tg-needs {
+    display: block; margin-top: 3px;
+    font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--ink-faint);
+  }
+  .tg-what { font-size: 0.86rem; color: var(--ink-soft); max-width: 62ch; }
+  @media (max-width: 640px) { .tg-row { grid-template-columns: 1fr; } }
+
   /* Cuánto has estrechado y cómo deshacerlo. */
   .fs-state { border-bottom: none; }
   .fs-state > div { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
@@ -819,7 +847,15 @@
       <div class="filterset">
         <div class="fs-row fs-primary">
           <span class="fs-label" data-i18n="explore.lWhat"></span>
-          <div class="segs" id="type-chips" role="group" data-i18n-aria="explore.byType"></div>
+          <div>
+            <div class="segs" id="type-chips" role="group" data-i18n-aria="explore.byType"></div>
+            <p class="seg-help">
+              <span id="seg-help-text"></span>
+              <button class="seg-help-more" type="button" id="type-guide-toggle"
+                      aria-expanded="false" aria-controls="type-guide"></button>
+            </p>
+            <div class="type-guide" id="type-guide" hidden></div>
+          </div>
         </div>
         <div class="fs-row">
           <span class="fs-label" data-i18n="explore.lField"></span>
@@ -1239,6 +1275,18 @@
       'explore.lead': 'Cada ficha muestra solo el resumen público. El planteamiento detallado se abre cuando su autor acepta tu solicitud.',
       'explore.search': 'Buscar por tema, técnica o disciplina…',
       'explore.byField': 'Filtrar por disciplina', 'explore.byLang': 'Filtrar por idioma de la idea',
+      'explore.whatIs': '¿Qué es cada una?', 'explore.whatIsClose': 'Cerrar',
+      'type.help.all': 'Cinco maneras de colaborar. Pulsa una para ver de qué va.',
+      'type.help.idea': 'Tienes una pregunta de investigación que aún no has ejecutado y te falta una técnica, un dato o una competencia que no está en tu grupo.',
+      'type.help.consortium': 'Hay una convocatoria con fecha y estás montando equipo. Se comprueba solo si llegas al mínimo de tres entidades de tres Estados distintos.',
+      'type.help.comparative': 'O ya hiciste el estudio y buscas quién lo repita en su zona, o aún no lo has lanzado y buscas sitios que arranquen a la vez con el mismo protocolo.',
+      'type.help.cotutela': 'Una tesis dirigida entre dos instituciones de dos países, con convenio firmado y un solo título al final.',
+      'type.help.estancia': 'Los meses fuera que pide la mención internacional. Sin convenio: basta la carta de aceptación, y lo que decide es la ventana de fechas.',
+      'type.needs.idea': 'lo publica quien tiene la idea',
+      'type.needs.consortium': '3 entidades · 3 Estados',
+      'type.needs.comparative': 'réplica o arranque simultáneo',
+      'type.needs.cotutela': 'convenio + 2 países',
+      'type.needs.estancia': 'carta de aceptación · 3 meses',
       'explore.lWhat': 'Qué buscas', 'explore.lField': 'Disciplina', 'explore.lLang': 'Idioma',
       'explore.lState': 'Filtros', 'explore.showing': 'Viendo {n} de {total}',
       'explore.clear': 'Quitar filtros', 'explore.more': '+{n} más', 'explore.less': 'Ver menos',
@@ -1483,6 +1531,18 @@
       'explore.lead': 'Each record shows only the public summary. The detailed proposal opens once its author accepts your request.',
       'explore.search': 'Search by topic, technique or field…',
       'explore.byField': 'Filter by field', 'explore.byLang': 'Filter by idea language',
+      'explore.whatIs': 'What is each one?', 'explore.whatIsClose': 'Close',
+      'type.help.all': 'Five ways to collaborate. Pick one to see what it involves.',
+      'type.help.idea': 'You have a research question you have not run yet, and you are missing a technique, a dataset or a skill your group does not have.',
+      'type.help.consortium': 'There is a call with a deadline and you are assembling a team. It checks whether you reach the minimum of three entities from three different States.',
+      'type.help.comparative': 'Either you have finished the study and want it repeated elsewhere, or you have not launched it and want sites starting together on one shared protocol.',
+      'type.help.cotutela': 'A thesis supervised across two institutions in two countries, with a signed agreement and a single degree at the end.',
+      'type.help.estancia': 'The months abroad the international mention requires. No agreement needed: an acceptance letter is enough, and the date window decides it.',
+      'type.needs.idea': 'posted by whoever has the idea',
+      'type.needs.consortium': '3 entities · 3 States',
+      'type.needs.comparative': 'replication or joint launch',
+      'type.needs.cotutela': 'agreement + 2 countries',
+      'type.needs.estancia': 'acceptance letter · 3 months',
       'explore.lWhat': 'What you need', 'explore.lField': 'Field', 'explore.lLang': 'Language',
       'explore.lState': 'Filters', 'explore.showing': 'Showing {n} of {total}',
       'explore.clear': 'Clear filters', 'explore.more': '+{n} more', 'explore.less': 'Show fewer',
@@ -1727,6 +1787,18 @@
       'explore.lead': 'Chaque fiche ne montre que le résumé public. L’exposé détaillé s’ouvre lorsque son auteur accepte votre demande.',
       'explore.search': 'Chercher par sujet, technique ou discipline…',
       'explore.byField': 'Filtrer par discipline', 'explore.byLang': 'Filtrer par langue de l’idée',
+      'explore.whatIs': 'Qu’est-ce que c’est ?', 'explore.whatIsClose': 'Fermer',
+      'type.help.all': 'Cinq façons de collaborer. Choisissez-en une pour voir ce qu’elle recouvre.',
+      'type.help.idea': 'Vous avez une question de recherche non encore menée et il vous manque une technique, des données ou une compétence absente de votre groupe.',
+      'type.help.consortium': 'Un appel avec une échéance et vous montez une équipe. On vérifie si vous atteignez le minimum de trois entités de trois États différents.',
+      'type.help.comparative': 'Soit l’étude est faite et vous cherchez qui la répétera ailleurs, soit elle n’est pas lancée et vous cherchez des sites démarrant ensemble avec un protocole commun.',
+      'type.help.cotutela': 'Une thèse encadrée entre deux établissements de deux pays, avec convention signée et un seul diplôme à l’arrivée.',
+      'type.help.estancia': 'Les mois à l’étranger exigés par la mention internationale. Sans convention : la lettre d’acceptation suffit, et c’est la fenêtre de dates qui décide.',
+      'type.needs.idea': 'publié par qui a l’idée',
+      'type.needs.consortium': '3 entités · 3 États',
+      'type.needs.comparative': 'réplication ou lancement conjoint',
+      'type.needs.cotutela': 'convention + 2 pays',
+      'type.needs.estancia': 'lettre d’acceptation · 3 mois',
       'explore.lWhat': 'Ce que vous cherchez', 'explore.lField': 'Discipline', 'explore.lLang': 'Langue',
       'explore.lState': 'Filtres', 'explore.showing': 'Affichage de {n} sur {total}',
       'explore.clear': 'Effacer les filtres', 'explore.more': '+{n} de plus', 'explore.less': 'Voir moins',
@@ -2751,7 +2823,37 @@
       });
       wrap.appendChild(b);
     });
+    renderTypeHelp();
+    if (window.__paintGuideToggle) window.__paintGuideToggle();
   }
+
+  /* La explicación va donde nace la duda —debajo del selector—, no en una
+     pestaña aparte: un manual al que hay que ir es un manual que no se lee.
+     Una línea siempre, y el resto plegado. */
+  var TYPE_ORDER = ['idea', 'consortium', 'comparative', 'cotutela', 'estancia'];
+  function renderTypeHelp() {
+    $('seg-help-text').textContent = t('type.help.' + (state.type || 'all'));
+    var guia = $('type-guide');
+    guia.textContent = '';
+    TYPE_ORDER.forEach(function (k) {
+      var fila = el('div', 'tg-row' + (state.type === k ? ' on' : ''));
+      var izq = el('div');
+      izq.appendChild(el('span', 'tg-name', t('type.' + k)));
+      izq.appendChild(el('span', 'tg-needs', t('type.needs.' + k)));
+      fila.appendChild(izq);
+      fila.appendChild(el('p', 'tg-what', t('type.help.' + k)));
+      guia.appendChild(fila);
+    });
+  }
+  (function () {
+    var b = $('type-guide-toggle'), g = $('type-guide');
+    function pintar() {
+      b.textContent = g.hidden ? t('explore.whatIs') : t('explore.whatIsClose');
+      b.setAttribute('aria-expanded', g.hidden ? 'false' : 'true');
+    }
+    b.addEventListener('click', function () { g.hidden = !g.hidden; pintar(); });
+    window.__paintGuideToggle = pintar;
+  })();
 
   /* Cuánto has estrechado, y cómo deshacerlo. Sin esto no se sabe si la
      pantalla está vacía porque no hay nada o porque queda un filtro puesto. */
