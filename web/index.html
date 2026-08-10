@@ -27,9 +27,8 @@
      La retícula manda: todo cuelga de un mismo filo izquierdo.
 
      Un solo tema, a propósito: esto es un panel iluminado, y la
-     herramienta real (synergium-seal.fly.dev) es igual. Se declara
-     color-scheme para que los controles nativos no se oscurezcan
-     por su cuenta.
+     herramienta de sellado es igual. Se declara color-scheme para que
+     los controles nativos no se oscurezcan por su cuenta.
      ═══════════════════════════════════════════════════════════════ */
 
   :root {
@@ -330,6 +329,9 @@
   .plan .done .when { color: var(--ok); }
   .plan .now .when { color: var(--signal); }
   .plan .n { font-weight: 600; font-size: .98rem; }
+  /* Las filas ya hechas se pueden abrir: el enlace no grita, subraya al pasar. */
+  a.n { display: inline-block; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--rule); }
+  a.n:hover { color: var(--signal); border-bottom-color: var(--signal); }
   .plan p { font-size: .93rem; margin-top: 3px; }
 
   /* Cierre */
@@ -679,9 +681,9 @@ ots verify SYN-2026-XXXX.ots -f tu-fichero.pdf</code></pre>
         <div class="done">
           <span class="when">Hecho</span>
           <div>
-            <span class="n">Maqueta de la aplicación</span>
+            <a class="n" href="https://synergium-seal.fly.dev/app">Maqueta de la aplicación →</a>
             <p>Publicar una idea, los tres tipos de colaboración, los niveles de acceso y el
-            memorando, en tres idiomas. Simulada, para poder enseñarla y discutirla.</p>
+            memorando, en tres idiomas. Simulada: los datos son de ejemplo, pero se navega entera.</p>
           </div>
         </div>
         <div class="now">

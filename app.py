@@ -53,13 +53,19 @@ def index():
 
 @app.get("/proyecto")
 def proyecto():
-    """La landing, servida como fichero estático.
-
-    Se genera con build_landing.py a partir de landing/index.html. Va por
-    send_from_directory y no por render_template a propósito: es HTML literal
-    y no tiene por qué pasar por Jinja.
-    """
+    """La página del proyecto."""
     return send_from_directory(app.static_folder, "proyecto.html")
+
+
+@app.get("/app")
+def maqueta():
+    """La maqueta navegable de la aplicación. Datos simulados, sin servidor."""
+    return send_from_directory(app.static_folder, "app.html")
+
+
+# Las dos salen de build_web.py a partir de web/*.html. Se sirven con
+# send_from_directory y no con render_template a propósito: son HTML literal
+# y no tienen por qué pasar por Jinja.
 
 
 @app.get("/health")
