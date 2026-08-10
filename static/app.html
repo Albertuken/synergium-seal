@@ -2098,6 +2098,15 @@
     i.style.background = fieldColor(key);
     return i;
   }
+  /* La etiqueta completa. Se compone aquí y solo aquí: cuando estaba repetida
+     a mano, el detalle se quedó sin cuadrito y la señal se perdía justo al
+     abrir la ficha. */
+  function fieldLabel(key) {
+    var s = el('span', 'field');
+    s.appendChild(fieldSwatch(key));
+    s.appendChild(document.createTextNode(fieldName(key)));
+    return s;
+  }
 
   var LANG_NAMES = {
     es: { es: 'español', en: 'inglés', fr: 'francés', de: 'alemán' },
@@ -2812,6 +2821,7 @@
       b.type = 'button';
       // El mismo color que llevará la ficha: así el filtro y el resultado se
       // reconocen entre sí sin leer.
+      // El mismo cuadrito que llevará la ficha.
       if (o.k) b.appendChild(fieldSwatch(o.k));
       b.appendChild(document.createTextNode(o.label));
       chipCount(b, countWith({ field: o.k }));
@@ -3020,10 +3030,7 @@
       var left = el('div');
       left.style.cssText = 'display:flex; gap:6px; align-items:center; flex-wrap:wrap;';
       left.appendChild(typeBadge(idea));
-      var fld = el('span', 'field');
-      fld.appendChild(fieldSwatch(idea.field));
-      fld.appendChild(document.createTextNode(fieldName(idea.field)));
-      left.appendChild(fld);
+      left.appendChild(fieldLabel(idea.field));
       top.appendChild(left);
       var right = el('div');
       right.style.cssText = 'display:flex; gap:6px; align-items:center;';
@@ -3465,7 +3472,7 @@
 
     var head = el('div');
     var top = el('div', 'card-top');
-    top.appendChild(el('span', 'field', fieldName(idea.field)));
+    top.appendChild(fieldLabel(idea.field));
     var right = el('div');
     right.style.cssText = 'display:flex; gap:6px; align-items:center;';
     right.appendChild(langTag(idea));
@@ -3757,7 +3764,7 @@
       var left = el('div');
       var tags = el('div');
       tags.style.cssText = 'display:flex; gap:6px; align-items:center; flex-wrap:wrap; margin-bottom:6px;';
-      tags.appendChild(el('span', 'field', fieldName(idea.field)));
+      tags.appendChild(fieldLabel(idea.field));
       tags.appendChild(langTag(idea));
       left.appendChild(tags);
       left.appendChild(el('h3', null, idea.title));
@@ -3876,7 +3883,7 @@
       var card = el('div', 'card');
       card.style.cursor = 'default';
       var top = el('div', 'card-top');
-      top.appendChild(el('span', 'field', fieldName(sp.field)));
+      top.appendChild(fieldLabel(sp.field));
       var av = el('span', 'avail ' + (sp.avail === 'open' ? 'open' : 'busy'));
       av.textContent = sp.avail === 'open' ? t('spec.availOpen') : t('spec.availBusy');
       top.appendChild(av);
