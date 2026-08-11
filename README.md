@@ -129,6 +129,24 @@ desbordar. Sin eso, una sonda rota daría todo correcto.
 
 Si no hay Chrome ni Chromium instalado, esas pruebas se saltan solas.
 
+## Opiniones
+
+Las nueve páginas llevan al pie un «¿Qué te ha parecido?» plegado. Pregunta lo
+único que decide el proyecto —si registrarías una idea antes de ejecutarla—,
+deja escribir y, **una vez enviado**, propone la videollamada. En ese orden:
+pedir la llamada de entrada convierte el formulario en una encerrona.
+
+Aquí el contenido sí se guarda, al revés que en los sellos, y el formulario lo
+dice antes de enviarse. No se guarda la IP y el correo es opcional.
+
+Se leen en `/opiniones/<clave>`, con la clave en la variable `FEEDBACK_TOKEN`.
+Sin esa variable la página no se abre a nadie: mejor inaccesible que
+accidentalmente pública.
+
+```bash
+fly secrets set FEEDBACK_TOKEN="…" --app synergium-seal
+```
+
 ## Comprobación independiente
 
 Esto es lo que hace que el sello valga algo. Con el `.ots` descargado:

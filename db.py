@@ -38,6 +38,21 @@ CREATE TABLE IF NOT EXISTS meta (
     key   TEXT PRIMARY KEY,
     value TEXT NOT NULL
 );
+
+-- Opiniones de quien prueba esto. Aquí el contenido SÍ se guarda —al revés
+-- que en los sellos—, así que el formulario lo dice antes de enviarse.
+-- No se guarda IP ni nada que identifique a nadie que no quiera: el correo
+-- es opcional y solo sirve para poder repreguntar.
+CREATE TABLE IF NOT EXISTS feedback (
+    id          TEXT PRIMARY KEY,
+    created_at  TEXT NOT NULL,
+    respuesta   TEXT,            -- si | no | duda
+    texto       TEXT,
+    correo      TEXT,
+    llamada     INTEGER NOT NULL DEFAULT 0,   -- se ofrece a la videollamada
+    pagina      TEXT,
+    idioma      TEXT
+);
 """
 
 
@@ -125,6 +140,39 @@ def update_proof(stamp_id: str, ots: bytes, path: Path = None) -> None:
     """La prueba creció pero todavía no llega a Bitcoin: se guarda igualmente."""
     with connect(path) as conn:
         conn.execute("UPDATE stamps SET ots = ? WHERE id = ?", (ots, stamp_id))
+
+
+def insert_feedback(respuesta, texto, correo, llamada, pagina, idioma, path=None) -> dict:
+    """Guarda una opinión. Todo es opcional menos que haya algo que guardar."""
+    fid = "OP-" + secrets.token_hex(4).upper()
+    fila = {
+        "id": fid, "created_at": now_iso(),
+        "respuesta": respuesta or None, "texto": texto or None, "correo": correo or None,
+        "llamada": 1 if llamada else 0, "pagina": pagina or None, "idioma": idioma or None,
+    }
+    with connect(path) as cx:
+        cx.execute(
+            "INSERT INTO feedback (id, created_at, respuesta, texto, correo, llamada, pagina, idioma)"
+            " VALUES (:id, :created_at, :respuesta, :texto, :correo, :llamada, :pagina, :idioma)",
+            fila)
+    return fila
+
+
+def list_feedback(path: Path = None) -> list:
+    with connect(path) as cx:
+        return [dict(r) for r in cx.execute(
+            "SELECT * FROM feedback ORDER BY created_at DESC")]
+
+
+def feedback_counts(path: Path = None) -> dict:
+    with connect(path) as cx:
+        filas = cx.execute(
+            "SELECT respuesta, COUNT(*) n FROM feedback GROUP BY respuesta").fetchall()
+        total = cx.execute("SELECT COUNT(*) n FROM feedback").fetchone()["n"]
+        llamada = cx.execute(
+            "SELECT COUNT(*) n FROM feedback WHERE llamada = 1").fetchone()["n"]
+    return {"total": total, "llamada": llamada,
+            **{(r["respuesta"] or "sin responder"): r["n"] for r in filas}}
 
 
 def set_meta(key: str, value: str, path: Path = None) -> None:

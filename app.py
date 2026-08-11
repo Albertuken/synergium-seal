@@ -7,6 +7,7 @@ El contenido nunca llega hasta aquí, ni siquiera de paso.
 
 import io
 import os
+import secrets
 from datetime import datetime, timezone
 
 from flask import (
@@ -204,6 +205,85 @@ def verify():
         "stamps": [_public(m) for m in matches],
         "independent_check": "ots verify <fichero>.ots -f <tu-fichero>",
     })
+
+
+@app.post("/api/feedback")
+def feedback():
+    """Recoge una opinión.
+
+    Aquí el contenido SÍ se guarda, al revés que en los sellos. El formulario
+    lo advierte antes de enviarse; sería feo prometer privacidad en una página
+    y recoger texto por detrás en la de al lado.
+    """
+    d = request.get_json(silent=True) or {}
+    respuesta = d.get("respuesta")
+    if respuesta not in (None, "", "si", "no", "duda"):
+        return jsonify({"error": "Respuesta no válida."}), 400
+
+    texto = (d.get("texto") or "").strip()[:4000]
+    correo = (d.get("correo") or "").strip()[:200]
+    llamada = bool(d.get("llamada"))
+    if correo and ("@" not in correo or " " in correo):
+        return jsonify({"error": "Ese correo no parece válido."}), 400
+    if not (respuesta or texto or correo):
+        return jsonify({"error": "No hay nada que guardar."}), 400
+    # Pedir la llamada sin dejar correo no sirve de nada: no habría cómo avisar.
+    if llamada and not correo:
+        return jsonify({"error": "Para la videollamada hace falta un correo."}), 400
+
+    fila = db.insert_feedback(respuesta, texto, correo, llamada,
+                              (d.get("pagina") or "")[:80], (d.get("idioma") or "")[:5])
+    return jsonify({"ok": True, "id": fila["id"]}), 201
+
+
+@app.get("/opiniones/<token>")
+def opiniones(token: str):
+    """Lectura de lo recogido. Protegida por una clave que solo tiene su dueño.
+
+    Sin FEEDBACK_TOKEN configurado no se abre a nadie: mejor inaccesible que
+    accidentalmente público.
+    """
+    esperado = os.environ.get("FEEDBACK_TOKEN", "")
+    if not esperado or not secrets.compare_digest(token, esperado):
+        return jsonify({"error": "No existe esa página."}), 404
+
+    filas = db.list_feedback()
+    cuenta = db.feedback_counts()
+    def esc(x):
+        return (str(x) if x is not None else "—").replace("&", "&amp;").replace(
+            "<", "&lt;").replace(">", "&gt;")
+    ETIQ = {"si": "SÍ registraría", "no": "NO lo haría", "duda": "No lo tiene claro"}
+    cuerpo = "".join(
+        f"<tr><td class=f>{esc(f['created_at'][:16].replace('T', ' '))}</td>"
+        f"<td class=r data-r=\"{esc(f['respuesta'])}\">{esc(ETIQ.get(f['respuesta'], '—'))}</td>"
+        f"<td>{esc(f['texto'])}</td>"
+        f"<td class=f>{esc(f['correo'])}{' · quiere llamada' if f['llamada'] else ''}</td>"
+        f"<td class=f>{esc(f['pagina'])} · {esc(f['idioma'])}</td></tr>"
+        for f in filas)
+    resumen = " · ".join(f"{k}: {v}" for k, v in cuenta.items())
+    return (
+        "<!doctype html><html lang=es><head><meta charset=utf-8>"
+        "<meta name=viewport content='width=device-width, initial-scale=1'>"
+        "<title>Opiniones · Synergium</title><style>"
+        "body{margin:0;padding:28px;background:#f0f0ee;color:#0c1116;"
+        "font:15px/1.5 'Helvetica Neue',Helvetica,Arial,sans-serif}"
+        "h1{font-size:1.4rem;letter-spacing:-.02em;margin:0 0 4px}"
+        ".s{font-family:ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.1em;"
+        "text-transform:uppercase;color:#4a545d;margin-bottom:18px}"
+        "table{border-collapse:collapse;width:100%;max-width:1100px}"
+        "th,td{text-align:left;padding:9px 12px 9px 0;border-bottom:1px solid #d8d9d6;vertical-align:top}"
+        "th{font-family:ui-monospace,Menlo,monospace;font-size:10px;letter-spacing:.14em;"
+        "text-transform:uppercase;color:#8a939b;font-weight:400}"
+        ".f{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#4a545d;white-space:nowrap}"
+        ".r{font-size:12px;font-weight:700;white-space:nowrap}"
+        "[data-r=si]{color:#1c6b4b}[data-r=no]{color:#b3202f}[data-r=duda]{color:#8a6a15}"
+        "</style></head><body><h1>Opiniones</h1>"
+        f"<p class=s>{esc(resumen)}</p>"
+        "<table><tr><th>Cuándo</th><th>¿Registraría?</th><th>Qué dice</th>"
+        "<th>Contacto</th><th>Dónde</th></tr>"
+        + (cuerpo or "<tr><td colspan=5>Todavía no hay ninguna.</td></tr>")
+        + "</table></body></html>"
+    )
 
 
 @app.errorhandler(413)
